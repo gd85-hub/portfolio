@@ -18,6 +18,6 @@ interface Props {
 const { caseStudy } = Astro.props;
 ---
 
-<BaseLayout title={`${caseStudy.title} - Gleb Dvoryatkin`}>
+<BaseLayout title={`${caseStudy.title} - Gleb Dvoryatkin`} description={caseStudy.lede}>
   <CaseLayout caseStudy={caseStudy} />
 </BaseLayout>
