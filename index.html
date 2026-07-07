@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gleb Dvoryatkin - Product Designer</title>
+<meta name="description" content="Product designer turning dense, complex products into clear interfaces. Fintech, sales, and edtech.">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/geist@5/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/geist-mono@5/index.css">
+
+<script>
+  (function(){ try { if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark'); } catch(e){} })();
+</script>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: { extend: {
+    colors: {
+      paper:'var(--paper)', surface:'var(--surface)',
+      ink:'var(--ink)', body:'var(--body)', muted:'var(--muted)', line:'var(--line)',
+      accent:'var(--accent)', 'on-accent':'var(--on-accent)',
+      ph1:'var(--ph1)', ph2:'var(--ph2)', phtext:'var(--phtext)',
+      inv:'var(--inv-bg)', 'inv-fg':'var(--inv-fg)', 'inv-sub':'var(--inv-sub)',
+      'inv-line':'var(--inv-line)', 'inv-btn':'var(--inv-btn)', 'inv-btnfg':'var(--inv-btnfg)',
+    },
+    fontFamily: {
+      sans: ['"Geist Variable"','ui-sans-serif','system-ui','-apple-system','sans-serif'],
+      mono: ['"Geist Mono Variable"','ui-monospace','SFMono-Regular','monospace'],
+    },
+    maxWidth: { content: '72rem' },
+  }}
+}
+</script>
+
+<style>
+  :root{
+    --paper:#fafafa; --surface:#ffffff;
+    --ink:#18181b; --body:#3f3f46; --muted:#71717a; --line:#e4e4e7;
+    --accent:#0f766e; --on-accent:#ffffff;
+    --ph1:#f4f4f5; --ph2:#e4e4e7; --phtext:#a1a1aa;
+    --inv-bg:#18181b; --inv-fg:#ffffff; --inv-sub:#a1a1aa; --inv-line:#3f3f46; --inv-btn:#ffffff; --inv-btnfg:#18181b;
+    --motion-fast:160ms; --motion-base:240ms; --motion-slow:520ms;
+    --ease-standard:cubic-bezier(.2,0,0,1);
+    --ease-emphasized:cubic-bezier(.16,1,.3,1);
+    color-scheme: light;
+  }
+  .dark{
+    --paper:#0a0a0a; --surface:#141417;
+    --ink:#fafafa; --body:#a1a1aa; --muted:#8a8a92; --line:#303036;
+    --accent:#5eead4; --on-accent:#0a0a0a;
+    --ph1:#1c1c20; --ph2:#141417; --phtext:#71717a;
+    --inv-bg:#141417; --inv-fg:#fafafa; --inv-sub:#a1a1aa; --inv-line:#2a2a30; --inv-btn:#fafafa; --inv-btnfg:#0a0a0a;
+    color-scheme: dark;
+  }
+  body{ background: var(--paper); transition:background-color var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard); }
+  ::selection{ background: var(--accent); color:var(--on-accent); }
+  :where(a, button){ transition-duration:var(--motion-base); transition-timing-function:var(--ease-standard); }
+  :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-inv, .border-line, .text-ink, .text-body, .text-muted, .text-accent){
+    transition-property:background-color, border-color, color;
+    transition-duration:var(--motion-base);
+    transition-timing-function:var(--ease-standard);
+  }
+  :where(.group svg, #theme-toggle svg){
+    transition-duration:var(--motion-fast);
+    transition-timing-function:var(--ease-standard);
+  }
+  .ph{ background: linear-gradient(135deg, var(--ph1), var(--ph2)); transition:background var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard); }
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity var(--motion-slow) var(--ease-emphasized), transform var(--motion-slow) var(--ease-emphasized); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    *, ::before, ::after{ animation-duration:1ms !important; transition-duration:1ms !important; scroll-behavior:auto !important; }
+    .reveal{ opacity:1 !important; transform:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+  .link-underline{ background-image:linear-gradient(currentColor,currentColor); background-size:0% 1px; background-repeat:no-repeat; background-position:0 100%; transition:background-size var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard); }
+  .link-underline:hover{ background-size:100% 1px; }
+  .card-lift{ transition:transform var(--motion-base) var(--ease-emphasized), border-color var(--motion-base) var(--ease-standard), background-color var(--motion-base) var(--ease-standard); }
+  .card-lift:hover{ transform:translateY(-4px); }
+  .card-lift:active{ transform:translateY(-1px); }
+  .view{ display:none; }
+  .view.active{ display:block; }
+</style>
+</head>
+
+<body class="font-sans text-body antialiased">
+
+<!-- NAV -->
+<header class="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur-md">
+  <nav class="mx-auto flex h-16 max-w-content items-center justify-between px-5 sm:px-8">
+    <a href="#top" data-nav="home" class="whitespace-nowrap font-mono text-[12px] font-medium leading-4 text-ink sm:text-[16px] sm:leading-6">Gleb Dvoryatkin<span class="text-accent">.</span></a>
+    <div class="flex items-center gap-4 text-[16px] text-muted sm:gap-7">
+      <a href="#work" data-nav="home" class="link-underline hover:text-ink">Work</a>
+      <a href="#about" data-nav="home" class="link-underline hover:text-ink">About</a>
+      <a href="#contact" data-nav="home" class="hidden sm:inline link-underline hover:text-ink">Contact</a>
+      <a href="#" data-view="resume" class="link-underline hover:text-ink">Resume</a>
+      <button id="theme-toggle" aria-label="Toggle theme" class="grid h-8 w-8 place-items-center rounded-full border border-line text-ink transition-colors hover:border-ink"></button>
+    </div>
+  </nav>
+</header>
+
+<!-- LANDING -->
+<main id="view-home" class="view active">
+<span id="top"></span>
+
+<!-- HERO -->
+<section class="mx-auto max-w-content px-5 pb-20 pt-16 sm:px-8 sm:pt-24">
+  <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
+    <div class="reveal">
+      <p class="mb-5 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Product Designer</p>
+      <h1 class="text-4xl font-semibold leading-10 text-ink sm:text-5xl sm:leading-[52px] lg:text-6xl lg:leading-[64px]">
+        Turning dense, complex<br>products into clear interfaces.
+      </h1>
+      <p class="mt-6 max-w-[48ch] text-[20px] leading-8 text-body">
+        Product designer with 5+ years in UX and a decade in marketing and research. Fintech, sales, and edtech.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a href="#work" data-nav="home" class="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-[16px] font-medium text-paper transition-colors hover:bg-accent hover:text-on-accent">
+          View work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em] translate-y-px transition-transform group-hover:translate-y-1"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+        </a>
+        <a href="#contact" data-nav="home" class="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-[16px] font-medium text-ink transition-colors hover:border-ink">
+          Get in touch
+        </a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="overflow-hidden rounded-2xl border border-line bg-surface">
+        <div class="border-b border-line p-6">
+          <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Portfolio focus</p>
+          <h2 class="mt-4 text-[24px] font-semibold leading-8 text-ink">Complex tools, made easier to read and operate.</h2>
+        </div>
+        <div class="grid border-b border-line sm:grid-cols-2">
+          <div class="border-b border-line p-6 sm:border-b-0 sm:border-r">
+            <p class="text-[32px] font-semibold leading-10 text-ink">50+</p>
+            <p class="mt-2 text-[16px] leading-6 text-body">screens specified for course-management flows</p>
+          </div>
+          <div class="p-6">
+            <p class="text-[32px] font-semibold leading-10 text-ink">60+</p>
+            <p class="mt-2 text-[16px] leading-6 text-body">competitors audited to shape product positioning</p>
+          </div>
+        </div>
+        <div class="divide-y divide-line">
+          <div class="grid gap-2 p-6 sm:grid-cols-[8rem_1fr]">
+            <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Domains</span>
+            <span class="text-[16px] leading-6 text-ink">Fintech, sales analytics, edtech operations</span>
+          </div>
+          <div class="grid gap-2 p-6 sm:grid-cols-[8rem_1fr]">
+            <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Strength</span>
+            <span class="text-[16px] leading-6 text-ink">Information architecture, design systems, shipped product flows</span>
+          </div>
+          <div class="grid gap-2 p-6 sm:grid-cols-[8rem_1fr]">
+            <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Signal</span>
+            <span class="text-[16px] leading-6 text-ink">First clients, B2B deals, measurable product lift</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTED WORK -->
+<section id="work" class="mx-auto max-w-content scroll-mt-20 px-5 py-16 sm:px-8">
+  <h2 class="reveal mb-10 text-[24px] font-semibold leading-8 text-ink sm:text-[32px] sm:leading-10">Selected work</h2>
+  <div class="grid gap-6 md:grid-cols-3">
+
+    <a href="#" data-case="naoma" class="card-lift reveal group block overflow-hidden rounded-2xl border border-line bg-surface">
+      <div class="ph relative aspect-[4/3]"><div class="absolute inset-0 flex items-center justify-center"><span class="font-mono text-[12px] uppercase tracking-[0.16em] text-phtext">[ cover ]</span></div></div>
+      <div class="flex flex-col gap-2.5 p-6">
+        <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-accent">AI sales analytics</p>
+        <h3 class="text-[20px] font-semibold leading-7 text-ink">Naoma</h3>
+        <p class="text-[16px] leading-6 text-body">A sales-analytics platform built from scratch: dashboard, call scoring, and reporting.</p>
+        <span class="mt-1 inline-flex items-center gap-1.5 text-[16px] font-medium text-ink">Read case <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em] transition-transform group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" data-case="oilcasex" class="card-lift reveal group block overflow-hidden rounded-2xl border border-line bg-surface">
+      <div class="ph relative aspect-[4/3]"><div class="absolute inset-0 flex items-center justify-center"><span class="font-mono text-[12px] uppercase tracking-[0.16em] text-phtext">[ cover ]</span></div></div>
+      <div class="flex flex-col gap-2.5 p-6">
+        <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-accent">Oilfield simulator</p>
+        <h3 class="text-[20px] font-semibold leading-7 text-ink">OilCase X</h3>
+        <p class="text-[16px] leading-6 text-body">Full redesign and a shared UI kit for a turn-based oil and gas simulator.</p>
+        <span class="mt-1 inline-flex items-center gap-1.5 text-[16px] font-medium text-ink">Read case <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em] transition-transform group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" data-case="oilcourses" class="card-lift reveal group block overflow-hidden rounded-2xl border border-line bg-surface">
+      <div class="ph relative aspect-[4/3]"><div class="absolute inset-0 flex items-center justify-center"><span class="font-mono text-[12px] uppercase tracking-[0.16em] text-phtext">[ cover ]</span></div></div>
+      <div class="flex flex-col gap-2.5 p-6">
+        <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-accent">Course CMS</p>
+        <h3 class="text-[20px] font-semibold leading-7 text-ink">OilCase Courses Back Office</h3>
+        <p class="text-[16px] leading-6 text-body">Information architecture and 50+ screens for a complex course-management system.</p>
+        <span class="mt-1 inline-flex items-center gap-1.5 text-[16px] font-medium text-ink">Read case <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em] transition-transform group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- WHAT I WORK ON -->
+<section class="border-y border-line bg-surface">
+  <div class="mx-auto max-w-content px-5 py-16 sm:px-8">
+    <h2 class="reveal mb-10 text-[24px] font-semibold leading-8 text-ink sm:text-[32px] sm:leading-10">What I work on</h2>
+    <div class="divide-y divide-line">
+      <div class="reveal grid gap-2 py-6 md:grid-cols-[.4fr_.6fr] md:gap-10">
+        <h3 class="text-[20px] font-medium leading-7 text-ink">Data-dense product UIs</h3>
+        <p class="text-[16px] leading-6 text-body">Dashboards, analytics, and monitoring where the job is to make a lot of state readable at a glance and safe to act on.</p>
+      </div>
+      <div class="reveal grid gap-2 py-6 md:grid-cols-[.4fr_.6fr] md:gap-10">
+        <h3 class="text-[20px] font-medium leading-7 text-ink">Design systems &amp; UI kits</h3>
+        <p class="text-[16px] leading-6 text-body">Reusable component kits and handoff conventions that keep a growing product consistent and let engineering move without redesigning.</p>
+      </div>
+      <div class="reveal grid gap-2 py-6 md:grid-cols-[.4fr_.6fr] md:gap-10">
+        <h3 class="text-[20px] font-medium leading-7 text-ink">0 to 1 and redesign</h3>
+        <p class="text-[16px] leading-6 text-body">Taking an ambiguous or broken product to a shipped, usable version. Framing, IA, flows, and the calls that decide whether it works.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="mx-auto max-w-content scroll-mt-20 px-5 py-16 sm:px-8">
+  <div class="grid gap-12 md:grid-cols-[.55fr_.45fr]">
+    <div class="reveal">
+      <h2 class="mb-6 text-[24px] font-semibold leading-8 text-ink sm:text-[32px] sm:leading-10">About</h2>
+      <div class="space-y-4 text-[16px] leading-6 text-body">
+        <p>I design interfaces for complex, data-heavy tools, the kind where a user has to read a lot of state and make a real decision. My background is unusual for a designer: about a decade in marketing, research, and project management before UX, so I read a problem from the business and the interface side before proposing anything.</p>
+        <p>Today I design internal and client-facing products at Axon Trade, a technology provider for the institutional crypto market. Before that I worked across sales analytics and edtech, and earlier led data and customer-facing teams at companies like June Homes and Standuply, with clients including IBM, Intel, Adobe, and Coursera.</p>
+        <p>Based in Novi Sad. English (C1), French (B1), Russian (native).</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="ph aspect-[4/5] w-full overflow-hidden rounded-2xl border border-line">
+        <div class="flex h-full items-center justify-center"><span class="font-mono text-[12px] uppercase tracking-[0.16em] text-phtext">[ photo ]</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="scroll-mt-20 border-t border-line bg-inv">
+  <div class="mx-auto max-w-content px-5 py-20 sm:px-8">
+    <div class="reveal max-w-[52ch]">
+      <h2 class="text-[32px] font-semibold leading-10 text-inv-fg sm:text-4xl">Let's talk.</h2>
+      <p class="mt-4 text-[20px] leading-8 text-inv-sub">Open to senior product design roles and selected fintech advisory.</p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="mailto:[your@email.com]" class="inline-flex items-center gap-2 rounded-full bg-inv-btn px-6 py-3 text-[16px] font-medium text-inv-btnfg transition-colors hover:bg-accent hover:text-on-accent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em]"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> [ your@email.com ]
+        </a>
+        <a href="[telegram-url]" class="inline-flex items-center gap-2 rounded-full border border-inv-line px-6 py-3 text-[16px] font-medium text-inv-fg transition-colors hover:border-inv-fg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em]"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg> Telegram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-inv">
+  <div class="mx-auto flex max-w-content flex-col gap-2 border-t border-inv-line px-5 py-8 text-[12px] text-inv-sub sm:flex-row sm:items-center sm:justify-between sm:px-8">
+    <span class="font-mono">Gleb Dvoryatkin - Novi Sad</span>
+    <span>&copy; 2026</span>
+  </div>
+</footer>
+</main>
+
+<!-- CASE VIEW -->
+<article id="view-case" class="view">
+  <div class="mx-auto max-w-3xl px-5 pb-24 pt-12 sm:px-8">
+    <button data-nav="home" class="mb-10 inline-flex items-center gap-2 text-[16px] font-medium text-muted transition-colors hover:text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em]"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Back to work</button>
+    <p id="c-kicker" class="mb-4 font-mono text-[12px] uppercase tracking-[0.16em] text-accent"></p>
+    <h1 id="c-title" class="text-[32px] font-semibold leading-10 text-ink sm:text-4xl"></h1>
+    <p id="c-lede" class="mt-5 text-[20px] leading-8 text-body"></p>
+    <dl class="my-10 grid grid-cols-2 gap-6 border-y border-line py-6 text-[16px] sm:grid-cols-4">
+      <div><dt class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Role</dt><dd id="c-role" class="mt-1.5 text-ink"></dd></div>
+      <div><dt class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Timeframe</dt><dd id="c-time" class="mt-1.5 text-ink"></dd></div>
+      <div><dt class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Team</dt><dd id="c-team" class="mt-1.5 text-ink"></dd></div>
+      <div><dt class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Outcome</dt><dd id="c-metric" class="mt-1.5 text-ink"></dd></div>
+    </dl>
+    <div class="ph mb-12 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-line"><div class="flex h-full items-center justify-center"><span class="font-mono text-[12px] uppercase tracking-[0.16em] text-phtext">[ hero shot ]</span></div></div>
+    <div id="c-body" class="space-y-12"></div>
+    <div class="mt-16 border-t border-line pt-8"><button data-nav="home" class="inline-flex items-center gap-2 text-[16px] font-medium text-ink transition-colors hover:text-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em]"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>All work</button></div>
+  </div>
+</article>
+
+<!-- RESUME VIEW -->
+<article id="view-resume" class="view">
+  <div class="mx-auto max-w-3xl px-5 pb-24 pt-12 sm:px-8">
+    <div class="mb-10 flex items-center justify-between gap-4">
+      <button data-nav="home" class="inline-flex items-center gap-2 text-[16px] font-medium text-muted transition-colors hover:text-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em]"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Back</button>
+      <a href="#" id="download-pdf" class="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-[16px] font-medium text-paper transition-colors hover:bg-accent hover:text-on-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.05em] w-[1.05em]"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Download PDF</a>
+    </div>
+
+    <header class="mb-12">
+      <p class="mb-3 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Resume</p>
+      <h1 class="text-[32px] font-semibold leading-10 text-ink sm:text-4xl">Gleb Dvoryatkin</h1>
+      <p class="mt-2 text-[20px] leading-8 text-body">Product Designer</p>
+    </header>
+
+    <!-- SUMMARY -->
+    <section class="mb-12">
+      <h2 class="mb-4 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Summary</h2>
+      <p class="text-[16px] leading-6 text-body">Product designer for complex, data-dense products. A decade in marketing, research, and project management before UX lets me frame the business problem and design the interface that solves it, not just style the screens.</p>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="mb-12">
+      <h2 class="mb-6 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Experience</h2>
+      <div class="space-y-8">
+
+        <div class="border-t border-line pt-6">
+          <h3 class="text-[20px] font-semibold leading-7 text-ink">Axon Trade - Product Designer, Marketing Generalist</h3>
+          <p class="mt-2 text-[16px] leading-6 text-body">Designing internal and client-facing products for a technology provider serving the institutional crypto market. Led all marketing until 2021, then moved fully into product design.</p>
+          <ul class="mt-3 list-disc space-y-2 pl-5 text-[16px] leading-6 text-body marker:text-muted">
+            <li>Sole product designer across three client platforms and two in-house tools (under NDA), spanning order flow, market data, and internal operations.</li>
+            <li>Made the product suite white-label-ready, which supported the company's 2023 move into licensed solutions.</li>
+            <li>Redesigned the company's marketing site; the rebuild lifted Lighthouse performance from 26 to 91.</li>
+          </ul>
+        </div>
+
+        <div class="border-t border-line pt-6">
+          <h3 class="text-[20px] font-semibold leading-7 text-ink">Naoma - Product Designer</h3>
+          <p class="mt-2 text-[16px] leading-6 text-body">Interfaces and user flows for an AI-powered sales analytics platform, alongside engineers from Amazon, Yandex, Aviasales, and Delivery Hero.</p>
+          <ul class="mt-3 list-disc space-y-2 pl-5 text-[16px] leading-6 text-body marker:text-muted">
+            <li>Reframed the product from a call-quality tool into a sales-performance platform after research showed leaders needed team-wide insight, not just call scores; designed the four core surfaces (dashboard, call scoring, insights, AI coaching).</li>
+            <li>Ran a teardown of 60+ competitors to find the positioning gap and shape product strategy.</li>
+            <li>Interface work contributed directly to the first paying customers and initial funding; by December 2024: 16 qualified leads (~$200K potential ARR), 8 pilots analyzing 50K+ calls, and 2 closed deals.</li>
+          </ul>
+        </div>
+
+        <div class="border-t border-line pt-6">
+          <h3 class="text-[20px] font-semibold leading-7 text-ink">OilCase - UX/UI Designer</h3>
+          <p class="mt-2 text-[16px] leading-6 text-body">Interfaces for educational IT products in the oil and gas industry.</p>
+          <ul class="mt-3 list-disc space-y-2 pl-5 text-[16px] leading-6 text-body marker:text-muted">
+            <li>Led an audit-driven redesign of OilCase X, a field-management simulator: a UX/UI audit plus participant interviews surfaced four issue classes that set the priorities; the refreshed product helped close the team's first major B2B client.</li>
+            <li>Built a shared UI kit for the whole OilCase ecosystem, cutting design inconsistency and speeding up development.</li>
+            <li>Owned IA and interface for the courses back-office: a classification model drove the architecture, then 50+ screens across two roles (Admin, Author) covering every state and edge case, shipped to engineering as documented spec.</li>
+          </ul>
+        </div>
+
+        <div class="border-t border-line pt-6">
+          <h3 class="text-[20px] font-semibold leading-7 text-ink">June Homes - Head of Property Listing and Data Department</h3>
+          <p class="mt-2 text-[16px] leading-6 text-body">Led a team of data managers at a tech-driven US apartment-rental service; owned advertising budgets, process, PropTech partnerships, and listing UX.</p>
+          <ul class="mt-3 list-disc space-y-2 pl-5 text-[16px] leading-6 text-body marker:text-muted">
+            <li>Expanded platform presence from 7 to 25 with no added ad spend.</li>
+            <li>Restructured process and budgeting: 3x leads, 3x paying customers, and 2x lower CPA.</li>
+          </ul>
+        </div>
+
+        <div class="border-t border-line pt-6">
+          <h3 class="text-[20px] font-semibold leading-7 text-ink">Standuply - UX Researcher, Head of Customer Success (from 2017)</h3>
+          <p class="mt-2 text-[16px] leading-6 text-body">UX research and Customer Success for a stand-up bot for Slack and Microsoft Teams; clients included IBM, Intel, Adobe, Oracle, and Coursera.</p>
+          <ul class="mt-3 list-disc space-y-2 pl-5 text-[16px] leading-6 text-body marker:text-muted">
+            <li>Built Customer Success from scratch and ran the research that shaped early product direction: 80+ in-depth user interviews worldwide, user churn down 20%.</li>
+            <li>Product Hunt launches drove 500 upvotes in a single day and a 25% lift in registrations.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EDUCATION (placeholder - no content provided) -->
+    <section class="mb-12">
+      <h2 class="mb-4 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Education</h2>
+      <p class="text-[16px] leading-6 text-muted">[ add education ]</p>
+    </section>
+
+    <!-- COURSES (placeholder - no content provided) -->
+    <section class="mb-12">
+      <h2 class="mb-4 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Courses</h2>
+      <p class="text-[16px] leading-6 text-muted">[ add courses ]</p>
+    </section>
+
+    <!-- CONTACT (reuses existing site placeholders) -->
+    <section>
+      <h2 class="mb-4 font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Contact</h2>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-[16px]">
+        <a href="mailto:[your@email.com]" class="link-underline text-ink">[ your@email.com ]</a>
+        <a href="[telegram-url]" class="link-underline text-ink">Telegram</a>
+      </div>
+    </section>
+
+  </div>
+</article>
+
+<script>
+const CASES = {
+  naoma: {
+    kicker:'AI sales analytics', title:'Naoma',
+    lede:'An AI sales-analytics platform that turns scattered call and deal data into a clear read on why reps win or lose.',
+    role:'Product Designer', time:'2024 to 2025', team:'Founder, CRO, eng team', metric:'First paying clients and funding',
+    body:[
+      {h:'Context', p:'Companies pour money into CRMs, KPIs, and sales training, but one question stays open: why does one rep close and another does not? The honest answer sits in the data, spread across hundreds of calls and metrics. Manual review is slow, expensive, and subjective; CRMs show what happened but not why.'},
+      {h:'The problem', p:'Sales teams invest heavily in process but have no objective way to see the full picture and fix what is broken. Leadership needed one place to read team performance and drill into the reasons behind it.'},
+      {h:'Who it was for', p:'CEOs and Heads of Sales, the people accountable for revenue and for scaling a team. The founder came from sales and ran 20+ interviews with owners and sales execs from his network, which grounded the hypotheses instead of guesswork.'},
+      {h:'What I did', p:'I reframed the product from a narrow call-quality tool into a sales-team performance platform, after research showed leaders needed a holistic view, not just call scores. I designed four core surfaces: a metrics dashboard with 10 team-level KPIs, an automated call score across five stages, per-call insights, and AI coaching. I also ran a teardown of 60+ competitors to find the positioning gap: rivals were either off-ICP or too complex and expensive.'},
+      {h:'Building it', p:'We shipped an MVP (dashboard, call log, call view) and validated with RITE testing. Two months in we pivoted: users needed the reasoning behind a score and a broader set of team metrics, so positioning moved from call evaluation to full sales analytics. A later expansion added rep profiles, time-based comparisons, richer call attributes, and a scoring model with contextual quotes.'},
+      {h:'Outcome', p:'Across two pilot clients over two months the product moved real numbers (one client saw revenue up 64% and 43% more closed deals; another 13% revenue and a 9.3% lift in call scores). By December 2024 there were 16 qualified leads at roughly $200K potential ARR, 8 pilots analyzing 50K+ calls, and 2 closed deals. The interface work contributed directly to landing the first paying customers and securing initial investment.'},
+      {h:'What I would keep', p:'The pivot was the real lesson. The first design was right for the wrong problem; it only started working once positioning caught up to what sales leaders actually needed.'},
+    ]
+  },
+  oilcasex: {
+    kicker:'Oilfield simulator', title:'OilCase X',
+    lede:'A full redesign of a turn-based oil and gas field-management simulator used in EdTech case competitions and B2B training.',
+    role:'UX/UI Designer', time:'2021 to 2024', team:'In-house product team', metric:'Landed first B2B client',
+    body:[
+      {h:'Context', p:'OilCase X teaches people to develop and manage oil and gas fields through a turn-based strategy game that models real engineering and economic processes. The goal was to enter the EdTech market in oil and gas and win B2B clients who wanted custom simulators.'},
+      {h:'The problem', p:'The first version was clunky and visually inconsistent: overloaded layouts, scattered data, and awkward navigation. The weak design made it hard to use for existing players and eroded trust with the corporate clients the team was trying to win.'},
+      {h:'How I worked', p:'I ran a UX/UI audit of v1 plus interviews with past case-competition participants, which surfaced four issue categories: inconsistent UI, inefficient navigation, unstructured data, and redundant or missing features. Early decisions came from the audit and flow analysis; later ones folded in client requirements and a systematic pass through bug reports.'},
+      {h:'What I did', p:'UI: built a shared UI kit for the whole OilCase ecosystem (buttons, inputs, avatars, tabs, selectors, lists, tooltips), which fixed consistency and sped up build. Navigation: replaced a 4-link top bar with a scalable sidebar and clear state indicators, and moved stats and controls to the top bar to fit the turn-based pattern. Data: introduced hierarchy, cut and simplified copy, and reorganized content into tables and blocks. Features: removed dead weight and added the tools players actually needed, including a statistics view, resource display, a drilling section with a well widget, and a turn-completion flow.'},
+      {h:'Outcome', p:'We did not have resources for deep research, but still solved the core problems. Case-competition engagement went up, which strengthened the platform reputation and made funding easier to attract, and the refreshed product helped close the team first major B2B deal.'},
+    ]
+  },
+  oilcourses: {
+    kicker:'Course CMS', title:'OilCase Courses Back Office',
+    lede:'A content-management system that lets admins and authors build, configure, and moderate complex oil and gas online courses.',
+    role:'UX/UI Designer', time:'2021 to 2024', team:'With a systems analyst', metric:'50+ screens, dev-ready specs',
+    body:[
+      {h:'Context', p:'OilCase Courses Backoffice is the admin system behind the courses: create and configure courses, manage users, and track progress. The hard part was supporting a genuinely complex course structure without making the tool unusable.'},
+      {h:'What I did', p:'I started from a classification system that grouped every course type into three core scenarios, which set the shape of the architecture. From there I built a detailed information architecture capturing the range of possible configurations and interaction paths, then designed the interface for two roles, Admin and Author, across every configuration type.'},
+      {h:'Designing for the whole state space', p:'I designed for edge cases, not the happy path: empty pages, errors, confirmations, conflicting scenarios, and both successful and failed actions. Over 50 screens, backed by written design documentation covering UI states, component-to-module logic, content workflows, corner cases, and data-entry guidelines.'},
+      {h:'Outcome', p:'I mapped how modules, tests, and settings connect, set parameters for four training types, built step-by-step admin screens, defined roles and permissions, and documented the system logic into specs ready for handoff. A systems analyst partnered on refining requirements as the screen flow came together.'},
+    ]
+  }
+};
+
+const views = {
+  home: document.getElementById('view-home'),
+  case: document.getElementById('view-case'),
+  resume: document.getElementById('view-resume')
+};
+function show(view){ Object.values(views).forEach(v=>v.classList.remove('active')); views[view].classList.add('active'); window.scrollTo(0,0); }
+function openCase(key){
+  const c = CASES[key]; if(!c) return;
+  document.getElementById('c-kicker').textContent = c.kicker;
+  document.getElementById('c-title').textContent  = c.title;
+  document.getElementById('c-lede').textContent   = c.lede;
+  document.getElementById('c-role').textContent   = c.role;
+  document.getElementById('c-time').textContent   = c.time;
+  document.getElementById('c-team').textContent   = c.team;
+  document.getElementById('c-metric').textContent = c.metric;
+  const body = document.getElementById('c-body'); body.innerHTML = '';
+  c.body.forEach(sec => {
+    const wrap = document.createElement('section');
+    wrap.innerHTML = '<h2 class="mb-3 text-[20px] font-semibold leading-7 text-ink">'+sec.h+'</h2><p class="text-[16px] leading-6 text-body">'+sec.p+'</p>';
+    body.appendChild(wrap);
+  });
+  show('case');
+}
+document.addEventListener('click', e => {
+  const caseEl = e.target.closest('[data-case]');
+  if(caseEl){ e.preventDefault(); openCase(caseEl.dataset.case); return; }
+  const viewEl = e.target.closest('[data-view]');
+  if(viewEl){ e.preventDefault(); show(viewEl.dataset.view); return; }
+  const navEl = e.target.closest('[data-nav="home"]');
+  if(navEl){
+    const href = navEl.getAttribute('href') || '';
+    if(!views.home.classList.contains('active')){ e.preventDefault(); show('home');
+      if(href.startsWith('#') && href!=='#top'){ setTimeout(()=>document.querySelector(href)?.scrollIntoView({behavior:'smooth'}),40); }
+    }
+  }
+});
+const toggle = document.getElementById('theme-toggle');
+const ICON_SUN  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>';
+const ICON_MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>';
+function syncIcon(){ const dark = document.documentElement.classList.contains('dark'); toggle.innerHTML = dark ? ICON_SUN : ICON_MOON; }
+syncIcon();
+toggle.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); syncIcon(); });
+const io = new IntersectionObserver((entries)=>{ entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
