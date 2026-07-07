@@ -1,0 +1,21 @@
+:root{
+  --paper:#fafafa; --surface:#ffffff;
+  --ink:#18181b; --body:#3f3f46; --muted:#71717a; --line:#e4e4e7;
+  --accent:#0f766e; --on-accent:#ffffff;
+  --ph1:#f4f4f5; --ph2:#e4e4e7; --phtext:#a1a1aa;
+  --inv-bg:#18181b; --inv-fg:#ffffff; --inv-sub:#a1a1aa; --inv-line:#3f3f46; --inv-btn:#ffffff; --inv-btnfg:#18181b;
+  --motion-fast:160ms; --motion-base:240ms; --motion-slow:520ms;
+  --ease-standard:cubic-bezier(.2,0,0,1);
+  --ease-emphasized:cubic-bezier(.16,1,.3,1);
+  --sans:'Geist Variable',ui-sans-serif,system-ui,sans-serif;
+  --mono:'Geist Mono Variable',ui-monospace,monospace;
+  color-scheme: light;
+}
+.dark{
+  --paper:#0a0a0a; --surface:#141417;
+  --ink:#fafafa; --body:#a1a1aa; --muted:#8a8a92; --line:#303036;
+  --accent:#5eead4; --on-accent:#0a0a0a;
+  --ph1:#1c1c20; --ph2:#141417; --phtext:#71717a;
+  --inv-bg:#141417; --inv-fg:#fafafa; --inv-sub:#a1a1aa; --inv-line:#2a2a30; --inv-btn:#fafafa; --inv-btnfg:#0a0a0a;
+  color-scheme: dark;
+}

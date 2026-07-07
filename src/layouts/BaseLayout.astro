@@ -1,0 +1,29 @@
+---
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
+import '../styles/tokens.css';
+import '../styles/typography.css';
+import '../styles/motion.css';
+import '../styles/components.css';
+
+const {
+  title = 'Gleb Dvoryatkin - Product Designer',
+  description = 'Product designer turning dense, complex products into clear interfaces. Fintech, sales, and edtech.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <script is:inline>
+      (function(){ try { if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark'); } catch(e){} })();
+    </script>
+  </head>
+  <body class="font-sans text-body antialiased">
+    <slot />
+  </body>
+</html>
