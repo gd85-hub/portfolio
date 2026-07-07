@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseLayout from '../../layouts/CaseLayout.astro';
+import { caseStudies } from '../../data/cases';
+import type { CaseStudy } from '../../data/cases';
+
+export function getStaticPaths() {
+  return caseStudies.map((caseStudy) => ({
+    params: { slug: caseStudy.slug },
+    props: { caseStudy },
+  }));
+}
+
+interface Props {
+  caseStudy: CaseStudy;
+}
+
+const { caseStudy } = Astro.props;
+---
+
+<BaseLayout title={`${caseStudy.title} - Gleb Dvoryatkin`}>
+  <CaseLayout caseStudy={caseStudy} />
+</BaseLayout>

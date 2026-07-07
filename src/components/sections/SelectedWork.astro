@@ -1,29 +1,27 @@
 ---
 import WorkCard from '../WorkCard.astro';
+import { cases } from '../../data/cases';
 ---
 
 <section id="work" class="mx-auto max-w-content scroll-mt-20 px-5 py-16 sm:px-8">
   <h2 class="reveal mb-10 t-section text-ink">Selected work</h2>
   <div class="grid gap-6 md:grid-cols-3">
     <WorkCard
-      href="#"
-      data-case="naoma"
-      kicker="AI sales analytics"
-      title="Naoma"
+      href={`/case/${cases.naoma.slug}`}
+      kicker={cases.naoma.kicker}
+      title={cases.naoma.title}
       desc="A sales-analytics platform built from scratch: dashboard, call scoring, and reporting."
     />
     <WorkCard
-      href="#"
-      data-case="oilcasex"
-      kicker="Oilfield simulator"
-      title="OilCase X"
+      href={`/case/${cases.oilcasex.slug}`}
+      kicker={cases.oilcasex.kicker}
+      title={cases.oilcasex.title}
       desc="Full redesign and a shared UI kit for a turn-based oil and gas simulator."
     />
     <WorkCard
-      href="#"
-      data-case="oilcourses"
-      kicker="Course CMS"
-      title="OilCase Courses Back Office"
+      href={`/case/${cases.oilcourses.slug}`}
+      kicker={cases.oilcourses.kicker}
+      title={cases.oilcourses.title}
       desc="Information architecture and 50+ screens for a complex course-management system."
     />
   </div>

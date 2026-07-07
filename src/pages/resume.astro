@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+---
+
+<BaseLayout title="Resume - Gleb Dvoryatkin">
+  <article>
+    <div class="mx-auto max-w-3xl px-5 pb-24 pt-12 sm:px-8">
+      <div class="mb-10 flex items-center justify-between gap-4">
+        <a href="/" class="inline-flex items-center gap-2 text-[16px] font-medium text-muted transition-colors hover:text-ink">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+          </span>
+          Back
+        </a>
+        <Button href="/Gleb_Dvoryatkin_Resume.pdf" target="_blank" rel="noopener" size="sm">
+          <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5" /><path d="M5 21h14" /></svg>
+          Download PDF
+        </Button>
+      </div>
+
+      <header class="mb-12">
+        <Eyebrow class="mb-3">Resume</Eyebrow>
+        <h1 class="t-title text-ink">Gleb Dvoryatkin</h1>
+        <p class="t-lede mt-2 text-body">Product Designer</p>
+      </header>
+
+      <section class="mb-12">
+        <Eyebrow as="h2" class="mb-4">Summary</Eyebrow>
+        <p class="t-body text-body">Product designer for complex, data-dense products. A decade in marketing, research, and project management before UX lets me frame the business problem and design the interface that solves it, not just style the screens.</p>
+      </section>
+
+      <section class="mb-12">
+        <Eyebrow as="h2" class="mb-6">Experience</Eyebrow>
+        <div class="space-y-8">
+          <div class="border-t border-line pt-6">
+            <h3 class="t-sub text-ink">Axon Trade - Product Designer, Marketing Generalist</h3>
+            <p class="t-body mt-2 text-body">Designing internal and client-facing products for a technology provider serving the institutional crypto market. Led all marketing until 2021, then moved fully into product design.</p>
+            <ul class="t-body mt-3 list-disc space-y-2 pl-5 text-body marker:text-muted">
+              <li>Sole product designer across three client platforms and two in-house tools (under NDA), spanning order flow, market data, and internal operations.</li>
+              <li>Made the product suite white-label-ready, which supported the company's 2023 move into licensed solutions.</li>
+              <li>Redesigned the company's marketing site; the rebuild lifted Lighthouse performance from 26 to 91.</li>
+            </ul>
+          </div>
+
+          <div class="border-t border-line pt-6">
+            <h3 class="t-sub text-ink">Naoma - Product Designer</h3>
+            <p class="t-body mt-2 text-body">Interfaces and user flows for an AI-powered sales analytics platform, alongside engineers from Amazon, Yandex, Aviasales, and Delivery Hero.</p>
+            <ul class="t-body mt-3 list-disc space-y-2 pl-5 text-body marker:text-muted">
+              <li>Reframed the product from a call-quality tool into a sales-performance platform after research showed leaders needed team-wide insight, not just call scores; designed the four core surfaces (dashboard, call scoring, insights, AI coaching).</li>
+              <li>Ran a teardown of 60+ competitors to find the positioning gap and shape product strategy.</li>
+              <li>Interface work contributed directly to the first paying customers and initial funding; by December 2024: 16 qualified leads (~$200K potential ARR), 8 pilots analyzing 50K+ calls, and 2 closed deals.</li>
+            </ul>
+          </div>
+
+          <div class="border-t border-line pt-6">
+            <h3 class="t-sub text-ink">OilCase - UX/UI Designer</h3>
+            <p class="t-body mt-2 text-body">Interfaces for educational IT products in the oil and gas industry.</p>
+            <ul class="t-body mt-3 list-disc space-y-2 pl-5 text-body marker:text-muted">
+              <li>Led an audit-driven redesign of OilCase X, a field-management simulator: a UX/UI audit plus participant interviews surfaced four issue classes that set the priorities; the refreshed product helped close the team's first major B2B client.</li>
+              <li>Built a shared UI kit for the whole OilCase ecosystem, cutting design inconsistency and speeding up development.</li>
+              <li>Owned IA and interface for the courses back-office: a classification model drove the architecture, then 50+ screens across two roles (Admin, Author) covering every state and edge case, shipped to engineering as documented spec.</li>
+            </ul>
+          </div>
+
+          <div class="border-t border-line pt-6">
+            <h3 class="t-sub text-ink">June Homes - Head of Property Listing and Data Department</h3>
+            <p class="t-body mt-2 text-body">Led a team of data managers at a tech-driven US apartment-rental service; owned advertising budgets, process, PropTech partnerships, and listing UX.</p>
+            <ul class="t-body mt-3 list-disc space-y-2 pl-5 text-body marker:text-muted">
+              <li>Expanded platform presence from 7 to 25 with no added ad spend.</li>
+              <li>Restructured process and budgeting: 3x leads, 3x paying customers, and 2x lower CPA.</li>
+            </ul>
+          </div>
+
+          <div class="border-t border-line pt-6">
+            <h3 class="t-sub text-ink">Standuply - UX Researcher, Head of Customer Success (from 2017)</h3>
+            <p class="t-body mt-2 text-body">UX research and Customer Success for a stand-up bot for Slack and Microsoft Teams; clients included IBM, Intel, Adobe, Oracle, and Coursera.</p>
+            <ul class="t-body mt-3 list-disc space-y-2 pl-5 text-body marker:text-muted">
+              <li>Built Customer Success from scratch and ran the research that shaped early product direction: 80+ in-depth user interviews worldwide, user churn down 20%.</li>
+              <li>Product Hunt launches drove 500 upvotes in a single day and a 25% lift in registrations.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <Eyebrow as="h2" class="mb-4">Education</Eyebrow>
+        <ul class="t-body list-disc space-y-2 pl-5 text-body marker:text-muted">
+          <li>Tomsk State University of Control Systems and Radioelectronics (2011) - Master's in Innovative Industries Management</li>
+          <li>State University of New York, Empire State College (2014) - Bachelor's in Business Administration</li>
+        </ul>
+      </section>
+
+      <section class="mb-12">
+        <Eyebrow as="h2" class="mb-4">Courses</Eyebrow>
+        <p class="t-body text-body">Product Design, Formfactor, 2024. Instructor: Artur Kuzmin (Senior Product Designer at JetBrains, former Senior at Avito). Mentor: Assylkhan Nazir (Head of Design at Bereke Bank, former Head of Product Design at Tekmates, Kcell, and Alfa-Bank Kazakhstan).</p>
+      </section>
+
+      <section>
+        <Eyebrow as="h2" class="mb-4">Contact</Eyebrow>
+        <div class="flex flex-wrap gap-x-6 gap-y-2 text-[16px]">
+          <a href="mailto:[your@email.com]" class="link-underline text-ink">[ your@email.com ]</a>
+          <a href="[telegram-url]" class="link-underline text-ink">Telegram</a>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

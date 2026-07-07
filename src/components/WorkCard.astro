@@ -6,7 +6,6 @@ interface Props {
   title: string;
   desc: string;
   href?: string;
-  'data-case'?: string;
   class?: string;
   [key: string]: unknown;
 }
@@ -16,13 +15,12 @@ const {
   title,
   desc,
   href = '#',
-  'data-case': dataCase,
   class: className,
   ...attrs
 } = Astro.props;
 ---
 
-<a href={href} data-case={dataCase} class:list={['card-lift reveal group block overflow-hidden rounded-2xl border border-line bg-surface', className]} {...attrs}>
+<a href={href} class:list={['card-lift reveal group block overflow-hidden rounded-2xl border border-line bg-surface', className]} {...attrs}>
   <div class="ph relative aspect-[4/3]">
     <div class="absolute inset-0 flex items-center justify-center">
       <Eyebrow tone="ph" as="span">[ cover ]</Eyebrow>

@@ -1,0 +1,63 @@
+---
+import Eyebrow from '../components/Eyebrow.astro';
+import type { CaseStudy } from '../data/cases';
+
+interface Props {
+  caseStudy: CaseStudy;
+}
+
+const { caseStudy } = Astro.props;
+---
+
+<article>
+  <div class="mx-auto max-w-3xl px-5 pb-24 pt-12 sm:px-8">
+    <a href="/" class="mb-10 inline-flex items-center gap-2 text-[16px] font-medium text-muted transition-colors hover:text-ink">
+      <span class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+      </span>
+      Back to work
+    </a>
+    <Eyebrow tone="accent" class="mb-4">{caseStudy.kicker}</Eyebrow>
+    <h1 class="t-title text-ink">{caseStudy.title}</h1>
+    <p class="t-lede mt-5 text-body">{caseStudy.lede}</p>
+    <dl class="my-10 grid grid-cols-2 gap-6 border-y border-line py-6 text-[16px] sm:grid-cols-4">
+      <div>
+        <Eyebrow as="dt">Role</Eyebrow>
+        <dd class="mt-1.5 text-ink">{caseStudy.role}</dd>
+      </div>
+      <div>
+        <Eyebrow as="dt">Timeframe</Eyebrow>
+        <dd class="mt-1.5 text-ink">{caseStudy.time}</dd>
+      </div>
+      <div>
+        <Eyebrow as="dt">Team</Eyebrow>
+        <dd class="mt-1.5 text-ink">{caseStudy.team}</dd>
+      </div>
+      <div>
+        <Eyebrow as="dt">Outcome</Eyebrow>
+        <dd class="mt-1.5 text-ink">{caseStudy.metric}</dd>
+      </div>
+    </dl>
+    <div class="ph mb-12 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-line">
+      <div class="flex h-full items-center justify-center">
+        <Eyebrow tone="ph" as="span">[ hero shot ]</Eyebrow>
+      </div>
+    </div>
+    <div class="space-y-12">
+      {caseStudy.body.map((section) => (
+        <section>
+          <h2 class="mb-3 t-sub text-ink">{section.h}</h2>
+          <p class="t-body text-body">{section.p}</p>
+        </section>
+      ))}
+    </div>
+    <div class="mt-16 border-t border-line pt-8">
+      <a href="/#work" class="inline-flex items-center gap-2 text-[16px] font-medium text-ink transition-colors hover:text-accent">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+        </span>
+        All work
+      </a>
+    </div>
+  </div>
+</article>
