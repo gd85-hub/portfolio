@@ -1,0 +1,29 @@
+---
+import Button from '../Button.astro';
+---
+
+<section id="contact" class="panel scroll-mt-20 border-t border-line bg-inv">
+  <div class="mx-auto max-w-content px-5 py-20 sm:px-8">
+    <div class="reveal max-w-[52ch]">
+      <h2 class="t-title text-inv-fg">Let's talk.</h2>
+      <p class="t-lede mt-4 text-inv-sub">Open to senior product design roles and selected fintech advisory.</p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <Button href="mailto:[your@email.com]" on="panel">
+          <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+          [ your@email.com ]
+        </Button>
+        <Button href="[telegram-url]" on="panel" variant="ghost">
+          <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4 20-7z" /></svg>
+          Telegram
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-inv">
+  <div class="mx-auto flex max-w-content flex-col gap-2 border-t border-inv-line px-5 py-8 text-[12px] text-inv-sub sm:flex-row sm:items-center sm:justify-between sm:px-8">
+    <span class="font-mono">Gleb Dvoryatkin - Novi Sad</span>
+    <span>&copy; 2026</span>
+  </div>
+</footer>

@@ -1,0 +1,31 @@
+---
+type Tone = 'muted' | 'accent' | 'ph' | 'inherit';
+type Tag = 'p' | 'span' | 'h2' | 'dt';
+
+interface Props {
+  tone?: Tone;
+  as?: Tag;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  tone = 'muted',
+  as = 'p',
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const Tag = as;
+
+const toneClasses = {
+  muted: 'text-muted',
+  accent: 'text-accent',
+  ph: 'text-phtext',
+  inherit: '',
+} satisfies Record<Tone, string>;
+---
+
+<Tag class:list={['eyebrow', toneClasses[tone], className]} {...attrs}>
+  <slot />
+</Tag>

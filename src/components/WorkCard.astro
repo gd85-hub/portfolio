@@ -1,0 +1,42 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  kicker: string;
+  title: string;
+  desc: string;
+  href?: string;
+  'data-case'?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  kicker,
+  title,
+  desc,
+  href = '#',
+  'data-case': dataCase,
+  class: className,
+  ...attrs
+} = Astro.props;
+---
+
+<a href={href} data-case={dataCase} class:list={['card-lift reveal group block overflow-hidden rounded-2xl border border-line bg-surface', className]} {...attrs}>
+  <div class="ph relative aspect-[4/3]">
+    <div class="absolute inset-0 flex items-center justify-center">
+      <Eyebrow tone="ph" as="span">[ cover ]</Eyebrow>
+    </div>
+  </div>
+  <div class="flex flex-col gap-2.5 p-6">
+    <Eyebrow tone="accent">{kicker}</Eyebrow>
+    <h3 class="t-sub text-ink">{title}</h3>
+    <p class="t-small text-body">{desc}</p>
+    <span class="mt-1 inline-flex items-center gap-1.5 text-[16px] font-medium text-ink">
+      Read case
+      <span class="icon transition-transform group-hover:translate-x-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </span>
+    </span>
+  </div>
+</a>

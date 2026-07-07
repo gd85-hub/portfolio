@@ -1,0 +1,59 @@
+---
+import Button from '../Button.astro';
+import Eyebrow from '../Eyebrow.astro';
+---
+
+<section class="mx-auto max-w-content px-5 pb-20 pt-16 sm:px-8 sm:pt-24">
+  <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
+    <div class="reveal">
+      <Eyebrow class="mb-5">Product Designer</Eyebrow>
+      <h1 class="t-display text-ink">
+        Turning dense, complex<br />products into clear interfaces.
+      </h1>
+      <p class="t-lede mt-6 max-w-[48ch] text-body">
+        Product designer with 5+ years in UX and a decade in marketing and research. Fintech, sales, and edtech.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <Button href="#work" data-nav="home" iconPosition="end">
+          View work
+          <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="translate-y-px transition-transform group-hover:translate-y-1"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
+        </Button>
+        <Button href="#contact" data-nav="home" variant="ghost">
+          Get in touch
+        </Button>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="overflow-hidden rounded-2xl border border-line bg-surface">
+        <div class="border-b border-line p-6">
+          <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Portfolio focus</p>
+          <h2 class="mt-4 text-[24px] font-semibold leading-8 text-ink">Complex tools, made easier to read and operate.</h2>
+        </div>
+        <div class="grid border-b border-line sm:grid-cols-2">
+          <div class="border-b border-line p-6 sm:border-b-0 sm:border-r">
+            <p class="text-[32px] font-semibold leading-10 text-ink">50+</p>
+            <p class="mt-2 text-[16px] leading-6 text-body">screens specified for course-management flows</p>
+          </div>
+          <div class="p-6">
+            <p class="text-[32px] font-semibold leading-10 text-ink">60+</p>
+            <p class="mt-2 text-[16px] leading-6 text-body">competitors audited to shape product positioning</p>
+          </div>
+        </div>
+        <div class="divide-y divide-line">
+          <div class="grid gap-2 p-6 sm:grid-cols-[8rem_1fr]">
+            <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Domains</span>
+            <span class="text-[16px] leading-6 text-ink">Fintech, sales analytics, edtech operations</span>
+          </div>
+          <div class="grid gap-2 p-6 sm:grid-cols-[8rem_1fr]">
+            <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Strength</span>
+            <span class="text-[16px] leading-6 text-ink">Information architecture, design systems, shipped product flows</span>
+          </div>
+          <div class="grid gap-2 p-6 sm:grid-cols-[8rem_1fr]">
+            <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-muted">Signal</span>
+            <span class="text-[16px] leading-6 text-ink">First clients, B2B deals, measurable product lift</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

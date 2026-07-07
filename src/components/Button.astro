@@ -1,0 +1,72 @@
+---
+type Variant = 'solid' | 'ghost';
+type Surface = 'page' | 'panel';
+type Size = 'default' | 'sm';
+type IconPosition = 'start' | 'end';
+
+interface Props {
+  href?: string;
+  variant?: Variant;
+  on?: Surface;
+  size?: Size;
+  iconPosition?: IconPosition;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'solid',
+  on = 'page',
+  size = 'default',
+  iconPosition = 'start',
+  type = 'button',
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const baseClasses = 'group inline-flex items-center gap-2 rounded-full font-medium transition-colors';
+
+const sizeClasses = {
+  default: 'px-6 py-3',
+  sm: 'px-5 py-2.5',
+} satisfies Record<Size, string>;
+
+const variantClasses = {
+  page: {
+    solid: 'bg-ink text-paper hover:bg-accent hover:text-on-accent',
+    ghost: 'border border-line text-ink hover:border-ink',
+  },
+  panel: {
+    solid: 'bg-inv-btn text-inv-btnfg hover:bg-accent hover:text-on-accent',
+    ghost: 'border border-inv-line text-inv-fg hover:border-inv-fg',
+  },
+} satisfies Record<Surface, Record<Variant, string>>;
+
+const classes = [
+  baseClasses,
+  't-small',
+  sizeClasses[size],
+  variantClasses[on][variant],
+  className,
+];
+
+const hasIcon = Astro.slots.has('icon');
+---
+
+{
+  href ? (
+    <a href={href} class:list={classes} {...attrs}>
+      {hasIcon && iconPosition === 'start' && <span class="icon"><slot name="icon" /></span>}
+      <slot />
+      {hasIcon && iconPosition === 'end' && <span class="icon"><slot name="icon" /></span>}
+    </a>
+  ) : (
+    <button type={type} class:list={classes} {...attrs}>
+      {hasIcon && iconPosition === 'start' && <span class="icon"><slot name="icon" /></span>}
+      <slot />
+      {hasIcon && iconPosition === 'end' && <span class="icon"><slot name="icon" /></span>}
+    </button>
+  )
+}

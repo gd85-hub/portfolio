@@ -1,1 +1,11 @@
-
+.icon{
+  display:inline-grid;
+  width:1.05em;
+  height:1.05em;
+  flex:none;
+  place-items:center;
+}
+.icon svg{
+  width:100%;
+  height:100%;
+}

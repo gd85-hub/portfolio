@@ -1,13 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import SelectedWork from '../components/sections/SelectedWork.astro';
+import About from '../components/sections/About.astro';
+import Contact from '../components/sections/Contact.astro';
 ---
 
 <BaseLayout>
-  <main class="mx-auto max-w-content px-5 py-16 sm:px-8">
-    <p class="eyebrow text-muted">Foundation</p>
-    <h1 class="t-display mt-4 text-ink">Astro migration - stage 0</h1>
-    <p class="t-body mt-6 max-w-[48ch] text-body">
-      Tokens, typography, motion, fonts, and Tailwind are wired. Content migration starts in the next stage.
-    </p>
+  <main id="view-home" class="view active">
+    <span id="top"></span>
+    <Hero />
+    <SelectedWork />
+    <About />
+    <Contact />
   </main>
 </BaseLayout>
