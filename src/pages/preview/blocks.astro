@@ -51,6 +51,74 @@ const demoBlocks: CaseBlock[] = [
     afterAlt: 'After state placeholder',
     caption: 'Before and after comparison with placeholders.',
   },
+  {
+    type: 'callout',
+    variant: 'default',
+    body: 'Default callout for a compact note that should stand apart from the surrounding narrative.',
+  },
+  {
+    type: 'callout',
+    variant: 'problem',
+    body: 'Problem callout uses the same neutral palette and changes only the left border treatment.',
+  },
+  {
+    type: 'list',
+    heading: 'Bulleted list',
+    items: [
+      'Research signal from interviews and product usage.',
+      'Interface decision tied to a concrete workflow.',
+      'Outcome or open question that belongs in the case.',
+    ],
+  },
+  {
+    type: 'list',
+    heading: 'Ordered list',
+    ordered: true,
+    items: [
+      'Map the current state.',
+      'Find the broken decision point.',
+      'Design and test the simplified flow.',
+    ],
+  },
+  {
+    type: 'quote',
+    quote: 'The useful version of a case study explains the decision, not just the screen.',
+    attribution: 'Internal writing note',
+  },
+  {
+    type: 'twoCol',
+    heading: 'Two-column comparison',
+    left: {
+      label: 'Before',
+      body: 'Scattered signals, unclear ownership, and a workflow that asked users to remember too much.',
+    },
+    right: {
+      label: 'After',
+      body: 'Grouped decisions, clearer state, and a path that kept the next action close to the data.',
+    },
+  },
+  {
+    type: 'divider',
+    label: 'Phase 2',
+    title: 'From research signal to interface direction',
+  },
+  {
+    type: 'divider',
+    title: 'A divider without an eyebrow label',
+  },
+  {
+    type: 'gallery',
+    heading: 'Gallery block',
+    columns: 3,
+    items: [
+      { image: null, alt: 'Gallery placeholder one', caption: 'Dashboard state' },
+      { image: null, alt: 'Gallery placeholder two', caption: 'Detail view' },
+      { image: null, alt: 'Gallery placeholder three', caption: 'Empty state' },
+      { image: null, alt: 'Gallery placeholder four', caption: 'Flow step' },
+      { image: null, alt: 'Gallery placeholder five', caption: 'Component variant' },
+      { image: null, alt: 'Gallery placeholder six', caption: 'Final screen' },
+    ],
+  },
 ];
 ---
 

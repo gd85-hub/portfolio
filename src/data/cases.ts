@@ -46,7 +46,68 @@ export interface BeforeAfterBlock {
   caption?: string;
 }
 
-export type CaseBlock = ProseBlock | ImageTextBlock | FullImageBlock | MetricsBlock | BeforeAfterBlock;
+export interface CalloutBlock {
+  type: 'callout';
+  body: string;
+  variant?: 'default' | 'problem';
+}
+
+export interface ListBlock {
+  type: 'list';
+  heading?: string;
+  ordered?: boolean;
+  items: string[];
+}
+
+export interface QuoteBlock {
+  type: 'quote';
+  quote: string;
+  attribution?: string;
+}
+
+export interface TwoColContent {
+  label?: string;
+  body: string;
+}
+
+export interface TwoColBlock {
+  type: 'twoCol';
+  heading?: string;
+  left: TwoColContent;
+  right: TwoColContent;
+}
+
+export interface DividerBlock {
+  type: 'divider';
+  label?: string;
+  title: string;
+}
+
+export interface GalleryItem {
+  image: string | null;
+  alt: string;
+  caption?: string;
+}
+
+export interface GalleryBlock {
+  type: 'gallery';
+  heading?: string;
+  columns?: 2 | 3;
+  items: GalleryItem[];
+}
+
+export type CaseBlock =
+  | ProseBlock
+  | ImageTextBlock
+  | FullImageBlock
+  | MetricsBlock
+  | BeforeAfterBlock
+  | CalloutBlock
+  | ListBlock
+  | QuoteBlock
+  | TwoColBlock
+  | DividerBlock
+  | GalleryBlock;
 export type CaseBodyBlock = CaseBodySection | CaseBlock;
 
 export interface CaseStudy {
@@ -58,7 +119,7 @@ export interface CaseStudy {
   time: string;
   team: string;
   metric: string;
-  body: CaseBodyBlock[];
+  blocks: CaseBodyBlock[];
 }
 
 export const cases = {
@@ -71,7 +132,7 @@ export const cases = {
     time: '2024 to 2025',
     team: 'Founder, CRO, eng team',
     metric: 'First paying clients and funding',
-    body: [
+    blocks: [
       { h: 'Context', p: 'Companies pour money into CRMs, KPIs, and sales training, but one question stays open: why does one rep close and another does not? The honest answer sits in the data, spread across hundreds of calls and metrics. Manual review is slow, expensive, and subjective; CRMs show what happened but not why.' },
       { h: 'The problem', p: 'Sales teams invest heavily in process but have no objective way to see the full picture and fix what is broken. Leadership needed one place to read team performance and drill into the reasons behind it.' },
       { h: 'Who it was for', p: 'CEOs and Heads of Sales, the people accountable for revenue and for scaling a team. The founder came from sales and ran 20+ interviews with owners and sales execs from his network, which grounded the hypotheses instead of guesswork.' },
@@ -90,7 +151,7 @@ export const cases = {
     time: '2021 to 2024',
     team: 'In-house product team',
     metric: 'Landed first B2B client',
-    body: [
+    blocks: [
       { h: 'Context', p: 'OilCase X teaches people to develop and manage oil and gas fields through a turn-based strategy game that models real engineering and economic processes. The goal was to enter the EdTech market in oil and gas and win B2B clients who wanted custom simulators.' },
       { h: 'The problem', p: 'The first version was clunky and visually inconsistent: overloaded layouts, scattered data, and awkward navigation. The weak design made it hard to use for existing players and eroded trust with the corporate clients the team was trying to win.' },
       { h: 'How I worked', p: 'I ran a UX/UI audit of v1 plus interviews with past case-competition participants, which surfaced four issue categories: inconsistent UI, inefficient navigation, unstructured data, and redundant or missing features. Early decisions came from the audit and flow analysis; later ones folded in client requirements and a systematic pass through bug reports.' },
@@ -107,7 +168,7 @@ export const cases = {
     time: '2021 to 2024',
     team: 'With a systems analyst',
     metric: '50+ screens, dev-ready specs',
-    body: [
+    blocks: [
       { h: 'Context', p: 'OilCase Courses Backoffice is the admin system behind the courses: create and configure courses, manage users, and track progress. The hard part was supporting a genuinely complex course structure without making the tool unusable.' },
       { h: 'What I did', p: 'I started from a classification system that grouped every course type into three core scenarios, which set the shape of the architecture. From there I built a detailed information architecture capturing the range of possible configurations and interaction paths, then designed the interface for two roles, Admin and Author, across every configuration type.' },
       { h: 'Designing for the whole state space', p: 'I designed for edge cases, not the happy path: empty pages, errors, confirmations, conflicting scenarios, and both successful and failed actions. Over 50 screens, backed by written design documentation covering UI states, component-to-module logic, content workflows, corner cases, and data-entry guidelines.' },

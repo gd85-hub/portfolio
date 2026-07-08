@@ -36,6 +36,8 @@ public/         static assets served as-is (includes the resume PDF)
 - Buttons: use the `Button` component, never inline button classes.
 - Typography: use the `t-*` role classes, do not hardcode sizes.
 - Add a case study: add an entry to `src/data/cases.ts`; a page is generated automatically at `/case/{slug}`.
+- Case content is assembled from typed blocks in `src/data/cases.ts`.
+  See `AGENTS.md` for the full block list and conventions.
 
 See `AGENTS.md` for the full set of conventions and current placeholders.
 

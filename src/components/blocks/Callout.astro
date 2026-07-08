@@ -1,0 +1,16 @@
+---
+interface Props {
+  body: string;
+  variant?: 'default' | 'problem';
+}
+
+const { body, variant = 'default' } = Astro.props;
+
+const classes = variant === 'problem'
+  ? 'border-l-4 border-l-muted bg-paper'
+  : 'border-l-8 border-l-accent bg-surface';
+---
+
+<aside class:list={['rounded-2xl border border-line p-6', classes]}>
+  <p class="t-body text-body">{body}</p>
+</aside>

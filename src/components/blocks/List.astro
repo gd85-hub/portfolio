@@ -1,0 +1,25 @@
+---
+interface Props {
+  heading?: string;
+  ordered?: boolean;
+  items: string[];
+}
+
+const { heading, ordered = false, items } = Astro.props;
+const listClasses = ordered
+  ? 't-body list-decimal space-y-3 pl-5 text-body marker:text-muted'
+  : 't-body list-disc space-y-3 pl-5 text-body marker:text-accent';
+---
+
+<section>
+  {heading && <h2 class="mb-4 t-sub text-ink">{heading}</h2>}
+  {ordered ? (
+    <ol class={listClasses}>
+      {items.map((item) => <li>{item}</li>)}
+    </ol>
+  ) : (
+    <ul class={listClasses}>
+      {items.map((item) => <li>{item}</li>)}
+    </ul>
+  )}
+</section>
