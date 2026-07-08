@@ -49,7 +49,8 @@ export interface BeforeAfterBlock {
 export interface CalloutBlock {
   type: 'callout';
   body: string;
-  variant?: 'default' | 'problem';
+  variant?: 'insight' | 'problem';
+  title?: string;
 }
 
 export interface ListBlock {

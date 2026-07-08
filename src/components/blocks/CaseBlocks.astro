@@ -45,7 +45,7 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
       case 'beforeAfter':
         return <BeforeAfter before={block.before} after={block.after} beforeAlt={block.beforeAlt} afterAlt={block.afterAlt} caption={block.caption} />;
       case 'callout':
-        return <Callout body={block.body} variant={block.variant} />;
+        return <Callout body={block.body} variant={block.variant} title={block.title} />;
       case 'list':
         return <List heading={block.heading} ordered={block.ordered} items={block.items} />;
       case 'quote':

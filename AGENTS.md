@@ -26,19 +26,24 @@
 - public/ - статика как есть (в т.ч. Gleb_Dvoryatkin_Resume.pdf, отдаётся по /Gleb_Dvoryatkin_Resume.pdf).
 
 ## Case blocks
-Case study content is defined in src/data/cases.ts as blocks: CaseBlock[]. Blocks render through src/components/blocks/CaseBlocks.astro. Block components live in src/components/blocks/. The internal noindex preview is /preview/blocks.
+Case study content is defined in src/data/cases.ts as blocks: CaseBlock[]. Blocks render through src/components/blocks/CaseBlocks.astro. Block components live in src/components/blocks/. The internal noindex preview is /preview/blocks. There are 11 block types.
 
 - prose - narrative text for context, process, or outcome. Fields: type, heading?, body.
 - imageText - image plus explanatory text in two columns. Fields: type, side, image, alt, caption?, heading?, body.
 - fullImage - one full-width image inside the case content column. Fields: type, image, alt, caption?.
 - metrics - compact outcome or process numbers. Fields: type, heading?, items[{ value, label }].
 - beforeAfter - side-by-side visual comparison. Fields: type, before, after, beforeAlt, afterAlt, caption?.
-- callout - highlighted note or problem statement. Fields: type, body, variant? ('default' | 'problem').
+- callout - highlighted insight or problem statement with label, icon, and body. Fields: type, body, title?, variant? ('insight' | 'problem').
 - list - bulleted or ordered list for steps, findings, or criteria. Fields: type, heading?, ordered?, items[].
 - quote - restrained quoted insight or internal note. Fields: type, quote, attribution?.
 - twoCol - paired text columns for comparisons or parallel ideas. Fields: type, heading?, left{ label?, body }, right{ label?, body }.
 - divider - lead-in between case sections or phases. Fields: type, label?, title.
 - gallery - grid of related images with captions. Fields: type, heading?, columns? (2 | 3), items[{ image, alt, caption? }].
+
+## Visual tokens and image behavior
+- Corner radius for cards, images, placeholders, and callouts comes from --radius in src/styles/tokens.css. Use --radius-sm only for deliberately smaller UI.
+- Real images in case blocks can opt into the global lightbox with data-zoomable. Placeholders must not be zoomable.
+- The lightbox lives in BaseLayout.astro and handles click-to-open, backdrop close, close button, Esc, and body scroll lock.
 
 ## Как вносить изменения (принципы)
 - Цвет / отступ / скругление / шкала: меняй ОДИН токен или ОДИН класс в src/styles, не хардкодь по месту.

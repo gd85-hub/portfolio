@@ -20,7 +20,7 @@ const {
 } = Astro.props;
 ---
 
-<a href={href} class:list={['card-lift reveal group block overflow-hidden rounded-2xl border border-line bg-surface', className]} {...attrs}>
+<a href={href} class:list={['card-lift reveal group block overflow-hidden rounded-[var(--radius)] border border-line bg-surface', className]} {...attrs}>
   <div class="ph relative aspect-[4/3]">
     <div class="absolute inset-0 flex items-center justify-center">
       <Eyebrow tone="ph" as="span">[ cover ]</Eyebrow>

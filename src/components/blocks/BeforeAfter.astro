@@ -18,9 +18,9 @@ const { before, after, beforeAlt, afterAlt, caption } = Astro.props;
       <Eyebrow class="mb-3">Before</Eyebrow>
       {
         before ? (
-          <img src={before} alt={beforeAlt} class="aspect-[4/3] w-full rounded-2xl border border-line object-cover" />
+          <img src={before} alt={beforeAlt} data-zoomable class="aspect-[4/3] w-full cursor-pointer rounded-[var(--radius)] border border-line object-cover" />
         ) : (
-          <div class="ph aspect-[4/3] w-full overflow-hidden rounded-2xl border border-line">
+          <div class="ph aspect-[4/3] w-full overflow-hidden rounded-[var(--radius)] border border-line">
             <div class="flex h-full items-center justify-center">
               <Eyebrow tone="ph" as="span">[ before ]</Eyebrow>
             </div>
@@ -32,9 +32,9 @@ const { before, after, beforeAlt, afterAlt, caption } = Astro.props;
       <Eyebrow class="mb-3">After</Eyebrow>
       {
         after ? (
-          <img src={after} alt={afterAlt} class="aspect-[4/3] w-full rounded-2xl border border-line object-cover" />
+          <img src={after} alt={afterAlt} data-zoomable class="aspect-[4/3] w-full cursor-pointer rounded-[var(--radius)] border border-line object-cover" />
         ) : (
-          <div class="ph aspect-[4/3] w-full overflow-hidden rounded-2xl border border-line">
+          <div class="ph aspect-[4/3] w-full overflow-hidden rounded-[var(--radius)] border border-line">
             <div class="flex h-full items-center justify-center">
               <Eyebrow tone="ph" as="span">[ after ]</Eyebrow>
             </div>

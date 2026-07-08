@@ -1,16 +1,36 @@
 ---
+import Eyebrow from '../Eyebrow.astro';
+
 interface Props {
   body: string;
-  variant?: 'default' | 'problem';
+  variant?: 'insight' | 'problem';
+  title?: string;
 }
 
-const { body, variant = 'default' } = Astro.props;
+const { body, variant = 'insight', title } = Astro.props;
 
-const classes = variant === 'problem'
-  ? 'border-l-4 border-l-muted bg-paper'
+const isProblem = variant === 'problem';
+const label = title ?? (isProblem ? 'Problem' : 'Key insight');
+const classes = isProblem
+  ? 'border-l-4 border-l-muted bg-surface'
   : 'border-l-8 border-l-accent bg-surface';
+const background = isProblem
+  ? 'background: color-mix(in srgb, var(--line) 34%, var(--surface));'
+  : 'background: color-mix(in srgb, var(--accent) 9%, var(--surface));';
 ---
 
-<aside class:list={['rounded-2xl border border-line p-6', classes]}>
+<aside class:list={['rounded-[var(--radius)] border border-line p-6', classes]} style={background}>
+  <div class="mb-4 flex items-center gap-2">
+    <span class:list={['icon', isProblem ? 'text-muted' : 'text-accent']} aria-hidden="true">
+      {
+        isProblem ? (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 17h.01" /></svg>
+        ) : (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6L12 3z" /></svg>
+        )
+      }
+    </span>
+    <Eyebrow tone={isProblem ? 'muted' : 'accent'} as="span">{label}</Eyebrow>
+  </div>
   <p class="t-body text-body">{body}</p>
 </aside>
