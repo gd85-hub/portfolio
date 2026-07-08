@@ -115,6 +115,7 @@ export interface CaseStudy {
   slug: string;
   kicker: string;
   title: string;
+  cardDesc: string;
   lede: string;
   role: string;
   time: string;
@@ -128,6 +129,7 @@ export const cases = {
     slug: 'naoma',
     kicker: 'AI sales analytics',
     title: 'Naoma',
+    cardDesc: 'A sales-analytics platform built from scratch: dashboard, call scoring, and reporting.',
     lede: 'An AI sales-analytics platform that turns scattered call and deal data into a clear read on why reps win or lose.',
     role: 'Product Designer',
     time: '2024 to 2025',
@@ -147,6 +149,7 @@ export const cases = {
     slug: 'oilcase-x',
     kicker: 'Oilfield simulator',
     title: 'OilCase X',
+    cardDesc: 'Full redesign and a shared UI kit for a turn-based oil and gas simulator.',
     lede: 'A full redesign of a turn-based oil and gas field-management simulator used in EdTech case competitions and B2B training.',
     role: 'UX/UI Designer',
     time: '2021 to 2024',
@@ -164,6 +167,7 @@ export const cases = {
     slug: 'oilcase-courses',
     kicker: 'Course CMS',
     title: 'OilCase Courses Back Office',
+    cardDesc: 'Information architecture and 50+ screens for a complex course-management system.',
     lede: 'A content-management system that lets admins and authors build, configure, and moderate complex oil and gas online courses.',
     role: 'UX/UI Designer',
     time: '2021 to 2024',

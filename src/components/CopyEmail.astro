@@ -16,17 +16,17 @@ const {
   role="button"
   tabindex="0"
   aria-label="Copy email"
-  class:list={['link-underline inline-grid cursor-pointer', className]}
+  class:list={['inline-flex cursor-pointer items-center', className]}
   data-copy-email={email}
 >
   <span
-    class="col-start-1 row-start-1 transition-opacity duration-[var(--motion-base)] ease-[var(--ease-standard)]"
+    class="link-underline transition-opacity duration-[var(--motion-base)] ease-[var(--ease-standard)]"
     data-copy-email-default
   >
     {label}
   </span>
   <span
-    class="col-start-1 row-start-1 inline-flex items-center gap-2 opacity-0 transition-opacity duration-[var(--motion-base)] ease-[var(--ease-standard)]"
+    class="hidden items-center gap-2 opacity-0 transition-opacity duration-[var(--motion-base)] ease-[var(--ease-standard)]"
     aria-hidden="true"
     data-copy-email-copied
   >
@@ -54,15 +54,16 @@ const {
     const defaultLabel = trigger.querySelector<HTMLElement>('[data-copy-email-default]');
     const copiedLabel = trigger.querySelector<HTMLElement>('[data-copy-email-copied]');
 
-    defaultLabel?.classList.toggle('opacity-0', copied);
-    defaultLabel?.classList.toggle('opacity-100', !copied);
+    defaultLabel?.classList.toggle('hidden', copied);
+    copiedLabel?.classList.toggle('hidden', !copied);
+    copiedLabel?.classList.toggle('inline-flex', copied);
     copiedLabel?.classList.toggle('opacity-0', !copied);
     copiedLabel?.classList.toggle('opacity-100', copied);
     copiedLabel?.setAttribute('aria-hidden', copied ? 'false' : 'true');
   };
 
   const showCopiedState = (trigger: HTMLElement) => {
-    const delay = readMotionMs('--motion-slow') * 10;
+    const delay = readMotionMs('--motion-slow') * 2;
     const previousTimer = copyEmailTimers.get(trigger);
 
     if (previousTimer) window.clearTimeout(previousTimer);

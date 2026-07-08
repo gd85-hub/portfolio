@@ -10,7 +10,7 @@ const telegramUrl = 'https://t.me/virbonus825';
     <div class="reveal max-w-[52ch]">
       <h2 class="t-title text-inv-fg">Let's talk.</h2>
       <p class="t-lede mt-4 text-inv-sub">Open to senior product design roles and selected fintech advisory.</p>
-      <div class="mt-8 flex flex-wrap items-center gap-6">
+      <div class="mt-8 flex flex-wrap items-center gap-5">
         <CopyEmail email={email} class="t-lede text-inv-fg" />
         <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="link-underline t-lede text-inv-fg">Telegram</a>
       </div>
@@ -19,12 +19,12 @@ const telegramUrl = 'https://t.me/virbonus825';
 </section>
 
 <footer class="bg-inv">
-  <div class="mx-auto flex max-w-content flex-col gap-3 border-t border-inv-line px-5 py-8 text-[12px] text-inv-sub sm:flex-row sm:items-center sm:justify-between sm:px-8">
+  <div class="mx-auto grid max-w-content gap-3 border-t border-inv-line px-5 py-8 text-[12px] text-inv-sub sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:px-8">
     <span class="font-mono">Gleb Dvoryatkin - Novi Sad</span>
-    <div class="flex flex-wrap gap-4 font-mono">
+    <div class="flex flex-wrap items-center gap-4 font-mono sm:justify-self-center">
       <CopyEmail email={email} class="t-small text-inv-sub" />
-      <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="link-underline text-inv-sub">Telegram</a>
+      <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="link-underline t-small text-inv-sub">Telegram</a>
     </div>
-    <span>&copy; 2026</span>
+    <span class="sm:justify-self-end">&copy; 2026</span>
   </div>
 </footer>

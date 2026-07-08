@@ -5,24 +5,30 @@ import { cases } from '../../data/cases';
 
 <section id="work" class="mx-auto max-w-content scroll-mt-20 px-5 py-16 sm:px-8">
   <h2 class="reveal mb-10 t-section text-ink">Selected work</h2>
-  <div class="grid gap-6 md:grid-cols-3">
+  <div class="space-y-5 sm:space-y-6">
     <WorkCard
       href={`/case/${cases.naoma.slug}`}
       kicker={cases.naoma.kicker}
       title={cases.naoma.title}
-      desc="A sales-analytics platform built from scratch: dashboard, call scoring, and reporting."
+      desc={cases.naoma.cardDesc}
+      time={cases.naoma.time}
+      role={cases.naoma.role}
     />
     <WorkCard
       href={`/case/${cases.oilcasex.slug}`}
       kicker={cases.oilcasex.kicker}
       title={cases.oilcasex.title}
-      desc="Full redesign and a shared UI kit for a turn-based oil and gas simulator."
+      desc={cases.oilcasex.cardDesc}
+      time={cases.oilcasex.time}
+      role={cases.oilcasex.role}
     />
     <WorkCard
       href={`/case/${cases.oilcourses.slug}`}
       kicker={cases.oilcourses.kicker}
       title={cases.oilcourses.title}
-      desc="Information architecture and 50+ screens for a complex course-management system."
+      desc={cases.oilcourses.cardDesc}
+      time={cases.oilcourses.time}
+      role={cases.oilcourses.role}
     />
   </div>
 </section>
