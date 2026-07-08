@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseBlocks from '../../components/blocks/CaseBlocks.astro';
+import type { CaseBlock } from '../../data/cases';
+
+const demoBlocks: CaseBlock[] = [
+  {
+    type: 'prose',
+    heading: 'Prose block',
+    body: 'A short text block for case context, problem framing, process notes, or outcome details.',
+  },
+  {
+    type: 'imageText',
+    side: 'left',
+    image: null,
+    alt: 'Demo image placeholder',
+    caption: 'Image left with caption.',
+    heading: 'Image and text - image left',
+    body: 'Use this block when a visual needs a short explanation next to it. On mobile the visual stacks above the text.',
+  },
+  {
+    type: 'imageText',
+    side: 'right',
+    image: null,
+    alt: 'Demo image placeholder',
+    caption: 'Image right with caption.',
+    heading: 'Image and text - image right',
+    body: 'The same content pattern can flip sides on desktop while keeping the mobile order simple.',
+  },
+  {
+    type: 'fullImage',
+    image: null,
+    alt: 'Full-width demo image placeholder',
+    caption: 'Full image block with a short caption.',
+  },
+  {
+    type: 'metrics',
+    heading: 'Metrics block',
+    items: [
+      { value: '50+', label: 'screens documented' },
+      { value: '60+', label: 'competitors audited' },
+      { value: '8', label: 'pilots reviewed' },
+      { value: '2', label: 'roles supported' },
+    ],
+  },
+  {
+    type: 'beforeAfter',
+    before: null,
+    after: null,
+    beforeAlt: 'Before state placeholder',
+    afterAlt: 'After state placeholder',
+    caption: 'Before and after comparison with placeholders.',
+  },
+];
+---
+
+<BaseLayout
+  title="Block library (internal) - Gleb Dvoryatkin"
+  description="Internal block library preview."
+  robots="noindex,nofollow"
+>
+  <main class="mx-auto max-w-content px-5 py-16 sm:px-8">
+    <header class="mb-12 max-w-3xl">
+      <h1 class="t-title text-ink">Block library (internal)</h1>
+      <p class="t-body mt-4 text-body">Internal preview page for case-study content blocks.</p>
+    </header>
+    <CaseBlocks blocks={demoBlocks} />
+  </main>
+</BaseLayout>

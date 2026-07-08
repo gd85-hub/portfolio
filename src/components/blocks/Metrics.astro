@@ -1,0 +1,22 @@
+---
+import type { MetricItem } from '../../data/cases';
+
+interface Props {
+  heading?: string;
+  items: MetricItem[];
+}
+
+const { heading, items } = Astro.props;
+---
+
+<section>
+  {heading && <h2 class="mb-6 t-sub text-ink">{heading}</h2>}
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {items.map((item) => (
+      <div class="border-t border-line pt-5">
+        <p class="t-section text-ink">{item.value}</p>
+        <p class="mt-2 t-small text-muted">{item.label}</p>
+      </div>
+    ))}
+  </div>
+</section>

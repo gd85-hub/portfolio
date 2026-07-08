@@ -1,0 +1,43 @@
+---
+import Prose from './Prose.astro';
+import ImageText from './ImageText.astro';
+import FullImage from './FullImage.astro';
+import Metrics from './Metrics.astro';
+import BeforeAfter from './BeforeAfter.astro';
+import type { CaseBlock, CaseBodyBlock } from '../../data/cases';
+
+interface Props {
+  blocks: CaseBodyBlock[];
+}
+
+const { blocks } = Astro.props;
+
+const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
+  if ('type' in block) {
+    return block;
+  }
+
+  return {
+    type: 'prose',
+    heading: block.h,
+    body: block.p,
+  };
+});
+---
+
+<div class="space-y-16">
+  {normalizedBlocks.map((block) => {
+    switch (block.type) {
+      case 'prose':
+        return <Prose heading={block.heading} body={block.body} />;
+      case 'imageText':
+        return <ImageText side={block.side} image={block.image} alt={block.alt} caption={block.caption} heading={block.heading} body={block.body} />;
+      case 'fullImage':
+        return <FullImage image={block.image} alt={block.alt} caption={block.caption} />;
+      case 'metrics':
+        return <Metrics heading={block.heading} items={block.items} />;
+      case 'beforeAfter':
+        return <BeforeAfter before={block.before} after={block.after} beforeAlt={block.beforeAlt} afterAlt={block.afterAlt} caption={block.caption} />;
+    }
+  })}
+</div>

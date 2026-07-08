@@ -3,6 +3,52 @@ export interface CaseBodySection {
   p: string;
 }
 
+export interface ProseBlock {
+  type: 'prose';
+  heading?: string;
+  body: string;
+}
+
+export interface ImageTextBlock {
+  type: 'imageText';
+  side: 'left' | 'right';
+  image: string | null;
+  alt: string;
+  caption?: string;
+  heading?: string;
+  body: string;
+}
+
+export interface FullImageBlock {
+  type: 'fullImage';
+  image: string | null;
+  alt: string;
+  caption?: string;
+}
+
+export interface MetricItem {
+  value: string;
+  label: string;
+}
+
+export interface MetricsBlock {
+  type: 'metrics';
+  heading?: string;
+  items: MetricItem[];
+}
+
+export interface BeforeAfterBlock {
+  type: 'beforeAfter';
+  before: string | null;
+  after: string | null;
+  beforeAlt: string;
+  afterAlt: string;
+  caption?: string;
+}
+
+export type CaseBlock = ProseBlock | ImageTextBlock | FullImageBlock | MetricsBlock | BeforeAfterBlock;
+export type CaseBodyBlock = CaseBodySection | CaseBlock;
+
 export interface CaseStudy {
   slug: string;
   kicker: string;
@@ -12,7 +58,7 @@ export interface CaseStudy {
   time: string;
   team: string;
   metric: string;
-  body: CaseBodySection[];
+  body: CaseBodyBlock[];
 }
 
 export const cases = {
