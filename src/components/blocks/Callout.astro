@@ -19,7 +19,7 @@ const background = isProblem
   : 'background: color-mix(in srgb, var(--accent) 9%, var(--surface));';
 ---
 
-<aside class:list={['rounded-[var(--radius)] border border-line p-6', classes]} style={background}>
+<aside class:list={['max-w-[70ch] rounded-[var(--radius)] border border-line p-6', classes]} style={background}>
   <div class="mb-4 flex items-center gap-2">
     <span class:list={['icon', isProblem ? 'text-muted' : 'text-accent']} aria-hidden="true">
       {

@@ -1,0 +1,49 @@
+---
+interface TableRow {
+  cells: string[];
+}
+
+interface Props {
+  heading?: string;
+  columns: string[];
+  rows: TableRow[];
+}
+
+const { heading, columns, rows } = Astro.props;
+---
+
+<section>
+  {heading && <h2 class="mb-6 t-sub text-ink">{heading}</h2>}
+  <div class="overflow-hidden rounded-[var(--radius)] border border-line">
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-max border-collapse">
+        <thead>
+          <tr class="border-b border-line">
+            {columns.map((column) => (
+              <th scope="col" class="eyebrow px-5 py-4 text-left text-muted">
+                {column}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr class="border-b border-line last:border-b-0">
+              {row.cells.map((cell, index) => (
+                index === 0 ? (
+                  <th scope="row" class="px-5 py-4 text-left t-small font-medium text-ink">
+                    {cell}
+                  </th>
+                ) : (
+                  <td class="px-5 py-4 t-small text-body">
+                    {cell}
+                  </td>
+                )
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

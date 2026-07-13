@@ -7,7 +7,7 @@ interface Props {
 const { heading, body } = Astro.props;
 ---
 
-<section>
+<section class="max-w-[70ch]">
   {heading && <h2 class="mb-3 t-sub text-ink">{heading}</h2>}
   <p class="t-body text-body">{body}</p>
 </section>

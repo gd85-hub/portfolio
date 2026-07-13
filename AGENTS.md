@@ -26,7 +26,7 @@
 - public/ - статика как есть (в т.ч. Gleb_Dvoryatkin_Resume.pdf, отдаётся по /Gleb_Dvoryatkin_Resume.pdf).
 
 ## Case blocks
-Case study content is defined in src/data/cases.ts as blocks: CaseBlock[]. Blocks render through src/components/blocks/CaseBlocks.astro. Block components live in src/components/blocks/. The internal noindex preview is /preview/blocks. There are 11 block types.
+Case study content is defined in src/data/cases.ts as blocks: CaseBlock[]. Blocks render through src/components/blocks/CaseBlocks.astro. Block components live in src/components/blocks/. The internal noindex preview is /preview/blocks. There are 12 block types.
 
 - prose - narrative text for context, process, or outcome. Fields: type, heading?, body.
 - imageText - image plus explanatory text in two columns. Fields: type, side, image, alt, caption?, heading?, body.
@@ -39,6 +39,7 @@ Case study content is defined in src/data/cases.ts as blocks: CaseBlock[]. Block
 - twoCol - paired text columns for comparisons or parallel ideas. Fields: type, heading?, left{ label?, body }, right{ label?, body }.
 - divider - lead-in between case sections or phases. Fields: type, label?, title.
 - gallery - grid of related images with captions. Fields: type, heading?, columns? (2 | 3), items[{ image, alt, caption? }].
+- table - structured comparison table. Fields: type, heading?, columns[], rows[{ cells[] }].
 
 ## Visual tokens and image behavior
 - Corner radius for cards, images, placeholders, and callouts comes from --radius in src/styles/tokens.css. Use --radius-sm only for deliberately smaller UI.

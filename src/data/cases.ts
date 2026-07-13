@@ -97,6 +97,13 @@ export interface GalleryBlock {
   items: GalleryItem[];
 }
 
+export interface TableBlock {
+  type: 'table';
+  heading?: string;
+  columns: string[];
+  rows: { cells: string[] }[];
+}
+
 export type CaseBlock =
   | ProseBlock
   | ImageTextBlock
@@ -108,7 +115,8 @@ export type CaseBlock =
   | QuoteBlock
   | TwoColBlock
   | DividerBlock
-  | GalleryBlock;
+  | GalleryBlock
+  | TableBlock;
 export type CaseBodyBlock = CaseBodySection | CaseBlock;
 
 export interface CaseStudy {
@@ -116,6 +124,7 @@ export interface CaseStudy {
   kicker: string;
   title: string;
   cardDesc: string;
+  cover?: string;
   lede: string;
   role: string;
   time: string;
@@ -136,13 +145,86 @@ export const cases = {
     team: 'Founder, CRO, eng team',
     metric: 'First paying clients and funding',
     blocks: [
-      { h: 'Context', p: 'Companies pour money into CRMs, KPIs, and sales training, but one question stays open: why does one rep close and another does not? The honest answer sits in the data, spread across hundreds of calls and metrics. Manual review is slow, expensive, and subjective; CRMs show what happened but not why.' },
-      { h: 'The problem', p: 'Sales teams invest heavily in process but have no objective way to see the full picture and fix what is broken. Leadership needed one place to read team performance and drill into the reasons behind it.' },
-      { h: 'Who it was for', p: 'CEOs and Heads of Sales, the people accountable for revenue and for scaling a team. The founder came from sales and ran 20+ interviews with owners and sales execs from his network, which grounded the hypotheses instead of guesswork.' },
-      { h: 'What I did', p: 'I reframed the product from a narrow call-quality tool into a sales-team performance platform, after research showed leaders needed a holistic view, not just call scores. I designed four core surfaces: a metrics dashboard with 10 team-level KPIs, an automated call score across five stages, per-call insights, and AI coaching. I also ran a teardown of 60+ competitors to find the positioning gap: rivals were either off-ICP or too complex and expensive.' },
-      { h: 'Building it', p: 'We shipped an MVP (dashboard, call log, call view) and validated with RITE testing. Two months in we pivoted: users needed the reasoning behind a score and a broader set of team metrics, so positioning moved from call evaluation to full sales analytics. A later expansion added rep profiles, time-based comparisons, richer call attributes, and a scoring model with contextual quotes.' },
-      { h: 'Outcome', p: 'Across two pilot clients over two months the product moved real numbers (one client saw revenue up 64% and 43% more closed deals; another 13% revenue and a 9.3% lift in call scores). By December 2024 there were 16 qualified leads at roughly $200K potential ARR, 8 pilots analyzing 50K+ calls, and 2 closed deals. The interface work contributed directly to landing the first paying customers and securing initial investment.' },
-      { h: 'What I would keep', p: 'The pivot was the real lesson. The first design was right for the wrong problem; it only started working once positioning caught up to what sales leaders actually needed.' },
+      { type: 'prose', heading: 'Context', body: 'Companies invest in training, implement CRMs, and track KPIs, yet the key question stays open: why does one sales rep close deals while another does not? The answer is data. To improve performance, businesses need to regularly analyze hundreds of calls and multiple metrics, identify patterns, and take action.' },
+      {
+        type: 'list',
+        items: [
+          'Manual call analysis is expensive, time-consuming, and subjective',
+          'CRMs provide numbers and facts but do not explain why things happen',
+          'Script-based training does not necessarily make sales reps more effective in practice',
+        ],
+      },
+      { type: 'callout', variant: 'problem', title: 'The problem', body: 'Sales teams invest heavily in process improvements but lack an objective way to see the full picture and fix existing issues. Companies know what is happening, but they do not understand why.' },
+      { type: 'prose', heading: 'Product concept and its evolution', body: 'The initial goal was to build a tool for analyzing sales calls and helping companies understand why some reps consistently outperform others. Through research, the vision evolved from a call quality evaluation tool into a sales team performance platform, recognizing that businesses need a holistic view of team efficiency across multiple dimensions, not just call quality.' },
+      { type: 'callout', variant: 'insight', title: 'Key objective', body: 'Develop an analytics system that transforms fragmented sales data into actionable insights, streamlines performance evaluation, and enables data-driven decision-making to increase revenue.' },
+      { type: 'prose', heading: 'Hypotheses and ICP', body: 'Naoma was designed for CEOs and Heads of Sales, the key decision-makers responsible for driving revenue and scaling sales teams. The core problem we identified shaped our product hypotheses and defined our Ideal Customer Profile.' },
+      {
+        type: 'list',
+        heading: 'Design hypotheses',
+        items: [
+          'Centralizing key sales metrics in a single dashboard will let leadership assess team performance instantly',
+          'Automating call analysis and segmentation will make conversation quality assessment faster and more objective',
+          'AI-powered insights with error detection will help sales teams identify and fix weak points in communication more effectively',
+        ],
+      },
+      {
+        type: 'table',
+        heading: 'Ideal Customer Profile',
+        columns: ['', 'CEO / Founder', 'Head of Sales'],
+        rows: [
+          { cells: ['Goal', 'Drive revenue growth and improve sales team efficiency', 'Hit revenue targets'] },
+          { cells: ['Problem', 'Lack of transparency, slow business growth, planning inefficiencies', 'Inconsistent sales performance, some reps excel, others struggle, with no clear explanation'] },
+          { cells: ['Impact', 'Cash flow gaps, missed revenue targets, difficulties securing investment', 'Revenue loss, failure to meet quarterly quotas'] },
+          { cells: ['How we solve it', 'Real-time sales analytics with full visibility; pinpointing revenue blockers; bridging the gap between sales and marketing', 'Full team transparency and automated call analysis; identifying top and struggling reps; AI-driven coaching recommendations'] },
+          { cells: ['Additional value', 'Less reliance on manual call reviews; clear, transparent metrics reduce internal friction', 'Better customer experience through improved performance; higher conversion by applying best practices'] },
+        ],
+      },
+      { type: 'prose', heading: 'Validating assumptions', body: 'Naoma CEO came from a sales background and had firsthand experience with the challenges faced by sales leaders and business owners. Leveraging this, he ran 20+ in-depth interviews with business owners and sales executives from his network. We validated our assumptions and pain points, then distilled the findings into four must-have features.' },
+      {
+        type: 'list',
+        ordered: true,
+        heading: 'Four must-have features',
+        items: [
+          'Sales Metrics Dashboard: a flexible dashboard with 10 key sales performance metrics',
+          'Call Score: automated call evaluation based on five stages',
+          'Insights and Smart Notes: actionable insights and notes for every call',
+          'AI Coaching: AI-generated coaching recommendations',
+        ],
+      },
+      { type: 'prose', heading: 'Competitive analysis', body: 'I analyzed 60+ products tackling similar challenges, evaluating their positioning, core features, integrations, market presence, business model, and pricing. This mapped the competitive landscape and identified critical gaps: most competitors either failed to address our ICP key needs or were too complex and expensive. Those insights shaped our positioning strategy.' },
+      { type: 'divider', label: 'Process', title: 'From MVP to expansion' },
+      { type: 'prose', heading: 'Phase 1: MVP', body: 'We started with the core functionality: a dashboard with key sales metrics, a call log, a detailed call view, and data visualization settings. The design process was iterative, incorporating RITE testing to validate decisions with real users and make rapid adjustments. We launched a functional MVP, began collecting feedback, and built the website and pitch deck to start fundraising.' },
+      { type: 'prose', heading: 'Phase 2: Pivot', body: 'Two months post-launch, we realized that simply evaluating calls was not enough: users needed clear reasoning behind scores and a broader set of team performance metrics. This shifted positioning from call quality evaluation to comprehensive sales analytics. We redesigned the reporting system, strengthened the call evaluation methodology to increase trust in AI-driven insights, and dropped self-service onboarding to focus development.' },
+      { type: 'prose', heading: 'Phase 3: Product expansion', body: 'We consolidated insights in Miro, ran structured brainstorming sessions, and mapped the next steps. New features: a sales rep profile with in-depth analytics, comparative time-based analysis in reports, new call and lead attributes (tags, alerts, UTM tracking, ABC qualification), and an enhanced scoring model with contextual quotes. This secured initial clients and raised early-stage funding.' },
+      { type: 'divider', label: 'The product', title: 'What we shipped' },
+      {
+        type: 'fullImage',
+        image: '/naoma/dashboard.png',
+        alt: 'Naoma dashboard with key metrics, sales team performance table, and revenue and leads charts',
+        caption: 'The dashboard brings team-level KPIs, per-rep performance, and revenue and leads over time into one view.',
+      },
+      { type: 'fullImage', image: '/naoma/calls-list.png', alt: 'Calls list with automatic scores per call', caption: 'Calls: every call is logged and scored automatically across five stages, sortable and filterable, with an Alerts Only mode for critical calls.' },
+      {
+        type: 'fullImage',
+        image: '/naoma/call-scoring-expanded.png',
+        alt: 'Call page with stage-by-stage scoring and quotes pulled from the transcript',
+        caption: 'Call page: the conversation is broken into stages, with a score summary, full transcript, and AI-powered feedback.',
+      },
+      { type: 'fullImage', image: '/naoma/reports-comparative.png', alt: 'Reports view comparing sales metrics across multiple time periods', caption: 'Reports: performance compared across multiple time periods, so leaders see trends instead of a single snapshot.' },
+      { type: 'fullImage', image: '/naoma/rep-profile-performance.png', alt: 'Sales rep profile comparing a rep against the team average', caption: 'Sales rep profile: each rep is benchmarked against the team average.' },
+      { type: 'divider', label: 'Results', title: 'Impact and traction' },
+      {
+        type: 'metrics',
+        heading: 'Flagship client, two months in',
+        items: [
+          { value: '+64.9%', label: 'Revenue' },
+          { value: '+43.6%', label: 'Closed deals' },
+          { value: '+67.4%', label: 'Avg. call duration' },
+          { value: '+17.9%', label: 'Calls over 5 min' },
+        ],
+      },
+      { type: 'prose', heading: 'Traction', body: 'A second pilot saw a 13% revenue lift and a 9.3% gain in call scores. By December 2024: 16 qualified leads at a potential $200K ARR, 8 pilots analyzing 50K+ calls, and 2 closed deals (U.S. and Kazakhstan). The interface work contributed directly to landing the first paying customers and securing initial investment.' },
+      { type: 'prose', heading: 'What I would keep', body: 'The pivot was the real lesson. The first design was right for the wrong problem; it only started working once positioning caught up to what sales leaders actually needed.' },
     ],
   },
   oilcasex: {

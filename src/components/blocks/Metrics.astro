@@ -14,7 +14,7 @@ const { heading, items } = Astro.props;
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
     {items.map((item) => (
       <div class="border-t border-line pt-5">
-        <p class="t-section text-ink">{item.value}</p>
+        <p class="t-section text-accent">{item.value}</p>
         <p class="mt-2 t-small text-muted">{item.label}</p>
       </div>
     ))}

@@ -10,6 +10,7 @@ import Quote from './Quote.astro';
 import TwoCol from './TwoCol.astro';
 import Divider from './Divider.astro';
 import Gallery from './Gallery.astro';
+import Table from './Table.astro';
 import type { CaseBlock, CaseBodyBlock } from '../../data/cases';
 
 interface Props {
@@ -31,7 +32,7 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
 });
 ---
 
-<div class="space-y-16">
+<div class="space-y-12 sm:space-y-16">
   {normalizedBlocks.map((block) => {
     switch (block.type) {
       case 'prose':
@@ -39,7 +40,7 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
       case 'imageText':
         return <ImageText side={block.side} image={block.image} alt={block.alt} caption={block.caption} heading={block.heading} body={block.body} />;
       case 'fullImage':
-        return <FullImage image={block.image} alt={block.alt} caption={block.caption} />;
+        return <div class="py-4 sm:py-6"><FullImage image={block.image} alt={block.alt} caption={block.caption} /></div>;
       case 'metrics':
         return <Metrics heading={block.heading} items={block.items} />;
       case 'beforeAfter':
@@ -53,9 +54,11 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
       case 'twoCol':
         return <TwoCol heading={block.heading} left={block.left} right={block.right} />;
       case 'divider':
-        return <Divider label={block.label} title={block.title} />;
+        return <div class="pt-4 sm:pt-6"><Divider label={block.label} title={block.title} /></div>;
       case 'gallery':
         return <Gallery heading={block.heading} columns={block.columns} items={block.items} />;
+      case 'table':
+        return <Table heading={block.heading} columns={block.columns} rows={block.rows} />;
     }
   })}
 </div>
