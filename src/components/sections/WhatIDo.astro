@@ -1,0 +1,42 @@
+---
+const items = [
+  {
+    number: '01',
+    title: 'Data-dense product UIs',
+    desc: 'Dashboards, analytics, and monitoring where a lot of state has to stay legible at a glance and safe to act on.',
+  },
+  {
+    number: '02',
+    title: '0 to 1 and redesign',
+    desc: 'Taking an ambiguous or broken product to a version that ships and holds up: the framing, IA, and flows, plus the calls that decide whether it actually works.',
+  },
+  {
+    number: '03',
+    title: 'Design systems and UI kits',
+    desc: 'Component libraries and handoff conventions that keep a growing product coherent and let engineering ship without rebuilding the basics every time.',
+  },
+];
+---
+
+<section class="mx-auto max-w-content px-5 py-16 sm:px-8">
+  <div class="reveal">
+    <h2 class="t-section text-ink">What I do</h2>
+    <p class="mt-5 max-w-[60ch] t-lede text-muted">
+      I read a problem from the business side before the interface side. These are the areas where that pays off.
+    </p>
+  </div>
+
+  <div class="mt-12 border-t border-line">
+    {
+      items.map((item) => (
+        <div class="reveal grid gap-4 border-b border-line py-8 sm:grid-cols-[7rem_1fr] sm:gap-8 sm:py-10">
+          <span class="eyebrow text-muted">{item.number}</span>
+          <div>
+            <h3 class="t-sub text-ink">{item.title}</h3>
+            <p class="mt-3 max-w-[70ch] t-body text-body">{item.desc}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
