@@ -7,16 +7,20 @@ const description = 'I design interfaces for complex, data-heavy tools, the kind
 
 const principles = [
   {
-    title: '[ principle 1 title ]',
-    desc: '[ principle 1 description ]',
+    title: 'The brief is a hypothesis',
+    desc: 'Projects start with a problem someone already believes in. On Naoma the first version was built for the wrong one, and it only worked after the positioning caught up. I test the framing before I trust it.',
   },
   {
-    title: '[ principle 2 title ]',
-    desc: '[ principle 2 description ]',
+    title: 'Edge cases are the product',
+    desc: 'Empty states, errors, conflicting actions, the configuration nobody planned for. In back-office tools that is most of the surface, and it decides whether the thing holds up in real use.',
   },
   {
-    title: '[ principle 3 title ]',
-    desc: '[ principle 3 description ]',
+    title: 'Density is a decision',
+    desc: 'In data-heavy tools every element competes for the same glance. The work is deciding what earns attention now, what earns a click, and what can sit quietly until someone looks for it.',
+  },
+  {
+    title: 'Finished means engineering can ship it',
+    desc: 'Component kits and written conventions exist so the same decision gets made once. A design that lives only in Figma leaves that work to someone else.',
   },
 ];
 ---
@@ -27,7 +31,7 @@ const principles = [
       <div class="grid items-start gap-10 md:grid-cols-[1fr_.42fr] md:gap-14">
         <header class="reveal max-w-[70ch]">
           <Eyebrow class="mb-4">About</Eyebrow>
-          <h1 class="t-title text-ink">[ big opening statement about how I think about design ]</h1>
+          <h1 class="t-title text-ink">I like problems where the answer is buried in data and someone still has to act on it.</h1>
         </header>
 
         <div class="reveal max-w-md overflow-hidden rounded-[var(--radius)] border border-line bg-surface md:justify-self-end">
@@ -47,7 +51,7 @@ const principles = [
         <div class="mt-10 border-t border-line">
           {
             principles.map((principle, index) => (
-              <div class="grid gap-4 border-b border-line py-8 sm:grid-cols-[7rem_1fr] sm:gap-8 sm:py-10">
+              <div class="grid gap-4 border-b border-line py-8 sm:grid-cols-[3rem_1fr] sm:gap-6 sm:py-10">
                 <span class="eyebrow text-muted">0{index + 1}</span>
                 <div>
                   <h3 class="t-sub text-ink">{principle.title}</h3>
@@ -59,21 +63,23 @@ const principles = [
         </div>
       </section>
 
-      <section class="reveal mt-16 max-w-[70ch] border-t border-line pt-12 sm:mt-20 sm:pt-14">
-        <Eyebrow tone="accent" class="mb-4">Background</Eyebrow>
-        <h2 class="t-section text-ink">Background</h2>
-        <div class="mt-6 space-y-4 t-body text-body">
-          <p>I design interfaces for complex, data-heavy tools, the kind where a user has to read a lot of state and make a real decision. My background is unusual for a designer: about a decade in marketing, research, and project management before UX, so I read a problem from the business and the interface side before proposing anything.</p>
-          <p>Today I design internal and client-facing products at Axon Trade, a technology provider for the institutional crypto market. Before that I worked across sales analytics and edtech, and earlier led data and customer-facing teams at companies like June Homes and Standuply, with clients including IBM, Intel, Adobe, and Coursera.</p>
+      <section class="reveal mt-16 border-t border-line pt-12 sm:mt-20 sm:pt-14">
+        <div class="max-w-[70ch]">
+          <h2 class="t-section text-ink">Background</h2>
+          <div class="mt-6 space-y-4 t-body text-body">
+            <p>I design interfaces for complex, data-heavy tools, the kind where a user has to read a lot of state and make a real decision. My background is unusual for a designer: about a decade in marketing, research, and project management before UX, so I read a problem from the business and the interface side before proposing anything.</p>
+            <p>Today I design internal and client-facing products at Axon Trade, a technology provider for the institutional crypto market. Before that I worked across sales analytics and edtech, and earlier led data and customer-facing teams at companies like June Homes and Standuply, with clients including IBM, Intel, Adobe, and Coursera.</p>
+          </div>
         </div>
       </section>
 
-      <section class="reveal mt-16 max-w-[70ch] border-t border-line pt-12 sm:mt-20 sm:pt-14">
-        <Eyebrow tone="accent" class="mb-4">Beyond work</Eyebrow>
-        <h2 class="t-section text-ink">Beyond work</h2>
-        <div class="mt-6 space-y-3">
-          <p class="t-body text-body">[ hobbies and interests ]</p>
-          <p class="t-small text-muted">Based in Novi Sad. English (C1), French (B1), Russian (native).</p>
+      <section class="reveal mt-16 border-t border-line pt-12 sm:mt-20 sm:pt-14">
+        <div class="max-w-[70ch]">
+          <h2 class="t-section text-ink">Beyond work</h2>
+          <div class="mt-6 space-y-3">
+            <p class="t-body text-body">Guitar, boxing, books, astrophysics. Languages are a long-running habit.</p>
+            <p class="t-small text-muted">English (C1), French (B1), Russian (native).</p>
+          </div>
         </div>
       </section>
 
