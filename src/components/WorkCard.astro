@@ -1,16 +1,14 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
 import Eyebrow from './Eyebrow.astro';
 
-interface Props {
+type Props = Omit<HTMLAttributes<'a'>, 'role'> & {
   kicker: string;
   title: string;
   desc: string;
   time: string;
   role: string;
-  href?: string;
-  class?: string;
-  [key: string]: unknown;
-}
+};
 
 const {
   kicker,

@@ -1,13 +1,13 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
+
 type Tone = 'muted' | 'accent' | 'ph' | 'inherit';
 type Tag = 'p' | 'span' | 'h2' | 'dt';
 
-interface Props {
+type Props = HTMLAttributes<'p'> & {
   tone?: Tone;
   as?: Tag;
-  class?: string;
-  [key: string]: unknown;
-}
+};
 
 const {
   tone = 'muted',

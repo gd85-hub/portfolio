@@ -1,19 +1,17 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
+
 type Variant = 'solid' | 'ghost';
 type Surface = 'page' | 'panel';
 type Size = 'default' | 'sm';
 type IconPosition = 'start' | 'end';
 
-interface Props {
-  href?: string;
+type Props = HTMLAttributes<'a'> & HTMLAttributes<'button'> & {
   variant?: Variant;
   on?: Surface;
   size?: Size;
   iconPosition?: IconPosition;
-  type?: 'button' | 'submit' | 'reset';
-  class?: string;
-  [key: string]: unknown;
-}
+};
 
 const {
   href,
