@@ -54,7 +54,7 @@ const {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
         </span>
       </button>
-      <img id="image-lightbox-img" src="" alt="" class="max-h-[86vh] max-w-full rounded-[var(--radius)] border border-inv-line object-contain" />
+      <img id="image-lightbox-img" alt="" class="max-h-[86vh] max-w-full rounded-[var(--radius)] border border-inv-line object-contain" />
     </div>
     <script is:inline>
       const io = new IntersectionObserver((entries) => {
@@ -72,6 +72,7 @@ const {
       const lightbox = document.getElementById('image-lightbox');
       const lightboxImage = document.getElementById('image-lightbox-img');
       const lightboxClose = document.getElementById('image-lightbox-close');
+      let lightboxTrigger = null;
 
       function closeLightbox(){
         lightbox.classList.add('hidden');
@@ -79,12 +80,17 @@ const {
         lightboxImage.removeAttribute('src');
         lightboxImage.alt = '';
         document.body.classList.remove('overflow-hidden');
+        if (lightboxTrigger) {
+          lightboxTrigger.focus();
+          lightboxTrigger = null;
+        }
       }
 
       document.addEventListener('click', (event) => {
         const target = event.target;
 
         if (target instanceof HTMLImageElement && target.matches('[data-zoomable]')) {
+          lightboxTrigger = target;
           lightboxImage.src = target.currentSrc || target.src;
           lightboxImage.alt = target.alt || '';
           lightbox.classList.remove('hidden');

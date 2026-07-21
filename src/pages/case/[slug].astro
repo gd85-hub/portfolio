@@ -19,5 +19,7 @@ const { caseStudy } = Astro.props;
 ---
 
 <BaseLayout title={`${caseStudy.title} - Gleb Dvoryatkin`} description={caseStudy.lede}>
-  <CaseLayout caseStudy={caseStudy} />
+  <main>
+    <CaseLayout caseStudy={caseStudy} />
+  </main>
 </BaseLayout>
