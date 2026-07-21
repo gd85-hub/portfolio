@@ -16,6 +16,8 @@ export default {
         ph1: 'var(--ph1)',
         ph2: 'var(--ph2)',
         phtext: 'var(--phtext)',
+        'callout-insight': 'var(--callout-insight-bg)',
+        'callout-problem': 'var(--callout-problem-bg)',
         inv: 'var(--inv-bg)',
         'inv-fg': 'var(--inv-fg)',
         'inv-sub': 'var(--inv-sub)',

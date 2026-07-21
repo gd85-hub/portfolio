@@ -59,6 +59,10 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
         return <Gallery heading={block.heading} columns={block.columns} items={block.items} />;
       case 'table':
         return <Table heading={block.heading} columns={block.columns} rows={block.rows} />;
+      default: {
+        const exhaustiveCheck: never = block;
+        return exhaustiveCheck;
+      }
     }
   })}
 </div>
