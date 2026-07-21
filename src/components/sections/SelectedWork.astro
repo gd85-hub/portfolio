@@ -1,34 +1,22 @@
 ---
 import WorkCard from '../WorkCard.astro';
-import { cases } from '../../data/cases';
+import { caseStudies } from '../../data/cases';
 ---
 
 <section id="work" class="mx-auto max-w-content scroll-mt-20 px-5 py-16 sm:px-8">
   <h2 class="reveal mb-10 t-section text-ink">Selected work</h2>
   <div class="space-y-5 sm:space-y-6">
-    <WorkCard
-      href={`/case/${cases.naoma.slug}`}
-      kicker={cases.naoma.kicker}
-      title={cases.naoma.title}
-      desc={cases.naoma.cardDesc}
-      time={cases.naoma.time}
-      role={cases.naoma.role}
-    />
-    <WorkCard
-      href={`/case/${cases.oilcasex.slug}`}
-      kicker={cases.oilcasex.kicker}
-      title={cases.oilcasex.title}
-      desc={cases.oilcasex.cardDesc}
-      time={cases.oilcasex.time}
-      role={cases.oilcasex.role}
-    />
-    <WorkCard
-      href={`/case/${cases.oilcourses.slug}`}
-      kicker={cases.oilcourses.kicker}
-      title={cases.oilcourses.title}
-      desc={cases.oilcourses.cardDesc}
-      time={cases.oilcourses.time}
-      role={cases.oilcourses.role}
-    />
+    {
+      caseStudies.map((caseStudy) => (
+        <WorkCard
+          href={`/case/${caseStudy.slug}`}
+          kicker={caseStudy.kicker}
+          title={caseStudy.title}
+          desc={caseStudy.cardDesc}
+          time={caseStudy.time}
+          role={caseStudy.role}
+        />
+      ))
+    }
   </div>
 </section>

@@ -8,6 +8,7 @@ type Props = Omit<HTMLAttributes<'a'>, 'role'> & {
   desc: string;
   time: string;
   role: string;
+  cover?: string | null;
 };
 
 const {
@@ -16,6 +17,7 @@ const {
   desc,
   time,
   role,
+  cover = null,
   href = '#',
   class: className,
   ...attrs
