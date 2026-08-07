@@ -7,10 +7,17 @@ import '../styles/motion.css';
 import '../styles/components.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  robots?: string;
+}
 
 const {
-  title = 'Gleb Dvoryatkin - Product Designer',
-  description = 'Product designer turning dense, complex products into clear interfaces. Fintech, sales, and edtech.',
+  title = site.defaultTitle,
+  description = site.defaultDescription,
   robots,
 } = Astro.props;
 ---

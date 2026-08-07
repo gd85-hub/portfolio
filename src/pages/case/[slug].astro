@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CaseLayout from '../../layouts/CaseLayout.astro';
 import { caseStudies } from '../../data/cases';
 import type { CaseStudy } from '../../data/cases';
+import { site } from '../../data/site';
 
 export function getStaticPaths() {
   return caseStudies.map((caseStudy) => ({
@@ -18,7 +19,7 @@ interface Props {
 const { caseStudy } = Astro.props;
 ---
 
-<BaseLayout title={`${caseStudy.title} - Gleb Dvoryatkin`} description={caseStudy.lede}>
+<BaseLayout title={`${caseStudy.title} - ${site.name}`} description={caseStudy.lede}>
   <main>
     <CaseLayout caseStudy={caseStudy} />
   </main>

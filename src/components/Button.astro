@@ -6,12 +6,23 @@ type Surface = 'page' | 'panel';
 type Size = 'default' | 'sm';
 type IconPosition = 'start' | 'end';
 
-type Props = HTMLAttributes<'a'> & HTMLAttributes<'button'> & {
+interface CustomProps {
   variant?: Variant;
   on?: Surface;
   size?: Size;
   iconPosition?: IconPosition;
+}
+
+type AnchorProps = Omit<HTMLAttributes<'a'>, 'href' | 'type'> & {
+  href: string;
+  type?: never;
 };
+
+type NativeButtonProps = HTMLAttributes<'button'> & {
+  href?: never;
+};
+
+type Props = CustomProps & (AnchorProps | NativeButtonProps);
 
 const {
   href,

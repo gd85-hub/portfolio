@@ -18,7 +18,7 @@
 - src/styles/ - дизайн-система, ЕДИНЫЙ источник стилей:
   - tokens.css - CSS-переменные (цвета light/dark, motion, radius). Тема переключается классом .dark на <html>.
   - typography.css - типо-шкала как классы t-display / t-title / t-section / t-sub / t-lede / t-body / t-small + .eyebrow. Размеры в ЧЁТНЫХ px.
-  - motion.css - переходы, .reveal, hover, .link-underline, .card-lift.
+  - motion.css - переходы, .reveal, hover, .link-underline.
   - components.css - .icon и прочие общие классы.
 - src/components/ - Button, CopyEmail, Eyebrow, Footer, Nav, WorkCard.
 - src/components/sections/ - Hero, SelectedWork, WhatIDo, Contact.

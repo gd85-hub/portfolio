@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Eyebrow from '../components/Eyebrow.astro';
+import { site } from '../data/site';
 
-const title = 'About - Gleb Dvoryatkin';
+const title = `About - ${site.name}`;
 const description = 'I design interfaces for complex, data-heavy tools, the kind where a user has to read a lot of state and make a real decision.';
 
 const principles = [
@@ -37,7 +38,7 @@ const principles = [
         <div class="reveal max-w-md overflow-hidden rounded-[var(--radius)] border border-line bg-surface md:justify-self-end">
           <img
             src="/gleb-photo.png"
-            alt="Portrait of Gleb Dvoryatkin"
+            alt={`Portrait of ${site.name}`}
             class="h-auto w-full"
             loading="lazy"
             decoding="async"
