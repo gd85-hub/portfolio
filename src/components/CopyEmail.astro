@@ -1,13 +1,11 @@
 ---
 interface Props {
   email: string;
-  label?: string;
   class?: string;
 }
 
 const {
   email,
-  label = 'Email',
   class: className = 't-body text-ink',
 } = Astro.props;
 ---
@@ -15,55 +13,34 @@ const {
 <span
   role="button"
   tabindex="0"
-  aria-label="Copy email"
-  class:list={['inline-flex cursor-pointer items-center', className]}
+  aria-label="Copy email address"
+  class:list={['copy-email-feedback inline-grid cursor-pointer font-mono', className]}
   data-copy-email={email}
 >
+  <span class="copy-email-label copy-email-label-default link-underline">Email</span>
   <span
-    class="link-underline transition-opacity duration-[var(--motion-base)] ease-[var(--ease-standard)]"
-    data-copy-email-default
-  >
-    {label}
-  </span>
-  <span
-    class="hidden items-center gap-2 opacity-0 transition-opacity duration-[var(--motion-base)] ease-[var(--ease-standard)]"
+    class="copy-email-label copy-email-label-copied pointer-events-none text-accent"
+    role="status"
+    aria-live="polite"
     aria-hidden="true"
     data-copy-email-copied
   >
-    <span class="icon text-accent" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 6 9 17l-5-5" />
-      </svg>
-    </span>
-    <span>Copied</span>
+    Copied
   </span>
 </span>
 
 <script>
   const copyEmailTimers = new WeakMap<HTMLElement, number>();
-
-  const readMotionMs = (token: string) => {
-    const raw = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
-    const value = Number.parseFloat(raw);
-
-    if (!Number.isFinite(value)) return 0;
-    return raw.endsWith('s') && !raw.endsWith('ms') ? value * 1000 : value;
-  };
+  const copiedVisibilityMs = 1400;
 
   const setCopiedState = (trigger: HTMLElement, copied: boolean) => {
-    const defaultLabel = trigger.querySelector<HTMLElement>('[data-copy-email-default]');
     const copiedLabel = trigger.querySelector<HTMLElement>('[data-copy-email-copied]');
 
-    defaultLabel?.classList.toggle('hidden', copied);
-    copiedLabel?.classList.toggle('hidden', !copied);
-    copiedLabel?.classList.toggle('inline-flex', copied);
-    copiedLabel?.classList.toggle('opacity-0', !copied);
-    copiedLabel?.classList.toggle('opacity-100', copied);
+    trigger.classList.toggle('is-copied', copied);
     copiedLabel?.setAttribute('aria-hidden', copied ? 'false' : 'true');
   };
 
   const showCopiedState = (trigger: HTMLElement) => {
-    const delay = readMotionMs('--motion-slow') * 2;
     const previousTimer = copyEmailTimers.get(trigger);
 
     if (previousTimer) window.clearTimeout(previousTimer);
@@ -73,7 +50,7 @@ const {
     const timer = window.setTimeout(() => {
       setCopiedState(trigger, false);
       copyEmailTimers.delete(trigger);
-    }, delay);
+    }, copiedVisibilityMs);
 
     copyEmailTimers.set(trigger, timer);
   };
@@ -81,9 +58,11 @@ const {
   const copyEmail = async (trigger: HTMLElement) => {
     const email = trigger.dataset.copyEmail;
 
-    if (!email || !navigator.clipboard?.writeText) return;
+    if (!email) return;
 
     try {
+      if (!navigator.clipboard?.writeText) return;
+
       await navigator.clipboard.writeText(email);
       showCopiedState(trigger);
     } catch {

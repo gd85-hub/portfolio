@@ -1,27 +1,110 @@
-body{ background: var(--paper); transition:background-color var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard); }
+body{ background:var(--paper); }
 ::selection{ background: var(--accent); color:var(--on-accent); }
-:where(a, button){ transition-duration:var(--motion-base); transition-timing-function:var(--ease-standard); }
-.transition-colors,
-.transition-transform{
-  transition-duration:var(--motion-base);
-  transition-timing-function:var(--ease-standard);
-}
-:where(header, section, article, footer, .bg-paper, .bg-surface, .bg-inv, .border-line, .text-ink, .text-body, .text-muted, .text-accent){
+.transition-colors{
   transition-property:background-color, border-color, color;
-  transition-duration:var(--motion-base);
-  transition-timing-function:var(--ease-standard);
+  transition-duration:var(--motion-theme);
+  transition-timing-function:var(--ease-out);
 }
-:where(.group svg, #theme-toggle svg){
+.transition-transform{
+  transition-property:transform;
   transition-duration:var(--motion-fast);
-  transition-timing-function:var(--ease-standard);
+  transition-timing-function:var(--ease-out);
 }
+:where(html.theme-transition-active),
+:where(html.theme-transition-active) body,
+:where(html.theme-transition-active) :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .text-accent, .text-body, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
+  transition-property:background-color, border-color, color;
+  transition-duration:var(--motion-theme);
+  transition-timing-function:var(--ease-out);
+}
+:where(.group svg){
+  transition-property:transform;
+  transition-duration:var(--motion-fast);
+  transition-timing-function:var(--ease-out);
+}
+.theme-toggle-icon{
+  grid-area:1 / 1;
+  opacity:0;
+  transform:rotate(-45deg);
+  transition:opacity var(--motion-theme) var(--ease-out), transform var(--motion-theme) var(--ease-out);
+}
+html:not(.dark) .theme-toggle-icon-moon,
+html.dark .theme-toggle-icon-sun{
+  opacity:1;
+  transform:rotate(0);
+}
+.button-feedback{
+  transition:
+    background-color var(--motion-theme) var(--ease-out),
+    border-color var(--motion-theme) var(--ease-out),
+    color var(--motion-theme) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+  transform-origin:center;
+}
+.button-feedback:active{ transform:scale(.96); }
 .ph{ background: linear-gradient(135deg, var(--ph1), var(--ph2)); transition:background var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard); }
-.reveal{ opacity:0; transform:translateY(16px); transition:opacity var(--motion-slow) var(--ease-emphasized), transform var(--motion-slow) var(--ease-emphasized); }
+.reveal{
+  opacity:0;
+  transform:translateY(16px);
+  transition:
+    opacity var(--motion-slow) var(--ease-emphasized),
+    transform var(--motion-slow) var(--ease-emphasized),
+    background-color var(--motion-theme) var(--ease-out),
+    border-color var(--motion-theme) var(--ease-out),
+    color var(--motion-theme) var(--ease-out);
+}
 .reveal.in{ opacity:1; transform:none; }
+.copy-email-label{
+  grid-area:1 / 1;
+  transition:opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+}
+.copy-email-label-default{
+  opacity:1;
+  transform:translateY(0);
+}
+.copy-email-label-copied{
+  opacity:0;
+  transform:translateY(4px);
+}
+.copy-email-feedback.is-copied .copy-email-label-default{
+  opacity:0;
+  transform:translateY(-4px);
+}
+.copy-email-feedback.is-copied .copy-email-label-copied{
+  opacity:1;
+  transform:translateY(0);
+}
 @media (prefers-reduced-motion: reduce){
   *, ::before, ::after{ animation-duration:1ms !important; transition-duration:1ms !important; scroll-behavior:auto !important; }
+  :where(html.theme-transition-active),
+  :where(html.theme-transition-active) body,
+  :where(html.theme-transition-active) :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .text-accent, .text-body, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){ transition:none !important; }
+  .theme-toggle-icon{ transform:none !important; transition:none !important; }
   .reveal{ opacity:1 !important; transform:none !important; }
+  .button-feedback:active{ transform:none; }
+  .copy-email-label{
+    transform:none !important;
+    transition-property:opacity !important;
+    transition-duration:var(--motion-fast) !important;
+    transition-timing-function:var(--ease-out) !important;
+  }
   html{ scroll-behavior:auto; }
 }
-.link-underline{ background-image:linear-gradient(currentColor,currentColor); background-size:0% 1px; background-repeat:no-repeat; background-position:0 100%; transition:background-size var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard); }
-.link-underline:hover{ background-size:100% 1px; }
+.link-underline{ position:relative; }
+.link-underline::after{
+  content:'';
+  position:absolute;
+  right:0;
+  bottom:0;
+  left:0;
+  height:1px;
+  background:currentColor;
+  pointer-events:none;
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform var(--motion-theme) var(--ease-out);
+}
+@media (hover:hover) and (pointer:fine){
+  .link-underline:hover::after,
+  .copy-email-feedback:hover .copy-email-label-default::after{ transform:scaleX(1); }
+}
