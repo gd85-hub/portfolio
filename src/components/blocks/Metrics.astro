@@ -14,9 +14,97 @@ const { heading, items } = Astro.props;
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
     {items.map((item) => (
       <div class="border-t border-line pt-5">
-        <p class="t-section text-accent">{item.value}</p>
+        <p class="metric-value t-section tabular-nums text-accent">
+          <span class="metric-value-reserve" aria-hidden="true">{item.value}</span>
+          <span data-metric-counter data-metric-value={item.value}>{item.value}</span>
+        </p>
         <p class="mt-2 t-small text-muted">{item.label}</p>
       </div>
     ))}
   </div>
 </section>
+
+<script>
+  const metricCounters = Array.from(document.querySelectorAll<HTMLElement>('[data-metric-counter]'));
+  const metricDurationToken = '--motion-slow';
+
+  const parseMetric = (raw: string) => {
+    const match = raw.trim().match(/^([^0-9]*?)([+-]?)(\d+(?:\.\d+)?)(.*)$/);
+
+    if (!match) return null;
+
+    const [, prefix, sign, numberText, suffix] = match;
+    const target = Number(sign + numberText);
+
+    if (!Number.isFinite(target)) return null;
+
+    return {
+      prefix,
+      sign,
+      suffix,
+      decimals: numberText.includes('.') ? numberText.split('.')[1].length : 0,
+      target,
+      finalText: raw,
+    };
+  };
+
+  const formatMetric = (value: number, parts: NonNullable<ReturnType<typeof parseMetric>>) => {
+    const absolute = Math.abs(value).toFixed(parts.decimals);
+    const formatted = parts.sign === '+'
+      ? '+' + absolute
+      : parts.sign === '-'
+        ? '-' + absolute
+        : value < 0
+          ? '-' + absolute
+          : absolute;
+
+    return parts.prefix + formatted + parts.suffix;
+  };
+
+  const readMetricDuration = () => {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(metricDurationToken).trim();
+    const value = Number.parseFloat(raw);
+
+    if (!Number.isFinite(value)) return 700;
+    return raw.endsWith('s') && !raw.endsWith('ms') ? value * 1000 : value;
+  };
+
+  const animateMetric = (counter: HTMLElement, parts: NonNullable<ReturnType<typeof parseMetric>>) => {
+    const start = performance.now();
+    const duration = readMetricDuration();
+
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      counter.textContent = progress === 1 ? parts.finalText : formatMetric(parts.target * eased, parts);
+
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  const parsedCounters = metricCounters
+    .map((counter) => ({ counter, parts: parseMetric(counter.dataset.metricValue || counter.textContent || '') }))
+    .filter((entry): entry is { counter: HTMLElement; parts: NonNullable<ReturnType<typeof parseMetric>> } => Boolean(entry.parts));
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    parsedCounters.forEach(({ counter, parts }) => {
+      counter.textContent = formatMetric(0, parts);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        observer.unobserve(entry.target);
+        const match = parsedCounters.find(({ counter }) => counter === entry.target);
+
+        if (match) animateMetric(match.counter, match.parts);
+      });
+    }, { threshold: 0.35 });
+
+    parsedCounters.forEach(({ counter }) => observer.observe(counter));
+  }
+</script>

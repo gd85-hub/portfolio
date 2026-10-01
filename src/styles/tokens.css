@@ -5,7 +5,7 @@
   --ph1:#f4f4f5; --ph2:#e4e4e7; --phtext:#a1a1aa;
   --callout-insight-bg:#e9f3f2; --callout-problem-bg:#f6f6f7;
   --inv-bg:#18181b; --inv-fg:#ffffff; --inv-sub:#a1a1aa; --inv-line:#3f3f46; --inv-btn:#ffffff; --inv-btnfg:#18181b;
-  --motion-fast:160ms; --motion-theme:220ms; --motion-slow:760ms;
+  --motion-fast:160ms; --motion-theme:220ms; --motion-slow:600ms;
   --ease-emphasized:cubic-bezier(.22,1,.36,1);
   --ease-out:cubic-bezier(.23,1,.32,1);
   --radius:10px; --radius-sm:8px;

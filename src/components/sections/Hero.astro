@@ -4,18 +4,28 @@ import Eyebrow from '../Eyebrow.astro';
 ---
 
 <section class="mx-auto max-w-content px-5 pb-6 pt-12 sm:px-8 sm:pt-16">
-  <div class="reveal max-w-2xl">
-    <Eyebrow class="mb-5">Product Designer</Eyebrow>
+  <div class="hero-reveal max-w-2xl" data-hero-reveal>
+    <Eyebrow class="hero-reveal-eyebrow mb-5">Product Designer</Eyebrow>
     <h1 class="t-display text-ink">
-      Turning dense, complex<br />products into clear interfaces.
+      <span class="hero-line-clip"><span class="hero-line" data-hero-line="1">Turning dense, complex</span></span>
+      <span class="hero-line-clip"><span class="hero-line" data-hero-line="2">products into clear interfaces.</span></span>
     </h1>
-    <p class="t-lede mt-6 max-w-[48ch] text-body">
+    <p class="hero-reveal-subtitle t-lede mt-6 max-w-[48ch] text-body">
       Product designer with 5+ years in UX and a decade in marketing and research. Fintech, sales, and edtech.
     </p>
-    <div class="mt-9 flex flex-wrap items-center gap-4">
+    <div class="hero-reveal-cta mt-9 flex flex-wrap items-center gap-4">
       <Button href="#contact">
         Get in touch
       </Button>
     </div>
   </div>
 </section>
+
+<script is:inline>
+  const hero = document.querySelector('[data-hero-reveal]');
+
+  if (hero instanceof HTMLElement && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    hero.classList.add('hero-reveal-ready');
+    requestAnimationFrame(() => hero.classList.add('hero-reveal-visible'));
+  }
+</script>
