@@ -2,24 +2,24 @@ body{ background:var(--paper); }
 ::selection{ background: var(--accent); color:var(--on-accent); }
 .transition-colors{
   transition-property:background-color, border-color, color;
-  transition-duration:var(--motion-theme);
+  transition-duration:var(--motion-hover);
   transition-timing-function:var(--ease-out);
 }
 .transition-transform{
   transition-property:transform;
-  transition-duration:var(--motion-fast);
+  transition-duration:var(--motion-hover);
   transition-timing-function:var(--ease-out);
 }
-:where(html.theme-transition-active),
-:where(html.theme-transition-active) body,
-:where(html.theme-transition-active) :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-muted, .text-accent, .text-body, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
+html.theme-transition-active,
+html.theme-transition-active body,
+html.theme-transition-active :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-muted, .text-accent, .text-body, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
   transition-property:background-color, border-color, color;
   transition-duration:var(--motion-theme);
   transition-timing-function:var(--ease-out);
 }
 :where(.group svg){
   transition-property:transform;
-  transition-duration:var(--motion-fast);
+  transition-duration:var(--motion-hover);
   transition-timing-function:var(--ease-out);
 }
 .theme-toggle-icon{
@@ -35,35 +35,24 @@ html.dark .theme-toggle-icon-sun{
 }
 .button-feedback{
   transition:
-    background-color var(--motion-theme) var(--ease-out),
-    border-color var(--motion-theme) var(--ease-out),
-    color var(--motion-theme) var(--ease-out),
+    background-color var(--motion-hover) var(--ease-out),
+    border-color var(--motion-hover) var(--ease-out),
+    color var(--motion-hover) var(--ease-out),
     transform var(--motion-fast) var(--ease-out);
   transform-origin:center;
 }
 .button-feedback:active{
   transform:scale(.94);
   background-color:color-mix(in srgb, currentColor 12%, transparent);
+  transition-duration:var(--motion-fast);
 }
-.magnetic-cta{
-  --magnetic-x:0px;
-  --magnetic-y:0px;
-  transform:translate(var(--magnetic-x), var(--magnetic-y));
+.ph{
+  background:linear-gradient(135deg, var(--ph1), var(--ph2));
   transition:
-    background-color var(--motion-theme) var(--ease-out),
+    background var(--motion-theme) var(--ease-out),
     border-color var(--motion-theme) var(--ease-out),
-    color var(--motion-theme) var(--ease-out),
-    transform var(--motion-theme) var(--ease-out);
+    transform var(--motion-hover) var(--ease-out);
 }
-.magnetic-cta.is-magnetic-tracking{
-  transition-property:background-color, border-color, color;
-  transition-duration:var(--motion-theme);
-  transition-timing-function:var(--ease-out);
-}
-.magnetic-cta:active{
-  transform:translate(var(--magnetic-x), var(--magnetic-y)) scale(.94);
-}
-.ph{ background: linear-gradient(135deg, var(--ph1), var(--ph2)); transition:background var(--motion-theme) var(--ease-out), border-color var(--motion-theme) var(--ease-out); }
 .reveal{
   opacity:0;
   transform:translateY(16px);
@@ -163,22 +152,14 @@ html.dark .theme-toggle-icon-sun{
     transition-duration:var(--motion-fast) !important;
     transition-timing-function:var(--ease-out) !important;
   }
-  :where(html.theme-transition-active),
-  :where(html.theme-transition-active) body,
-  :where(html.theme-transition-active) :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-muted, .text-accent, .text-body, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
+  html.theme-transition-active,
+  html.theme-transition-active body,
+  html.theme-transition-active :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-muted, .text-accent, .text-body, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
     transition-property:background-color, border-color, color !important;
     transition-duration:var(--motion-fast) !important;
     transition-timing-function:var(--ease-out) !important;
   }
   .theme-toggle-icon{ transform:none !important; transition:opacity var(--motion-fast) var(--ease-out) !important; }
-  .magnetic-cta,
-  .magnetic-cta:active{
-    --magnetic-x:0px;
-    --magnetic-y:0px;
-    transform:none !important;
-    transition-property:background-color, border-color, color !important;
-    transition-duration:var(--motion-fast) !important;
-  }
   .reveal{ opacity:1 !important; transform:none !important; }
   .button-feedback:active{
     transform:none;
@@ -212,21 +193,23 @@ html.dark .theme-toggle-icon-sun{
   html{ scroll-behavior:auto; }
 }
 .link-underline{
+  display:inline-block;
+  width:fit-content;
   position:relative;
-  transition:color var(--motion-theme) var(--ease-out);
+  transition:color var(--motion-hover) var(--ease-out);
 }
 .link-underline::after{
   content:'';
   position:absolute;
-  right:0;
-  bottom:0;
   left:0;
+  bottom:-2px;
+  width:100%;
   height:1px;
   background:currentColor;
   pointer-events:none;
   transform:scaleX(0);
   transform-origin:left;
-  transition:transform var(--motion-theme) var(--ease-out);
+  transition:transform var(--motion-hover) var(--ease-out);
 }
 @media (hover:hover) and (pointer:fine){
   .link-underline:hover::after,
