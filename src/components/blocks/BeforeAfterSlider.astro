@@ -10,6 +10,9 @@ type Props = HTMLAttributes<'figure'> & {
   beforeLabel?: string;
   afterLabel?: string;
   caption?: string;
+  heading?: string;
+  problem?: string;
+  solution?: string;
 };
 
 const {
@@ -20,14 +23,43 @@ const {
   beforeLabel = 'Before',
   afterLabel = 'After',
   caption,
+  heading,
+  problem,
+  solution,
   class: className,
   ...attrs
 } = Astro.props;
+const hasProblemSolution = Boolean(problem || solution);
 
 // Before and after source images are expected to have matching dimensions.
 ---
 
 <figure class:list={[className]} {...attrs}>
+  {
+    hasProblemSolution && (
+      <figcaption class="mx-auto mb-6 max-w-[70ch] text-left">
+        {heading && <h3 class="t-sub text-ink">{heading}</h3>}
+        <div class:list={['grid items-start gap-6 md:grid-cols-2', heading && 'mt-5']}>
+          {
+            problem && (
+              <div>
+                <Eyebrow tone="inherit" class="text-callout-problem-accent">Problem</Eyebrow>
+                <p class="mt-2 t-body text-body">{problem}</p>
+              </div>
+            )
+          }
+          {
+            solution && (
+              <div>
+                <Eyebrow tone="accent">Solution</Eyebrow>
+                <p class="mt-2 t-body text-body">{solution}</p>
+              </div>
+            )
+          }
+        </div>
+      </figcaption>
+    )
+  }
   <div
     data-before-after-slider
     class="ba relative cursor-ew-resize touch-none select-none overflow-hidden rounded-[var(--radius)] border border-line"
@@ -80,7 +112,11 @@ const {
       {afterLabel}
     </Eyebrow>
   </div>
-  {caption && <figcaption class="mt-3 max-w-[70ch] t-small text-muted">{caption}</figcaption>}
+  {
+    !hasProblemSolution && caption && (
+      <figcaption class="mt-3 max-w-[70ch] t-small text-muted">{caption}</figcaption>
+    )
+  }
 </figure>
 
 <script>

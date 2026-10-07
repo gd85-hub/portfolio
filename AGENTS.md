@@ -45,7 +45,7 @@
 - fullImage - одна full-width картинка в колонке кейса. Fields: type, image, alt, caption?.
 - metrics - числа результата/процесса. Fields: type, heading?, items[{ value, label }].
 - beforeAfter - визуальное сравнение до/после. Fields: type, before, after, beforeAlt, afterAlt, caption?.
-- beforeAfterSlider - draggable before/after comparison slider. Fields: type, before, after, beforeAlt, afterAlt, beforeLabel?, afterLabel?, caption?.
+- beforeAfterSlider - draggable before/after comparison slider. Fields: type, before, after, beforeAlt, afterAlt, beforeLabel?, afterLabel?, caption?, heading?, problem?, solution?.
 - callout - выделенный инсайт или проблема. Fields: type, body, title?, variant? ('insight' | 'problem').
 - list - маркированный или нумерованный список. Fields: type, heading?, ordered?, items[].
 - quote - сдержанная цитата или внутренняя заметка. Fields: type, quote, attribution?.

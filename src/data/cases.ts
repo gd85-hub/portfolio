@@ -58,6 +58,9 @@ export interface BeforeAfterSliderBlock {
   beforeLabel?: string;
   afterLabel?: string;
   caption?: string;
+  heading?: string;
+  problem?: string;
+  solution?: string;
 }
 
 export interface CalloutBlock {
