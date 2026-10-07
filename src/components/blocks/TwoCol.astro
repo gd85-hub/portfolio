@@ -11,7 +11,7 @@ interface Props {
 const { heading, left, right } = Astro.props;
 ---
 
-<section>
+<section class="mx-auto max-w-[70ch]">
   {heading && <h2 class="mb-6 t-sub text-ink">{heading}</h2>}
   <div class="grid gap-8 md:grid-cols-2">
     <div class="max-w-[70ch]">

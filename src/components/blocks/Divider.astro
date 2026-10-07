@@ -9,7 +9,7 @@ interface Props {
 const { label, title } = Astro.props;
 ---
 
-<section class="border-t border-line pt-12 sm:pt-14">
+<section class="mx-auto max-w-[70ch] border-t border-line pt-12 sm:pt-14">
   {label && <Eyebrow tone="accent" class="mb-4">{label}</Eyebrow>}
   <h2 class="t-section text-ink">{title}</h2>
 </section>

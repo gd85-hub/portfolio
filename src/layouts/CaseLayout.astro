@@ -12,33 +12,37 @@ const { caseStudy } = Astro.props;
 
 <article>
   <div class="mx-auto max-w-content px-5 pb-24 pt-12 sm:px-8">
-    <a href="/" class="mb-10 inline-flex items-center gap-2 t-body font-medium text-muted transition-colors hover:text-ink">
-      <span class="icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
-      </span>
-      Back to work
-    </a>
-    <Eyebrow tone="accent" class="mb-4">{caseStudy.kicker}</Eyebrow>
-    <h1 class="t-title text-ink">{caseStudy.title}</h1>
-    <p class="t-lede mt-5 max-w-[70ch] text-body">{caseStudy.lede}</p>
-    <dl class="my-10 grid grid-cols-2 gap-6 border-y border-line py-6 t-body sm:grid-cols-4">
-      <div>
-        <Eyebrow as="dt">Role</Eyebrow>
-        <dd class="mt-1.5 text-ink">{caseStudy.role}</dd>
-      </div>
-      <div>
-        <Eyebrow as="dt">Timeframe</Eyebrow>
-        <dd class="mt-1.5 text-ink">{caseStudy.time}</dd>
-      </div>
-      <div>
-        <Eyebrow as="dt">Team</Eyebrow>
-        <dd class="mt-1.5 text-ink">{caseStudy.team}</dd>
-      </div>
-      <div>
-        <Eyebrow as="dt">Outcome</Eyebrow>
-        <dd class="mt-1.5 text-ink">{caseStudy.metric}</dd>
-      </div>
-    </dl>
+    <div class="mx-auto mb-10 max-w-[70ch]">
+      <a href="/" class="inline-flex items-center gap-2 t-body font-medium text-muted transition-colors hover:text-ink">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+        </span>
+        Back to work
+      </a>
+    </div>
+    <header class="mx-auto max-w-[70ch]">
+      <Eyebrow tone="accent" class="mb-4">{caseStudy.kicker}</Eyebrow>
+      <h1 class="t-title text-ink">{caseStudy.title}</h1>
+      <p class="t-lede mt-5 text-body">{caseStudy.lede}</p>
+      <dl class="my-10 grid grid-cols-2 gap-6 border-y border-line py-6 t-body sm:grid-cols-4">
+        <div>
+          <Eyebrow as="dt">Role</Eyebrow>
+          <dd class="mt-1.5 text-ink">{caseStudy.role}</dd>
+        </div>
+        <div>
+          <Eyebrow as="dt">Timeframe</Eyebrow>
+          <dd class="mt-1.5 text-ink">{caseStudy.time}</dd>
+        </div>
+        <div>
+          <Eyebrow as="dt">Team</Eyebrow>
+          <dd class="mt-1.5 text-ink">{caseStudy.team}</dd>
+        </div>
+        <div>
+          <Eyebrow as="dt">Outcome</Eyebrow>
+          <dd class="mt-1.5 text-ink">{caseStudy.metric}</dd>
+        </div>
+      </dl>
+    </header>
     {
       caseStudy.cover && (
         <div class="mb-12 aspect-[16/9] w-full overflow-hidden rounded-[var(--radius)] border border-line">
@@ -52,7 +56,7 @@ const { caseStudy } = Astro.props;
       )
     }
     <CaseBlocks blocks={caseStudy.blocks} />
-    <div class="mt-16 border-t border-line pt-8">
+    <div class="mx-auto mt-16 max-w-[70ch] border-t border-line pt-8">
       <a href="/#work" class="inline-flex items-center gap-2 t-body font-medium text-ink transition-colors hover:text-accent">
         <span class="icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
