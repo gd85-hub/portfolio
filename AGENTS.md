@@ -36,8 +36,8 @@
 ## Case blocks
 Контент кейса в src/data/cases.ts. Есть ДВА формата, оба рабочие:
 
-1. Блочный формат (основной, для Naoma): blocks: CaseBlock[]. Рендерится через CaseBlocks.astro. 13 типов блоков.
-2. Легаси-формат { h, p } (CaseBodySection): используется в кейсах OilCase X и OilCase Courses. CaseBlocks нормализует его в prose при рендере. Это НЕ баг и НЕ мусор: не удаляй нормализацию и не переписывай эти кейсы на блоки без явной просьбы.
+1. Блочный формат (основной, для Naoma и OilCase X): blocks: CaseBlock[]. Рендерится через CaseBlocks.astro. 13 типов блоков.
+2. Легаси-формат { h, p } (CaseBodySection): используется в кейсе OilCase Courses. CaseBlocks нормализует его в prose при рендере. Это НЕ баг и НЕ мусор: не удаляй нормализацию и не переписывай этот кейс на блоки без явной просьбы.
 
 13 типов блоков:
 - prose - narrative text. Fields: type, heading?, body.
