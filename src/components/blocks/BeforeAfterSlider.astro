@@ -1,0 +1,243 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Eyebrow from '../Eyebrow.astro';
+
+type Props = HTMLAttributes<'figure'> & {
+  before: string;
+  after: string;
+  beforeAlt: string;
+  afterAlt: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+  caption?: string;
+};
+
+const {
+  before,
+  after,
+  beforeAlt,
+  afterAlt,
+  beforeLabel = 'Before',
+  afterLabel = 'After',
+  caption,
+  class: className,
+  ...attrs
+} = Astro.props;
+
+// Before and after source images are expected to have matching dimensions.
+---
+
+<figure class:list={[className]} {...attrs}>
+  <div
+    data-before-after-slider
+    class="ba relative cursor-ew-resize touch-none select-none overflow-hidden rounded-[var(--radius)] border border-line"
+  >
+    <img src={after} alt={afterAlt} draggable="false" class="block h-auto w-full" />
+    <img
+      src={before}
+      alt={beforeAlt}
+      draggable="false"
+      data-ba-before
+      class="absolute inset-0 h-full w-full object-cover"
+      style="clip-path: inset(0 50% 0 0);"
+    />
+
+    <div
+      data-ba-divider
+      class="pointer-events-none absolute inset-y-0 z-10 w-[2px] -translate-x-1/2 cursor-ew-resize bg-accent"
+      style="left: 50%;"
+    >
+      <div
+        data-ba-handle
+        role="slider"
+        tabindex="0"
+        aria-label={`Compare ${beforeLabel} and ${afterLabel}`}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="50"
+        aria-valuetext={`50% ${beforeLabel}`}
+        data-before-label={beforeLabel}
+        class="pointer-events-auto absolute left-1/2 top-1/2 grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize place-items-center rounded-full border border-line bg-surface text-ink shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+      >
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 18-6-6 6-6M3 12h18M15 6l6 6-6 6" />
+          </svg>
+        </span>
+      </div>
+      <span
+        data-ba-hint
+        class="eyebrow pointer-events-none absolute left-1/2 top-1/2 ml-7 -translate-y-1/2 rounded-[var(--radius-sm)] border border-line bg-surface px-3 py-2 text-ink opacity-100 transition-opacity duration-[var(--motion-theme)] ease-[var(--ease-out)]"
+      >
+        Drag
+      </span>
+    </div>
+
+    <Eyebrow as="span" tone="inherit" class="pointer-events-none absolute left-3 top-3 z-20 rounded-[var(--radius-sm)] border border-line bg-surface px-3 py-2 text-ink">
+      {beforeLabel}
+    </Eyebrow>
+    <Eyebrow as="span" tone="inherit" class="pointer-events-none absolute right-3 top-3 z-20 rounded-[var(--radius-sm)] border border-line bg-surface px-3 py-2 text-ink">
+      {afterLabel}
+    </Eyebrow>
+  </div>
+  {caption && <figcaption class="mt-3 max-w-[70ch] t-small text-muted">{caption}</figcaption>}
+</figure>
+
+<script>
+  const sliderElements = Array.from(document.querySelectorAll<HTMLElement>('[data-before-after-slider]'));
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const clamp = (value: number, minimum: number, maximum: number) => Math.min(maximum, Math.max(minimum, value));
+
+  const readMotionDuration = (token: string, fallback: number) => {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+    const value = Number.parseFloat(raw);
+
+    if (!Number.isFinite(value)) return fallback;
+    return raw.endsWith('s') && !raw.endsWith('ms') ? value * 1000 : value;
+  };
+
+  sliderElements.forEach((slider) => {
+    const beforeImage = slider.querySelector<HTMLElement>('[data-ba-before]');
+    const divider = slider.querySelector<HTMLElement>('[data-ba-divider]');
+    const handle = slider.querySelector<HTMLElement>('[data-ba-handle]');
+    const hint = slider.querySelector<HTMLElement>('[data-ba-hint]');
+
+    if (!beforeImage || !divider || !handle || !hint) return;
+
+    let position = 50;
+    let activePointerId: number | null = null;
+    let hasInteracted = false;
+    const teaseTimers: number[] = [];
+
+    const setPosition = (nextPosition: number) => {
+      position = clamp(nextPosition, 0, 100);
+      beforeImage.style.clipPath = `inset(0 ${100 - position}% 0 0)`;
+      divider.style.left = `${position}%`;
+
+      const roundedPosition = Math.round(position);
+      handle.setAttribute('aria-valuenow', String(roundedPosition));
+      handle.setAttribute('aria-valuetext', `${roundedPosition}% ${handle.dataset.beforeLabel || 'Before'}`);
+    };
+
+    const disableTransition = () => {
+      beforeImage.style.transition = 'none';
+      divider.style.transition = 'none';
+    };
+
+    const enableTransition = (durationToken: string) => {
+      beforeImage.style.transition = `clip-path var(${durationToken}) var(--ease-out)`;
+      divider.style.transition = `left var(${durationToken}) var(--ease-out)`;
+    };
+
+    const stopTease = () => {
+      teaseTimers.forEach((timer) => window.clearTimeout(timer));
+      teaseTimers.length = 0;
+    };
+
+    const markInteracted = () => {
+      if (!hasInteracted) {
+        hasInteracted = true;
+        stopTease();
+      }
+      hint.classList.remove('opacity-100');
+      hint.classList.add('opacity-0');
+    };
+
+    const updateFromPointer = (event: PointerEvent) => {
+      const bounds = slider.getBoundingClientRect();
+      setPosition(((event.clientX - bounds.left) / bounds.width) * 100);
+    };
+
+    const snapPosition = () => {
+      const snapTarget = [0, 50, 100].find((target) => Math.abs(position - target) <= 6);
+
+      if (snapTarget === undefined || snapTarget === position) {
+        disableTransition();
+        return;
+      }
+
+      if (reducedMotion) {
+        disableTransition();
+        setPosition(snapTarget);
+        return;
+      }
+
+      enableTransition('--motion-theme');
+      divider.addEventListener('transitionend', disableTransition, { once: true });
+      setPosition(snapTarget);
+    };
+
+    const finishDrag = (event: PointerEvent, shouldSnap: boolean) => {
+      if (activePointerId !== event.pointerId) return;
+
+      if (slider.hasPointerCapture(event.pointerId)) {
+        slider.releasePointerCapture(event.pointerId);
+      }
+
+      activePointerId = null;
+      if (shouldSnap) snapPosition();
+    };
+
+    slider.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      if (activePointerId !== null) return;
+
+      hasInteracted = true;
+      stopTease();
+      disableTransition();
+      activePointerId = event.pointerId;
+      slider.setPointerCapture(event.pointerId);
+      updateFromPointer(event);
+    });
+
+    slider.addEventListener('pointermove', (event) => {
+      if (activePointerId !== event.pointerId) return;
+      markInteracted();
+      updateFromPointer(event);
+    });
+
+    slider.addEventListener('pointerup', (event) => finishDrag(event, true));
+    slider.addEventListener('pointercancel', (event) => finishDrag(event, false));
+
+    handle.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+
+      event.preventDefault();
+      markInteracted();
+      disableTransition();
+      const step = event.shiftKey ? 10 : 2;
+      setPosition(position + (event.key === 'ArrowRight' ? step : -step));
+    });
+
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          observer.unobserve(entry.target);
+          if (hasInteracted) return;
+
+          const duration = readMotionDuration('--motion-fast', 160);
+          enableTransition('--motion-fast');
+
+          [42, 58, 50].forEach((nextPosition, index, steps) => {
+            const timer = window.setTimeout(() => {
+              if (hasInteracted) return;
+              setPosition(nextPosition);
+
+              if (index === steps.length - 1) {
+                const cleanupTimer = window.setTimeout(disableTransition, duration);
+                teaseTimers.push(cleanupTimer);
+              }
+            }, duration * index);
+
+            teaseTimers.push(timer);
+          });
+        });
+      }, { threshold: 0.35 });
+
+      observer.observe(slider);
+    }
+  });
+</script>

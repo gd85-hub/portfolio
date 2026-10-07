@@ -49,6 +49,17 @@ export interface BeforeAfterBlock {
   caption?: string;
 }
 
+export interface BeforeAfterSliderBlock {
+  type: 'beforeAfterSlider';
+  before: string;
+  after: string;
+  beforeAlt: string;
+  afterAlt: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+  caption?: string;
+}
+
 export interface CalloutBlock {
   type: 'callout';
   body: string;
@@ -113,6 +124,7 @@ export type CaseBlock =
   | FullImageBlock
   | MetricsBlock
   | BeforeAfterBlock
+  | BeforeAfterSliderBlock
   | CalloutBlock
   | ListBlock
   | QuoteBlock

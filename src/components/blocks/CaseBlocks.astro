@@ -4,6 +4,7 @@ import ImageText from './ImageText.astro';
 import FullImage from './FullImage.astro';
 import Metrics from './Metrics.astro';
 import BeforeAfter from './BeforeAfter.astro';
+import BeforeAfterSlider from './BeforeAfterSlider.astro';
 import Callout from './Callout.astro';
 import List from './List.astro';
 import Quote from './Quote.astro';
@@ -56,6 +57,18 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
         return <Metrics heading={block.heading} items={block.items} />;
       case 'beforeAfter':
         return <BeforeAfter before={block.before} after={block.after} beforeAlt={block.beforeAlt} afterAlt={block.afterAlt} caption={block.caption} />;
+      case 'beforeAfterSlider':
+        return (
+          <BeforeAfterSlider
+            before={block.before}
+            after={block.after}
+            beforeAlt={block.beforeAlt}
+            afterAlt={block.afterAlt}
+            beforeLabel={block.beforeLabel}
+            afterLabel={block.afterLabel}
+            caption={block.caption}
+          />
+        );
       case 'callout':
         return <Callout body={block.body} variant={block.variant} title={block.title} />;
       case 'list':

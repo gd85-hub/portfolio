@@ -36,15 +36,16 @@
 ## Case blocks
 Контент кейса в src/data/cases.ts. Есть ДВА формата, оба рабочие:
 
-1. Блочный формат (основной, для Naoma): blocks: CaseBlock[]. Рендерится через CaseBlocks.astro. 12 типов блоков.
+1. Блочный формат (основной, для Naoma): blocks: CaseBlock[]. Рендерится через CaseBlocks.astro. 13 типов блоков.
 2. Легаси-формат { h, p } (CaseBodySection): используется в кейсах OilCase X и OilCase Courses. CaseBlocks нормализует его в prose при рендере. Это НЕ баг и НЕ мусор: не удаляй нормализацию и не переписывай эти кейсы на блоки без явной просьбы.
 
-12 типов блоков:
+13 типов блоков:
 - prose - narrative text. Fields: type, heading?, body.
 - imageText - image + текст в две колонки. Fields: type, side, image, alt, caption?, heading?, body.
 - fullImage - одна full-width картинка в колонке кейса. Fields: type, image, alt, caption?.
 - metrics - числа результата/процесса. Fields: type, heading?, items[{ value, label }].
 - beforeAfter - визуальное сравнение до/после. Fields: type, before, after, beforeAlt, afterAlt, caption?.
+- beforeAfterSlider - draggable before/after comparison slider. Fields: type, before, after, beforeAlt, afterAlt, beforeLabel?, afterLabel?, caption?.
 - callout - выделенный инсайт или проблема. Fields: type, body, title?, variant? ('insight' | 'problem').
 - list - маркированный или нумерованный список. Fields: type, heading?, ordered?, items[].
 - quote - сдержанная цитата или внутренняя заметка. Fields: type, quote, attribution?.
