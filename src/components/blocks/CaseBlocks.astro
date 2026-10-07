@@ -40,7 +40,18 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
       case 'imageText':
         return <ImageText side={block.side} image={block.image} alt={block.alt} caption={block.caption} heading={block.heading} body={block.body} />;
       case 'fullImage':
-        return <div class="py-4 sm:py-6"><FullImage image={block.image} alt={block.alt} caption={block.caption} /></div>;
+        return (
+          <div class="py-4 sm:py-6">
+            <FullImage
+              image={block.image}
+              alt={block.alt}
+              caption={block.caption}
+              heading={block.heading}
+              problem={block.problem}
+              solution={block.solution}
+            />
+          </div>
+        );
       case 'metrics':
         return <Metrics heading={block.heading} items={block.items} />;
       case 'beforeAfter':

@@ -5,9 +5,13 @@ interface Props {
   image: string | null;
   alt: string;
   caption?: string;
+  heading?: string;
+  problem?: string;
+  solution?: string;
 }
 
-const { image, alt, caption } = Astro.props;
+const { image, alt, caption, heading, problem, solution } = Astro.props;
+const hasProblemSolution = Boolean(problem || solution);
 ---
 
 <figure class="pb-2 sm:pb-4">
@@ -22,5 +26,31 @@ const { image, alt, caption } = Astro.props;
       </div>
     )
   }
-  {caption && <figcaption class="mt-3 max-w-[70ch] t-small text-muted">{caption}</figcaption>}
+  {
+    hasProblemSolution ? (
+      <figcaption class="mx-auto mt-6 max-w-[70ch] text-left">
+        {heading && <h3 class="t-sub text-ink">{heading}</h3>}
+        <div class:list={['space-y-5', heading && 'mt-5']}>
+          {
+            problem && (
+              <div>
+                <Eyebrow tone="inherit" class="text-callout-problem-accent">Problem</Eyebrow>
+                <p class="mt-2 t-body text-body">{problem}</p>
+              </div>
+            )
+          }
+          {
+            solution && (
+              <div>
+                <Eyebrow tone="accent">Solution</Eyebrow>
+                <p class="mt-2 t-body text-body">{solution}</p>
+              </div>
+            )
+          }
+        </div>
+      </figcaption>
+    ) : (
+      caption && <figcaption class="mt-3 max-w-[70ch] t-small text-muted">{caption}</figcaption>
+    )
+  }
 </figure>

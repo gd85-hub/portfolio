@@ -24,6 +24,9 @@ export interface FullImageBlock {
   image: string | null;
   alt: string;
   caption?: string;
+  heading?: string;
+  problem?: string;
+  solution?: string;
 }
 
 export interface MetricItem {
@@ -201,17 +204,42 @@ export const cases = {
         type: 'fullImage',
         image: '/naoma/dashboard.png',
         alt: 'Naoma dashboard with key metrics, sales team performance table, and revenue and leads charts',
-        caption: 'The dashboard brings team-level KPIs, per-rep performance, and revenue and leads over time into one view.',
+        heading: 'Dashboard',
+        problem: 'Sales data was scattered across multiple tools, making it hard to get a real-time picture of team performance.',
+        solution: 'A centralized dashboard with 10 team-level metrics, a per-rep performance table, dynamic charts for spotting trends, and quick filters to drill down by time.',
       },
-      { type: 'fullImage', image: '/naoma/calls-list.png', alt: 'Calls list with automatic scores per call', caption: 'Calls: every call is logged and scored automatically across five stages, sortable and filterable, with an Alerts Only mode for critical calls.' },
+      {
+        type: 'fullImage',
+        image: '/naoma/calls-list.png',
+        alt: 'Calls list with automatic scores per call',
+        heading: 'Calls',
+        problem: 'Users had no easy way to assess call quality or flag critical calls, and filtering was limited.',
+        solution: 'A structured call database sorted by parameters like Call Score, type, and duration, with flexible filters and an Alerts Only mode for critical calls.',
+      },
       {
         type: 'fullImage',
         image: '/naoma/call-scoring-expanded.png',
         alt: 'Call page with stage-by-stage scoring and quotes pulled from the transcript',
-        caption: 'Call page: the conversation is broken into stages, with a score summary, full transcript, and AI-powered feedback.',
+        heading: 'Call page',
+        problem: 'Reviewing calls was time-consuming and subjective; teams struggled to pinpoint where deals were lost.',
+        solution: 'A structured review that breaks the conversation into stages, with a call-score summary, clickable stages, a full transcript with objections and questions, and AI-powered feedback.',
       },
-      { type: 'fullImage', image: '/naoma/reports-comparative.png', alt: 'Reports view comparing sales metrics across multiple time periods', caption: 'Reports: performance compared across multiple time periods, so leaders see trends instead of a single snapshot.' },
-      { type: 'fullImage', image: '/naoma/rep-profile-performance.png', alt: 'Sales rep profile comparing a rep against the team average', caption: 'Sales rep profile: each rep is benchmarked against the team average.' },
+      {
+        type: 'fullImage',
+        image: '/naoma/reports-comparative.png',
+        alt: 'Reports view comparing sales metrics across multiple time periods',
+        heading: 'Reports',
+        problem: 'Disconnected data made it hard to track performance over time.',
+        solution: 'A reporting tool combining revenue, deals, and quality metrics, with multi-period comparisons (up to six periods) for trend tracking and forecasting.',
+      },
+      {
+        type: 'fullImage',
+        image: '/naoma/rep-profile-performance.png',
+        alt: 'Sales rep profile comparing a rep against the team average',
+        heading: 'Sales rep profile',
+        problem: 'Leaders struggle to assess individual reps objectively; data is scattered and hard to compare to team-wide metrics.',
+        solution: 'A profile page with core metrics, strengths and weaknesses, and a table benchmarking the rep against team averages.',
+      },
       { type: 'divider', label: 'Results', title: 'Impact and traction' },
       {
         type: 'metrics',
