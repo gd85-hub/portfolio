@@ -12,7 +12,7 @@ const { label, title } = Astro.props;
 
 <section
   id={slugify(label || title)}
-  class="mx-auto max-w-[70ch] scroll-mt-28 border-t border-line pt-12 sm:pt-14 xl:scroll-mt-24"
+  class="mx-auto max-w-[70ch] scroll-mt-28 border-t border-line pt-12 sm:pt-14"
 >
   {label && <Eyebrow tone="accent" class="mb-4">{label}</Eyebrow>}
   <h2 class="t-section text-ink">{title}</h2>
