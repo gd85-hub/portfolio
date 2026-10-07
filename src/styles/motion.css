@@ -12,7 +12,7 @@ body{ background:var(--paper); }
 }
 html.theme-transition-active,
 html.theme-transition-active body,
-html.theme-transition-active :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-muted, .text-accent, .text-body, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
+html.theme-transition-active :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-callout-problem-accent, .border-l-muted, .text-accent, .text-body, .text-callout-problem-accent, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
   transition-property:background-color, border-color, color;
   transition-duration:var(--motion-theme);
   transition-timing-function:var(--ease-out);
@@ -154,7 +154,7 @@ html.dark .theme-toggle-icon-sun{
   }
   html.theme-transition-active,
   html.theme-transition-active body,
-  html.theme-transition-active :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-muted, .text-accent, .text-body, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
+  html.theme-transition-active :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-callout-problem-accent, .border-l-muted, .text-accent, .text-body, .text-callout-problem-accent, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
     transition-property:background-color, border-color, color !important;
     transition-duration:var(--motion-fast) !important;
     transition-timing-function:var(--ease-out) !important;

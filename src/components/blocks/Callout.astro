@@ -12,13 +12,13 @@ const { body, variant = 'insight', title } = Astro.props;
 const isProblem = variant === 'problem';
 const label = title ?? (isProblem ? 'Problem' : 'Key insight');
 const classes = isProblem
-  ? 'border-l-4 border-l-muted bg-callout-problem'
+  ? 'border-l-4 border-l-callout-problem-accent bg-callout-problem'
   : 'border-l-8 border-l-accent bg-callout-insight';
 ---
 
 <aside class:list={['mx-auto max-w-[70ch] rounded-[var(--radius)] border border-line p-6', classes]}>
   <div class="mb-4 flex items-center gap-2">
-    <span class:list={['icon', isProblem ? 'text-muted' : 'text-accent']} aria-hidden="true">
+    <span class:list={['icon', isProblem ? 'text-callout-problem-accent' : 'text-accent']} aria-hidden="true">
       {
         isProblem ? (
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 8v5" /><path d="M12 17h.01" /></svg>
@@ -27,7 +27,13 @@ const classes = isProblem
         )
       }
     </span>
-    <Eyebrow tone={isProblem ? 'muted' : 'accent'} as="span">{label}</Eyebrow>
+    <Eyebrow
+      tone={isProblem ? 'inherit' : 'accent'}
+      class:list={[isProblem && 'text-callout-problem-accent']}
+      as="span"
+    >
+      {label}
+    </Eyebrow>
   </div>
   <p class="t-body text-body">{body}</p>
 </aside>

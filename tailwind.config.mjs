@@ -18,6 +18,7 @@ export default {
         phtext: 'var(--phtext)',
         'callout-insight': 'var(--callout-insight-bg)',
         'callout-problem': 'var(--callout-problem-bg)',
+        'callout-problem-accent': 'var(--callout-problem-accent)',
         inv: 'var(--inv-bg)',
         'inv-fg': 'var(--inv-fg)',
         'inv-sub': 'var(--inv-sub)',
