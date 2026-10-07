@@ -13,44 +13,41 @@ type Props = HTMLAttributes<'nav'> & {
 const { toc, class: className, ...attrs } = Astro.props;
 ---
 
-<nav
-  data-case-toc
-  aria-label="Case sections"
-  class:list={['sticky top-16 z-30 border-b border-line bg-paper', className]}
-  {...attrs}
->
-  <div class="mx-auto max-w-content px-5 sm:px-8">
-    <div data-toc-scroll class="overflow-x-auto">
-      <div data-toc-track class="relative flex h-12 w-max min-w-full items-center gap-6 pr-5 sm:pr-8">
-        {
-          toc.map((item, index) => (
-            <a
-              href={`#${item.id}`}
-              data-toc-link
-              data-toc-id={item.id}
-              aria-current={index === 0 ? 'true' : undefined}
-              class:list={[
-                'shrink-0 whitespace-nowrap t-small transition-[color] duration-[var(--motion-theme)] ease-[var(--ease-out)] hover:text-ink focus-visible:text-ink',
-                index === 0 ? 'text-accent' : 'text-muted',
-              ]}
-            >
-              {item.label}
-            </a>
-          ))
-        }
-        <span
-          data-toc-indicator
-          class="pointer-events-none absolute bottom-[2px] left-0 h-[2px] w-0 bg-accent transition-transform duration-[var(--motion-theme)] ease-[var(--ease-out)]"
-          aria-hidden="true"
-        ></span>
-      </div>
+<div data-case-toc class="sticky top-16 z-30 flex w-full justify-center border-b border-line bg-paper px-5 py-2 sm:px-8">
+  <nav
+    data-toc-scroll
+    aria-label="Case sections"
+    class:list={[
+      'w-fit max-w-full overflow-x-auto rounded-full border border-line bg-surface p-1',
+      className,
+    ]}
+    {...attrs}
+  >
+    <div data-toc-track class="relative inline-flex w-max items-center gap-1">
+      <span
+        data-toc-thumb
+        class="pointer-events-none absolute inset-y-0 left-0 z-0 w-px origin-left rounded-full bg-ph1 transition-transform duration-[var(--motion-theme)] ease-[var(--ease-out)]"
+        aria-hidden="true"
+      ></span>
+      {
+        toc.map((item, index) => (
+          <a
+            href={`#${item.id}`}
+            data-toc-link
+            data-toc-id={item.id}
+            aria-current={index === 0 ? 'true' : undefined}
+            class:list={[
+              'relative z-10 shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 t-small transition-[color] duration-[var(--motion-theme)] ease-[var(--ease-out)] hover:text-ink focus-visible:text-ink',
+              index === 0 ? 'text-accent' : 'text-muted',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
     </div>
-  </div>
-
-  <span class="pointer-events-none absolute inset-x-0 bottom-0 h-[2px]" aria-hidden="true">
-    <span data-toc-progress class="block h-full w-0 bg-accent"></span>
-  </span>
-</nav>
+  </nav>
+</div>
 
 <script>
   const tocRoots = document.querySelectorAll<HTMLElement>('[data-case-toc]');
@@ -58,27 +55,19 @@ const { toc, class: className, ...attrs } = Astro.props;
   tocRoots.forEach((root) => {
     const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
     const scrollArea = root.querySelector<HTMLElement>('[data-toc-scroll]');
-    const track = root.querySelector<HTMLElement>('[data-toc-track]');
-    const indicator = root.querySelector<HTMLElement>('[data-toc-indicator]');
-    const progress = root.querySelector<HTMLElement>('[data-toc-progress]');
-    const items = links.map((link) => ({
-      id: link.dataset.tocId ?? '',
-    }));
+    const thumb = root.querySelector<HTMLElement>('[data-toc-thumb]');
+    const items = links.map((link) => ({ id: link.dataset.tocId ?? '' }));
     const sections = items
       .map((item) => document.getElementById(item.id))
       .filter((section): section is HTMLElement => section instanceof HTMLElement);
 
-    if (!scrollArea || !track || !indicator || !progress) return;
+    if (!scrollArea || !thumb) return;
 
     let activeId = items[0]?.id ?? '';
-    let progressFrame = 0;
     let layoutFrame = 0;
 
-    const positionIndicator = (link: HTMLAnchorElement, revealLink = true) => {
-      const trackRect = track.getBoundingClientRect();
-      const linkRect = link.getBoundingClientRect();
-      indicator.style.width = `${linkRect.width}px`;
-      indicator.style.transform = `translateX(${linkRect.left - trackRect.left}px)`;
+    const positionThumb = (link: HTMLAnchorElement, revealLink = true) => {
+      thumb.style.transform = `translateX(${link.offsetLeft}px) scaleX(${link.offsetWidth})`;
 
       if (revealLink && scrollArea.scrollWidth > scrollArea.clientWidth) {
         link.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
@@ -97,7 +86,7 @@ const { toc, class: className, ...attrs } = Astro.props;
         if (active) link.setAttribute('aria-current', 'true');
         else link.removeAttribute('aria-current');
       });
-      positionIndicator(activeLink, revealLink);
+      positionThumb(activeLink, revealLink);
     };
 
     const visibleSections = new Set<string>();
@@ -117,24 +106,11 @@ const { toc, class: className, ...attrs } = Astro.props;
 
     sections.forEach((section) => observer.observe(section));
 
-    const updateProgress = () => {
-      const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
-      const value = scrollRange > 0 ? Math.min(Math.max(window.scrollY / scrollRange, 0), 1) : 0;
-      progress.style.width = `${value * 100}%`;
-      progressFrame = 0;
-    };
-
-    const requestProgressUpdate = () => {
-      if (progressFrame) return;
-      progressFrame = window.requestAnimationFrame(updateProgress);
-    };
-
     const requestLayoutUpdate = () => {
       if (layoutFrame) return;
       layoutFrame = window.requestAnimationFrame(() => {
         const activeLink = links.find((link) => link.dataset.tocId === activeId);
-        if (activeLink) positionIndicator(activeLink, false);
-        updateProgress();
+        if (activeLink) positionThumb(activeLink, false);
         layoutFrame = 0;
       });
     };
@@ -146,12 +122,10 @@ const { toc, class: className, ...attrs } = Astro.props;
       });
     });
 
-    window.addEventListener('scroll', requestProgressUpdate, { passive: true });
     window.addEventListener('resize', requestLayoutUpdate);
 
     const hashId = window.location.hash.slice(1);
     setActive(items.some((item) => item.id === hashId) ? hashId : activeId, false);
-    updateProgress();
     document.fonts.ready.then(requestLayoutUpdate);
   });
 </script>
@@ -167,7 +141,7 @@ const { toc, class: className, ...attrs } = Astro.props;
 
   @media (prefers-reduced-motion: reduce) {
     [data-toc-link],
-    [data-toc-indicator] {
+    [data-toc-thumb] {
       transition: none !important;
     }
   }
