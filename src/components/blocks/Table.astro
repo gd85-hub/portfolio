@@ -12,11 +12,11 @@ interface Props {
 const { heading, columns, rows } = Astro.props;
 ---
 
-<section class="mx-auto">
+<section class="mx-auto max-w-[70ch]">
   {heading && <h2 class="mb-6 t-sub text-ink">{heading}</h2>}
   <div class="overflow-hidden rounded-[var(--radius)] border border-line">
     <div class="overflow-x-auto">
-      <table class="w-full min-w-[720px] border-collapse">
+      <table class="w-full border-collapse">
         <thead>
           <tr class="border-b border-line">
             {columns.map((column) => (

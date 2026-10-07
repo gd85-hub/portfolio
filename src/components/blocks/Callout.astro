@@ -12,11 +12,11 @@ const { body, variant = 'insight', title } = Astro.props;
 const isProblem = variant === 'problem';
 const label = title ?? (isProblem ? 'Problem' : 'Key insight');
 const classes = isProblem
-  ? 'border-l-4 border-l-callout-problem-accent bg-callout-problem'
-  : 'border-l-8 border-l-accent bg-callout-insight';
+  ? 'border-l-[6px] border-l-callout-problem-accent bg-callout-problem'
+  : 'border-l-[6px] border-l-accent bg-callout-insight';
 ---
 
-<aside class:list={['mx-auto max-w-[70ch] rounded-[var(--radius)] border border-line p-6', classes]}>
+<aside class:list={['mx-auto max-w-[70ch] rounded-[var(--radius)] p-6', classes]}>
   <div class="mb-4 flex items-center gap-2">
     <span class:list={['icon', isProblem ? 'text-callout-problem-accent' : 'text-accent']} aria-hidden="true">
       {
