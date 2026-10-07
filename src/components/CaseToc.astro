@@ -1,0 +1,279 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Button from './Button.astro';
+
+type TocItem = {
+  id: string;
+  label: string;
+};
+
+type Props = HTMLAttributes<'div'> & {
+  toc: TocItem[];
+};
+
+const { toc, class: className, ...attrs } = Astro.props;
+---
+
+<div data-case-toc class:list={['contents', className]} {...attrs}>
+  <aside
+    class="fixed left-0 top-1/2 z-30 hidden w-[calc(50vw-35rem)] -translate-y-1/2 xl:block"
+  >
+    <nav aria-label="Case sections">
+      <ul class="space-y-3">
+        {
+          toc.map((item, index) => (
+            <li>
+              <a
+                href={`#${item.id}`}
+                data-toc-link
+                data-toc-rail-link
+                data-toc-id={item.id}
+                aria-current={index === 0 ? 'true' : undefined}
+                class:list={[
+                  'group flex min-w-0 items-center justify-end gap-3 t-small transition-colors duration-[var(--motion-theme)] ease-[var(--ease-out)] hover:text-accent focus-visible:text-accent',
+                  index === 0 ? 'text-accent' : 'text-muted',
+                ]}
+              >
+                <span
+                  data-toc-rail-label
+                  class:list={[
+                    'truncate text-right transition-opacity duration-[var(--motion-theme)] ease-[var(--ease-out)] group-hover:opacity-100 group-focus-visible:opacity-100',
+                    index === 0 ? 'opacity-100' : 'opacity-0',
+                  ]}
+                >
+                  {item.label}
+                </span>
+                <span
+                  data-toc-tick
+                  aria-hidden="true"
+                  class:list={[
+                    'h-[2px] w-4 shrink-0 transition-colors duration-[var(--motion-theme)] ease-[var(--ease-out)] group-hover:bg-accent',
+                    index === 0 ? 'bg-accent' : 'bg-line',
+                  ]}
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="sticky top-16 z-30 border-b border-line bg-paper xl:hidden">
+    <Button
+      type="button"
+      variant="ghost"
+      size="sm"
+      data-toc-toggle
+      aria-controls="case-toc-panel"
+      aria-expanded="false"
+      class="!flex !w-full !justify-between !rounded-none !border-0 !px-5 !py-3 sm:!px-8"
+    >
+      <span data-toc-current class="min-w-0 truncate text-left">{toc[0].label}</span>
+      <span class="flex shrink-0 items-center gap-2 text-muted">
+        <span data-toc-count>{`1 / ${toc.length}`}</span>
+        <span
+          data-toc-chevron
+          class="icon transition-transform duration-[var(--motion-theme)] ease-[var(--ease-out)]"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </span>
+      </span>
+    </Button>
+
+    <nav
+      id="case-toc-panel"
+      data-toc-panel
+      aria-label="Case sections"
+      aria-hidden="true"
+      inert
+      class="pointer-events-none absolute inset-x-0 top-full -translate-y-2 border-b border-line bg-paper px-5 py-3 opacity-0 transition-[opacity,transform] duration-[var(--motion-theme)] ease-[var(--ease-out)] sm:px-8"
+    >
+      <ul class="space-y-1">
+        {
+          toc.map((item, index) => (
+            <li>
+              <a
+                href={`#${item.id}`}
+                data-toc-link
+                data-toc-menu-link
+                data-toc-id={item.id}
+                aria-current={index === 0 ? 'true' : undefined}
+                class:list={[
+                  'block py-2 t-small transition-colors duration-[var(--motion-theme)] ease-[var(--ease-out)] hover:text-accent',
+                  index === 0 ? 'text-accent' : 'text-muted',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="h-[2px] bg-line" aria-hidden="true">
+      <span data-toc-progress class="block h-full w-0 bg-accent"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const tocRoots = document.querySelectorAll<HTMLElement>('[data-case-toc]');
+
+  tocRoots.forEach((root) => {
+    const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+    const railLinks = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-toc-rail-link]'));
+    const menuLinks = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-toc-menu-link]'));
+    const toggle = root.querySelector<HTMLButtonElement>('[data-toc-toggle]');
+    const panel = root.querySelector<HTMLElement>('[data-toc-panel]');
+    const currentLabel = root.querySelector<HTMLElement>('[data-toc-current]');
+    const currentCount = root.querySelector<HTMLElement>('[data-toc-count]');
+    const chevron = root.querySelector<HTMLElement>('[data-toc-chevron]');
+    const progress = root.querySelector<HTMLElement>('[data-toc-progress]');
+    const items = railLinks.map((link) => ({
+      id: link.dataset.tocId ?? '',
+      label: link.querySelector<HTMLElement>('[data-toc-rail-label]')?.textContent?.trim() ?? '',
+    }));
+    const sections = items
+      .map((item) => document.getElementById(item.id))
+      .filter((section): section is HTMLElement => section instanceof HTMLElement);
+
+    if (!toggle || !panel || !currentLabel || !currentCount || !chevron || !progress) return;
+
+    let panelOpen = false;
+    let progressFrame = 0;
+
+    const closePanel = () => {
+      if (!panelOpen) return;
+      panelOpen = false;
+      toggle.setAttribute('aria-expanded', 'false');
+      panel.setAttribute('aria-hidden', 'true');
+      panel.setAttribute('inert', '');
+      panel.classList.add('pointer-events-none', '-translate-y-2', 'opacity-0');
+      panel.classList.remove('pointer-events-auto', 'translate-y-0', 'opacity-100');
+      chevron.classList.remove('rotate-180');
+    };
+
+    const openPanel = () => {
+      panelOpen = true;
+      toggle.setAttribute('aria-expanded', 'true');
+      panel.setAttribute('aria-hidden', 'false');
+      panel.removeAttribute('inert');
+      panel.classList.remove('pointer-events-none', '-translate-y-2', 'opacity-0');
+      panel.classList.add('pointer-events-auto', 'translate-y-0', 'opacity-100');
+      chevron.classList.add('rotate-180');
+    };
+
+    const setActive = (id: string) => {
+      const activeIndex = items.findIndex((item) => item.id === id);
+      if (activeIndex < 0) return;
+
+      links.forEach((link) => {
+        const active = link.dataset.tocId === id;
+        if (active) link.setAttribute('aria-current', 'true');
+        else link.removeAttribute('aria-current');
+      });
+
+      railLinks.forEach((link) => {
+        const active = link.dataset.tocId === id;
+        const label = link.querySelector<HTMLElement>('[data-toc-rail-label]');
+        const tick = link.querySelector<HTMLElement>('[data-toc-tick]');
+        link.classList.toggle('text-accent', active);
+        link.classList.toggle('text-muted', !active);
+        label?.classList.toggle('opacity-100', active);
+        label?.classList.toggle('opacity-0', !active);
+        tick?.classList.toggle('bg-accent', active);
+        tick?.classList.toggle('bg-line', !active);
+      });
+
+      menuLinks.forEach((link) => {
+        const active = link.dataset.tocId === id;
+        link.classList.toggle('text-accent', active);
+        link.classList.toggle('text-muted', !active);
+      });
+
+      currentLabel.textContent = items[activeIndex].label;
+      currentCount.textContent = `${activeIndex + 1} / ${items.length}`;
+    };
+
+    const visibleSections = new Set<string>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!(entry.target instanceof HTMLElement)) return;
+          if (entry.isIntersecting) visibleSections.add(entry.target.id);
+          else visibleSections.delete(entry.target.id);
+        });
+
+        const activeSection = sections.find((section) => visibleSections.has(section.id));
+        if (activeSection) setActive(activeSection.id);
+      },
+      { rootMargin: '-30% 0px -60% 0px' },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    const updateProgress = () => {
+      const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
+      const value = scrollRange > 0 ? Math.min(Math.max(window.scrollY / scrollRange, 0), 1) : 0;
+      progress.style.width = `${value * 100}%`;
+      progressFrame = 0;
+    };
+
+    const requestProgressUpdate = () => {
+      if (progressFrame) return;
+      progressFrame = window.requestAnimationFrame(updateProgress);
+    };
+
+    toggle.addEventListener('click', () => {
+      if (panelOpen) closePanel();
+      else openPanel();
+    });
+
+    menuLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const id = link.dataset.tocId;
+        if (id) setActive(id);
+        closePanel();
+      });
+    });
+
+    railLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const id = link.dataset.tocId;
+        if (id) setActive(id);
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (panelOpen && event.target instanceof Node && !root.contains(event.target)) closePanel();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !panelOpen) return;
+      closePanel();
+      toggle.focus();
+    });
+
+    window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+    window.addEventListener('resize', requestProgressUpdate);
+
+    const hashId = window.location.hash.slice(1);
+    if (items.some((item) => item.id === hashId)) setActive(hashId);
+    updateProgress();
+  });
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    [data-toc-panel],
+    [data-toc-chevron] {
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>

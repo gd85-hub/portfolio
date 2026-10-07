@@ -1,16 +1,28 @@
 ---
 import Eyebrow from '../components/Eyebrow.astro';
+import CaseToc from '../components/CaseToc.astro';
 import CaseBlocks from '../components/blocks/CaseBlocks.astro';
 import type { CaseStudy } from '../data/cases';
+import { slugify } from '../lib/slug';
 
 interface Props {
   caseStudy: CaseStudy;
 }
 
 const { caseStudy } = Astro.props;
+
+const dividerItems = caseStudy.blocks.flatMap((block) => {
+  if (!('type' in block) || block.type !== 'divider') return [];
+
+  const label = block.label || block.title;
+  return [{ id: slugify(label), label }];
+});
+
+const toc = [{ id: 'overview', label: 'Overview' }, ...dividerItems];
 ---
 
 <article>
+  {dividerItems.length > 0 && <CaseToc toc={toc} />}
   <div class="mx-auto max-w-content px-5 pb-24 pt-12 sm:px-8">
     <div class="mx-auto mb-10 max-w-[70ch]">
       <a href="/" class="inline-flex items-center gap-2 t-body font-medium text-muted transition-colors hover:text-ink">
@@ -20,7 +32,7 @@ const { caseStudy } = Astro.props;
         Back to work
       </a>
     </div>
-    <header class="mx-auto max-w-[70ch]">
+    <header id="overview" class="mx-auto max-w-[70ch] scroll-mt-28 xl:scroll-mt-24">
       <Eyebrow tone="accent" class="mb-4">{caseStudy.kicker}</Eyebrow>
       <h1 class="t-title text-ink">{caseStudy.title}</h1>
       <p class="t-lede mt-5 text-body">{caseStudy.lede}</p>
