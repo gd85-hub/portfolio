@@ -31,7 +31,7 @@ const hasThemed = Boolean(coverLight && coverDark);
 const imgClass = 'absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[var(--motion-hover)] ease-[var(--ease-out)] group-hover:scale-[1.03]';
 ---
 
-<a href={href} class:list={['reveal group flex flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-surface', className]} {...attrs}>
+<a href={href} class:list={['reveal group flex flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-surface dark:border-white/[0.12] dark:bg-[#0c0c0e]', className]} {...attrs}>
   <div class="relative aspect-[16/10] overflow-hidden">
     {
       hasThemed ? (
