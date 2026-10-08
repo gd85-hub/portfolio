@@ -11,6 +11,8 @@ type Props = Omit<HTMLAttributes<'a'>, 'role'> & {
   cover?: string | null;
   coverLight?: string | null;
   coverDark?: string | null;
+  coverLightHover?: string | null;
+  coverDarkHover?: string | null;
 };
 
 const {
@@ -22,13 +24,17 @@ const {
   cover = null,
   coverLight = null,
   coverDark = null,
+  coverLightHover = null,
+  coverDarkHover = null,
   href = '#',
   class: className,
   ...attrs
 } = Astro.props;
 
 const hasThemed = Boolean(coverLight && coverDark);
-const imgClass = 'absolute inset-0 h-full w-full object-cover object-top [transition:transform_700ms_var(--ease-out)] group-hover:scale-[1.08]';
+const hasThemedHover = Boolean(coverLightHover && coverDarkHover);
+const imgBase = 'absolute inset-0 h-full w-full object-cover object-top';
+const imgHover = 'absolute inset-0 h-full w-full object-cover object-top opacity-0 [transition:opacity_900ms_var(--ease-out)] group-hover:opacity-100';
 const metaYear = time.replace(' to ', '–');
 ---
 
@@ -37,21 +43,25 @@ const metaYear = time.replace(' to ', '–');
     {
       hasThemed ? (
         <Fragment>
-          <img src={coverLight} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class:list={['block dark:hidden', imgClass]} />
-          <img src={coverDark} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class:list={['hidden dark:block', imgClass]} />
+          <img src={coverLight} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class:list={['block dark:hidden', imgBase]} />
+          <img src={coverDark} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class:list={['hidden dark:block', imgBase]} />
+          {hasThemedHover && (
+            <Fragment>
+              <img src={coverLightHover} alt="" aria-hidden="true" width="1600" height="1000" loading="lazy" decoding="async" class:list={['block dark:hidden', imgHover]} />
+              <img src={coverDarkHover} alt="" aria-hidden="true" width="1600" height="1000" loading="lazy" decoding="async" class:list={['hidden dark:block', imgHover]} />
+            </Fragment>
+          )}
         </Fragment>
       ) : cover ? (
-        <img src={cover} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class={imgClass} />
+        <img src={cover} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class={imgBase} />
       ) : (
-        <div class="ph absolute inset-0 flex items-center justify-center [transition:transform_700ms_var(--ease-out)] group-hover:scale-[1.08]">
+        <div class="ph absolute inset-0 flex items-center justify-center">
           <Eyebrow tone="ph" as="span">[ cover ]</Eyebrow>
         </div>
       )
     }
-    <span class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/85 via-black/40 to-transparent opacity-0 [transition:opacity_400ms_var(--ease-out)] group-hover:opacity-100"></span>
-    <p data-typewriter class="wc-caption pointer-events-none absolute inset-x-0 bottom-0 px-6 pb-4 font-mono text-[12px] leading-tight tracking-[0.02em] text-white/85 opacity-0 [transition:opacity_400ms_var(--ease-out)] group-hover:opacity-100 sm:px-7">{role} &middot; {kicker} &middot; {metaYear}</p>
   </div>
-  <div class="flex min-w-0 flex-1 flex-col border-t border-line p-6 sm:p-7 dark:border-white/[0.07]">
+  <div class="flex min-w-0 flex-1 flex-col border-t border-line p-6 sm:p-7 dark:border-white/[0.07] [transition:background-color_1000ms_var(--ease-out)] dark:group-hover:bg-white/[0.03]">
     <div class="flex items-center justify-between gap-4">
       <h3 class="t-section text-ink">{title}</h3>
       <span class="icon shrink-0 text-ink [transition:transform_420ms_var(--ease-out)] group-hover:translate-x-1" aria-hidden="true">
@@ -59,65 +69,7 @@ const metaYear = time.replace(' to ', '–');
       </span>
     </div>
     <p class="mt-3 line-clamp-2 t-body text-body">{desc}</p>
+    <p class="mt-4 t-small font-mono text-muted">{role} &middot; {kicker} &middot; {metaYear}</p>
     <span class="sr-only">Read case</span>
   </div>
 </a>
-
-<style>
-  .wc-caption::after{ content:''; }
-  .wc-caption.is-typing::after{
-    display:inline-block;
-    width:0.5ch;
-    height:1em;
-    margin-left:2px;
-    background:var(--accent);
-    vertical-align:-0.14em;
-    animation:wc-blink 600ms steps(1, end) infinite;
-  }
-  @keyframes wc-blink{ 50%{ opacity:0; } }
-  @media (prefers-reduced-motion: reduce){
-    .wc-caption.is-typing::after{ display:none; animation:none; }
-  }
-</style>
-
-<script>
-  const fineHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (fineHover && !reduce) {
-    const captions = Array.from(document.querySelectorAll<HTMLElement>('[data-typewriter]'));
-
-    captions.forEach((caption) => {
-      const card = caption.closest('a');
-      if (!card) return;
-
-      const full = caption.textContent ?? '';
-      let timer: number | undefined;
-      let runId = 0;
-
-      card.addEventListener('mouseenter', () => {
-        const myId = ++runId;
-        caption.classList.add('is-typing');
-        caption.textContent = '';
-        let i = 0;
-        const step = () => {
-          if (myId !== runId) return;
-          caption.textContent = full.slice(0, ++i);
-          if (i < full.length) {
-            timer = window.setTimeout(step, 22);
-          } else {
-            caption.classList.remove('is-typing');
-          }
-        };
-        step();
-      });
-
-      card.addEventListener('mouseleave', () => {
-        runId += 1;
-        if (timer) window.clearTimeout(timer);
-        caption.classList.remove('is-typing');
-        caption.textContent = full;
-      });
-    });
-  }
-</script>
