@@ -31,7 +31,8 @@ export default {
         mono: ['"Geist Mono Variable"', 'ui-monospace', 'monospace']
       },
       maxWidth: {
-        content: '72rem'
+        content: '72rem',
+        wide: '90rem'
       }
     }
   }
