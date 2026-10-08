@@ -24,6 +24,24 @@ const principles = [
     desc: 'Component kits and written conventions exist so the same decision gets made once. A design that lives only in Figma leaves that work to someone else.',
   },
 ];
+
+const whatIDo = [
+  {
+    number: '01',
+    title: 'Data-dense product UIs',
+    desc: 'Dashboards, analytics, and monitoring where a lot of state has to stay legible at a glance and safe to act on.',
+  },
+  {
+    number: '02',
+    title: '0 to 1 and redesign',
+    desc: 'Taking an ambiguous or broken product to a version that ships and holds up: the framing, IA, and flows, plus the calls that decide whether it actually works.',
+  },
+  {
+    number: '03',
+    title: 'Design systems and UI kits',
+    desc: 'Component libraries and handoff conventions that keep a growing product coherent and let engineering ship without rebuilding the basics every time.',
+  },
+];
 ---
 
 <BaseLayout title={title} description={description}>
@@ -45,6 +63,23 @@ const principles = [
           />
         </div>
       </div>
+
+      <section class="reveal mt-16 border-t border-line pt-12 sm:mt-20 sm:pt-14">
+        <h2 class="t-section text-ink">What I do</h2>
+        <div class="mt-10 border-t border-line">
+          {
+            whatIDo.map((item) => (
+              <div class="grid gap-4 border-b border-line py-8 sm:grid-cols-[3rem_1fr] sm:gap-6 sm:py-10">
+                <span class="eyebrow text-muted">{item.number}</span>
+                <div>
+                  <h3 class="t-sub text-ink">{item.title}</h3>
+                  <p class="mt-3 max-w-[70ch] t-body text-body">{item.desc}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
 
       <section class="reveal mt-16 border-t border-line pt-12 sm:mt-20 sm:pt-14">
         <Eyebrow tone="accent" class="mb-4">Principles</Eyebrow>
