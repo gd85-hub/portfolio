@@ -6,7 +6,7 @@ interface Props {
 
 const {
   email,
-  class: className = 't-body text-body',
+  class: className = 't-body text-ink',
 } = Astro.props;
 ---
 
@@ -18,13 +18,12 @@ const {
   data-copy-email={email}
 >
   <span class="link-underline">Email</span>
-  <span
-    class="copy-tooltip pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2 py-1 text-[11px] font-medium leading-none text-paper opacity-0 shadow-sm transition-opacity duration-[var(--motion-fast)] group-hover:opacity-100 group-focus-visible:opacity-100"
-    aria-hidden="true"
-  >
-    <span class="copy-tooltip-default">Copy</span>
-    <span class="copy-tooltip-copied">
-      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+  <span class="copy-tooltip" aria-hidden="true">
+    <span class="copy-face copy-face-default">Copy</span>
+    <span class="copy-face copy-face-copied">
+      <svg class="copy-check" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path pathLength="1" d="M20 6 9 17l-5-5" />
+      </svg>
       Copied
     </span>
   </span>
@@ -32,10 +31,53 @@ const {
 </span>
 
 <style>
-  .copy-tooltip-copied { display: none; align-items: center; gap: 0.25rem; }
-  .copy-email.is-copied .copy-tooltip-default { display: none; }
-  .copy-email.is-copied .copy-tooltip-copied { display: inline-flex; }
-  .copy-email.is-copied .copy-tooltip { opacity: 1; }
+  .copy-tooltip{
+    position:absolute; bottom:100%; left:50%; margin-bottom:8px;
+    display:grid; place-items:center;
+    padding:5px 10px; border-radius:9999px;
+    background:var(--ink); color:var(--paper);
+    font-size:10px; line-height:1; letter-spacing:.09em; text-transform:uppercase; white-space:nowrap;
+    pointer-events:none; opacity:0;
+    transform:translate(-50%,4px) scale(.96); transform-origin:bottom center;
+    box-shadow:0 6px 16px -4px rgba(0,0,0,.25);
+    transition:
+      opacity var(--motion-fast) var(--ease-out),
+      transform var(--motion-fast) var(--ease-out),
+      background-color var(--motion-fast) ease,
+      color var(--motion-fast) ease;
+  }
+  .copy-face{ grid-area:1 / 1; display:inline-flex; align-items:center; gap:5px; transition:opacity var(--motion-fast) var(--ease-out); }
+  .copy-face-copied{ opacity:0; }
+
+  @media (hover:hover) and (pointer:fine){
+    .copy-email:hover .copy-tooltip{ opacity:1; transform:translate(-50%,0) scale(1); }
+  }
+  .copy-email:focus-visible .copy-tooltip{ opacity:1; transform:translate(-50%,0) scale(1); }
+
+  .copy-email.is-copied .copy-tooltip{
+    opacity:1; transform:translate(-50%,0) scale(1);
+    background:var(--accent); color:var(--on-accent);
+    animation:copy-pop 260ms var(--ease-out);
+  }
+  .copy-email.is-copied .copy-face-default{ opacity:0; }
+  .copy-email.is-copied .copy-face-copied{ opacity:1; }
+
+  .copy-check path{ stroke-dasharray:1; stroke-dashoffset:1; }
+  .copy-email.is-copied .copy-check path{ stroke-dashoffset:0; transition:stroke-dashoffset 320ms var(--ease-out) 70ms; }
+
+  @keyframes copy-pop{
+    0%{ transform:translate(-50%,0) scale(1); }
+    45%{ transform:translate(-50%,0) scale(1.07); }
+    100%{ transform:translate(-50%,0) scale(1); }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .copy-tooltip{ transform:translate(-50%,0) scale(1);
+      transition:opacity var(--motion-fast) ease, background-color var(--motion-fast) ease, color var(--motion-fast) ease; }
+    .copy-email.is-copied .copy-tooltip{ animation:none; }
+    .copy-check path{ transition:none; }
+    .copy-email.is-copied .copy-check path{ stroke-dashoffset:0; }
+  }
 </style>
 
 <script>
