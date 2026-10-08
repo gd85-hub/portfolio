@@ -1,0 +1,27 @@
+---
+import Button from '../Button.astro';
+import Eyebrow from '../Eyebrow.astro';
+---
+
+<section class="mx-auto max-w-content px-5 pb-4 pt-10 sm:px-8 sm:pt-14">
+  <div class="hero-reveal max-w-2xl" data-hero-reveal>
+    <Eyebrow class="hero-reveal-eyebrow mb-4">Product Designer</Eyebrow>
+    <h1 class="t-title text-ink">
+      <span class="hero-line-clip"><span class="hero-line" data-hero-line="1">I design complex, high-load interfaces.</span></span>
+    </h1>
+    <p class="hero-reveal-subtitle t-body mt-4 max-w-[46ch] text-body">
+      Dense dashboards and data-heavy tools, made clear enough to use every day.
+    </p>
+    <div class="hero-reveal-cta mt-6 flex flex-wrap items-center gap-4">
+      <Button href="#contact">Get in touch</Button>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const hero = document.querySelector('[data-hero-reveal]');
+  if (hero instanceof HTMLElement && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    hero.classList.add('hero-reveal-ready');
+    requestAnimationFrame(() => hero.classList.add('hero-reveal-visible'));
+  }
+</script>
