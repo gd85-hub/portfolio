@@ -377,4 +377,4 @@ export const cases = {
   },
 } satisfies Record<string, CaseStudy>;
 
-export const caseStudies = Object.values(cases);
+export const caseStudies: CaseStudy[] = Object.values(cases);
