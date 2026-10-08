@@ -21,33 +21,42 @@ const {
   <span class="copy-tooltip" aria-hidden="true">
     <span class="copy-face copy-face-default">Copy</span>
     <span class="copy-face copy-face-copied">
-      <svg class="copy-check" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="copy-check" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path pathLength="1" d="M20 6 9 17l-5-5" />
       </svg>
       Copied
     </span>
+    <span class="copy-caret" aria-hidden="true"></span>
   </span>
   <span class="sr-only" role="status" aria-live="polite" data-copy-status></span>
 </span>
 
 <style>
   .copy-tooltip{
-    position:absolute; bottom:100%; left:50%; margin-bottom:8px;
+    position:absolute; bottom:100%; left:50%; margin-bottom:9px;
     display:grid; place-items:center;
-    padding:5px 10px; border-radius:9999px;
+    padding:4px 10px; border-radius:9999px;
     background:var(--ink); color:var(--paper);
-    font-size:10px; line-height:1; letter-spacing:.09em; text-transform:uppercase; white-space:nowrap;
+    font-size:11px; line-height:1; white-space:nowrap;
     pointer-events:none; opacity:0;
-    transform:translate(-50%,4px) scale(.96); transform-origin:bottom center;
-    box-shadow:0 6px 16px -4px rgba(0,0,0,.25);
+    transform:translate(-50%,6px) scale(.9); transform-origin:bottom center;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.3);
     transition:
-      opacity var(--motion-fast) var(--ease-out),
-      transform var(--motion-fast) var(--ease-out),
-      background-color var(--motion-fast) ease,
-      color var(--motion-fast) ease;
+      opacity 180ms var(--ease-out),
+      transform 200ms cubic-bezier(0.34, 1.5, 0.64, 1),
+      background-color 160ms ease,
+      color 160ms ease;
   }
-  .copy-face{ grid-area:1 / 1; display:inline-flex; align-items:center; gap:5px; transition:opacity var(--motion-fast) var(--ease-out); }
+  .copy-face{ grid-area:1 / 1; display:inline-flex; align-items:center; gap:5px; transition:opacity 150ms var(--ease-out); }
   .copy-face-copied{ opacity:0; }
+
+  .copy-caret{
+    position:absolute; top:100%; left:50%;
+    width:9px; height:9px; margin-top:-5px;
+    transform:translateX(-50%) rotate(45deg);
+    background:var(--ink); border-radius:1px;
+    transition:background-color 160ms ease;
+  }
 
   @media (hover:hover) and (pointer:fine){
     .copy-email:hover .copy-tooltip{ opacity:1; transform:translate(-50%,0) scale(1); }
@@ -57,26 +66,26 @@ const {
   .copy-email.is-copied .copy-tooltip{
     opacity:1; transform:translate(-50%,0) scale(1);
     background:var(--accent); color:var(--on-accent);
-    animation:copy-pop 260ms var(--ease-out);
+    animation:copy-pop 240ms var(--ease-out);
   }
+  .copy-email.is-copied .copy-caret{ background:var(--accent); }
   .copy-email.is-copied .copy-face-default{ opacity:0; }
   .copy-email.is-copied .copy-face-copied{ opacity:1; }
 
   .copy-check path{ stroke-dasharray:1; stroke-dashoffset:1; }
-  .copy-email.is-copied .copy-check path{ stroke-dashoffset:0; transition:stroke-dashoffset 320ms var(--ease-out) 70ms; }
+  .copy-email.is-copied .copy-check path{ stroke-dashoffset:0; transition:stroke-dashoffset 300ms var(--ease-out) 60ms; }
 
   @keyframes copy-pop{
     0%{ transform:translate(-50%,0) scale(1); }
-    45%{ transform:translate(-50%,0) scale(1.07); }
+    45%{ transform:translate(-50%,0) scale(1.05); }
     100%{ transform:translate(-50%,0) scale(1); }
   }
 
   @media (prefers-reduced-motion:reduce){
     .copy-tooltip{ transform:translate(-50%,0) scale(1);
-      transition:opacity var(--motion-fast) ease, background-color var(--motion-fast) ease, color var(--motion-fast) ease; }
+      transition:opacity 160ms ease, background-color 160ms ease, color 160ms ease; }
     .copy-email.is-copied .copy-tooltip{ animation:none; }
-    .copy-check path{ transition:none; }
-    .copy-email.is-copied .copy-check path{ stroke-dashoffset:0; }
+    .copy-check path{ transition:none; stroke-dashoffset:0; }
   }
 </style>
 
