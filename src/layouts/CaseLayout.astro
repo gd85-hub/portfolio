@@ -19,10 +19,13 @@ const dividerItems = caseStudy.blocks.flatMap((block) => {
 });
 
 const toc = [{ id: 'overview', label: 'Overview' }, ...dividerItems];
+
+// Переключатель оглавления на страницах кейсов. true — показать (боковой рейл + табы из CaseToc), false — скрыть. Вернуть можно одной строкой.
+const showCaseToc = false;
 ---
 
 <article>
-  {dividerItems.length > 0 && <CaseToc toc={toc} />}
+  {showCaseToc && dividerItems.length > 0 && <CaseToc toc={toc} />}
   <div class="mx-auto max-w-content px-5 pb-24 pt-12 sm:px-8">
     <div class="mx-auto mb-10 max-w-[70ch]">
       <a href="/" class="inline-flex items-center gap-2 t-body font-medium text-muted transition-colors hover:text-ink">
