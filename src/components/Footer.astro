@@ -5,13 +5,34 @@ import { site } from '../data/site';
 const { email, name, telegramUrl, year } = site;
 ---
 
-<footer class="bg-inv">
-  <div class="mx-auto grid max-w-content gap-3 border-t border-inv-line px-5 py-8 text-[12px] text-inv-sub sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:px-8">
-    <span class="font-mono">{name}</span>
-    <div class="flex flex-wrap items-center gap-4 font-mono sm:justify-self-center">
-      <CopyEmail email={email} class="t-small text-inv-sub" />
-      <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="link-underline t-small text-inv-sub">Telegram</a>
+<footer id="contact" class="scroll-mt-20 bg-[var(--footer-bg)]">
+  <div class="mx-auto max-w-wide border-t border-line px-5 py-16 sm:px-8">
+    <div class="max-w-[52ch]">
+      <h2 class="t-title text-ink">Let's talk.</h2>
+      <p class="t-lede mt-4 text-body">Open to senior product design roles and selected fintech advisory.</p>
+      <div class="mt-8 flex flex-wrap items-center gap-6 font-mono">
+        <CopyEmail email={email} class="t-body text-ink" />
+        <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="link-underline t-body text-ink">Telegram</a>
+      </div>
     </div>
-    <span class="sm:justify-self-end">&copy; {year}</span>
+
+    <div class="mt-14 flex flex-col gap-6 border-t border-line pt-8 text-[12px] text-muted sm:flex-row sm:items-center sm:justify-between">
+      <span class="font-mono">{name}</span>
+      <nav class="flex flex-wrap items-center gap-6 font-mono" aria-label="Footer">
+        <a href="/#work" class="link-underline hover:text-ink">Work</a>
+        <a href="/about" class="link-underline hover:text-ink">About</a>
+        <a href="/resume" class="link-underline hover:text-ink">Resume</a>
+        <a href="#top" data-back-to-top class="link-underline hover:text-ink">Back to top</a>
+      </nav>
+      <span class="font-mono sm:text-right">&copy; {year}</span>
+    </div>
   </div>
+
+  <script is:inline>
+    document.querySelector('[data-back-to-top]')?.addEventListener('click', (event) => {
+      event.preventDefault();
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  </script>
 </footer>

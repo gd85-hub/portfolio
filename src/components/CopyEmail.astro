@@ -6,7 +6,7 @@ interface Props {
 
 const {
   email,
-  class: className = 't-body text-ink',
+  class: className = 't-body text-body',
 } = Astro.props;
 ---
 
@@ -14,64 +14,58 @@ const {
   role="button"
   tabindex="0"
   aria-label="Copy email address"
-  class:list={['copy-email-feedback inline-grid cursor-pointer font-mono', className]}
+  class:list={['copy-email group relative inline-flex cursor-pointer font-mono', className]}
   data-copy-email={email}
 >
-  <span class="copy-email-label copy-email-label-default link-underline">Email</span>
+  <span class="link-underline">Email</span>
   <span
-    class="copy-email-label copy-email-label-copied pointer-events-none text-accent"
-    role="status"
-    aria-live="polite"
+    class="copy-tooltip pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2 py-1 text-[11px] font-medium leading-none text-paper opacity-0 shadow-sm transition-opacity duration-[var(--motion-fast)] group-hover:opacity-100 group-focus-visible:opacity-100"
     aria-hidden="true"
-    data-copy-email-copied
   >
-    <span class="icon copy-email-check" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path pathLength="1" d="M20 6 9 17l-5-5" />
-      </svg>
+    <span class="copy-tooltip-default">Copy</span>
+    <span class="copy-tooltip-copied">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+      Copied
     </span>
-    Copied
   </span>
+  <span class="sr-only" role="status" aria-live="polite" data-copy-status></span>
 </span>
 
+<style>
+  .copy-tooltip-copied { display: none; align-items: center; gap: 0.25rem; }
+  .copy-email.is-copied .copy-tooltip-default { display: none; }
+  .copy-email.is-copied .copy-tooltip-copied { display: inline-flex; }
+  .copy-email.is-copied .copy-tooltip { opacity: 1; }
+</style>
+
 <script>
-  const copyEmailTimers = new WeakMap<HTMLElement, number>();
-  const copiedVisibilityMs = 1400;
+  const timers = new WeakMap<HTMLElement, number>();
 
-  const setCopiedState = (trigger: HTMLElement, copied: boolean) => {
-    const copiedLabel = trigger.querySelector<HTMLElement>('[data-copy-email-copied]');
-
+  const setCopied = (trigger: HTMLElement, copied: boolean) => {
     trigger.classList.toggle('is-copied', copied);
-    copiedLabel?.setAttribute('aria-hidden', copied ? 'false' : 'true');
+    const status = trigger.querySelector<HTMLElement>('[data-copy-status]');
+    if (status) status.textContent = copied ? 'Email copied' : '';
   };
 
-  const showCopiedState = (trigger: HTMLElement) => {
-    const previousTimer = copyEmailTimers.get(trigger);
-
-    if (previousTimer) window.clearTimeout(previousTimer);
-
-    setCopiedState(trigger, true);
-
-    const timer = window.setTimeout(() => {
-      setCopiedState(trigger, false);
-      copyEmailTimers.delete(trigger);
-    }, copiedVisibilityMs);
-
-    copyEmailTimers.set(trigger, timer);
+  const flashCopied = (trigger: HTMLElement) => {
+    const prev = timers.get(trigger);
+    if (prev) window.clearTimeout(prev);
+    setCopied(trigger, true);
+    const t = window.setTimeout(() => {
+      setCopied(trigger, false);
+      timers.delete(trigger);
+    }, 1400);
+    timers.set(trigger, t);
   };
 
   const copyEmail = async (trigger: HTMLElement) => {
-    const email = trigger.dataset.copyEmail;
-
-    if (!email) return;
-
+    const value = trigger.dataset.copyEmail;
+    if (!value || !navigator.clipboard?.writeText) return;
     try {
-      if (!navigator.clipboard?.writeText) return;
-
-      await navigator.clipboard.writeText(email);
-      showCopiedState(trigger);
+      await navigator.clipboard.writeText(value);
+      flashCopied(trigger);
     } catch {
-      // Clipboard can be unavailable in some browser contexts.
+      /* clipboard may be unavailable */
     }
   };
 
@@ -80,15 +74,13 @@ const {
 
     document.addEventListener('click', (event) => {
       const trigger = (event.target as Element).closest<HTMLElement>('[data-copy-email]');
-
       if (trigger) copyEmail(trigger);
     });
 
     document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
       const trigger = (event.target as Element).closest<HTMLElement>('[data-copy-email]');
-
-      if (!trigger || (event.key !== 'Enter' && event.key !== ' ')) return;
-
+      if (!trigger) return;
       event.preventDefault();
       copyEmail(trigger);
     });
