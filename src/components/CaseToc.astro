@@ -13,82 +13,85 @@ type Props = HTMLAttributes<'nav'> & {
 const { toc, class: className, ...attrs } = Astro.props;
 ---
 
-<div data-case-toc class="sticky top-16 z-30 flex w-full justify-center border-b border-line bg-paper px-5 py-2 sm:px-8">
-  <nav
-    data-toc-scroll
-    aria-label="Case sections"
-    class:list={[
-      'w-fit max-w-full overflow-x-auto rounded-full border border-line bg-surface p-1',
-      className,
-    ]}
-    {...attrs}
+<nav
+  data-case-toc
+  aria-label="Case sections"
+  class:list={['sticky top-16 z-30 w-full border-b border-line bg-paper', className]}
+  {...attrs}
+>
+  <div
+    data-case-toc-track
+    class="relative mx-auto flex justify-center gap-6 overflow-x-auto px-5 py-2 sm:px-8"
   >
-    <div data-toc-track class="relative inline-flex w-max items-center gap-1">
-      <span
-        data-toc-thumb
-        class="pointer-events-none absolute inset-y-0 left-0 z-0 w-px origin-left rounded-full bg-ph1 transition-transform duration-[var(--motion-theme)] ease-[var(--ease-out)]"
-        aria-hidden="true"
-      ></span>
-      {
-        toc.map((item, index) => (
-          <a
-            href={`#${item.id}`}
-            data-toc-link
-            data-toc-id={item.id}
-            aria-current={index === 0 ? 'true' : undefined}
-            class:list={[
-              'relative z-10 shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 t-small transition-[color] duration-[var(--motion-theme)] ease-[var(--ease-out)] hover:text-ink focus-visible:text-ink',
-              index === 0 ? 'text-accent' : 'text-muted',
-            ]}
-          >
-            {item.label}
-          </a>
-        ))
-      }
-    </div>
-  </nav>
-</div>
+    {
+      toc.map((item, index) => (
+        <a
+          href={`#${item.id}`}
+          data-case-toc-link
+          aria-current={index === 0 ? 'page' : undefined}
+          class="t-small whitespace-nowrap py-1 text-muted transition-colors duration-[var(--motion-fast)] hover:text-ink aria-[current=page]:text-accent"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+    <span
+      data-case-toc-indicator
+      aria-hidden="true"
+      class="pointer-events-none absolute bottom-0 left-0 h-[2px] w-0 bg-accent"
+    ></span>
+  </div>
+</nav>
 
 <script>
   const tocRoots = document.querySelectorAll<HTMLElement>('[data-case-toc]');
 
   tocRoots.forEach((root) => {
-    const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
-    const scrollArea = root.querySelector<HTMLElement>('[data-toc-scroll]');
-    const thumb = root.querySelector<HTMLElement>('[data-toc-thumb]');
-    const items = links.map((link) => ({ id: link.dataset.tocId ?? '' }));
-    const sections = items
-      .map((item) => document.getElementById(item.id))
-      .filter((section): section is HTMLElement => section instanceof HTMLElement);
+    const track = root.querySelector<HTMLElement>('[data-case-toc-track]');
+    const indicator = root.querySelector<HTMLElement>('[data-case-toc-indicator]');
+    if (!track || !indicator) return;
 
-    if (!scrollArea || !thumb) return;
+    const links = Array.from(track.querySelectorAll<HTMLAnchorElement>('[data-case-toc-link]'));
+    if (links.length === 0) return;
 
-    let activeId = items[0]?.id ?? '';
-    let layoutFrame = 0;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const indicatorTransition =
+      'transform var(--motion-theme) var(--ease-out), width var(--motion-theme) var(--ease-out)';
+    let activeId = '';
+    let resizeFrame = 0;
 
-    const positionThumb = (link: HTMLAnchorElement, revealLink = true) => {
-      thumb.style.transform = `translateX(${link.offsetLeft}px) scaleX(${link.offsetWidth})`;
+    const getLinkId = (link: HTMLAnchorElement) => link.getAttribute('href')?.slice(1) ?? '';
 
-      if (revealLink && scrollArea.scrollWidth > scrollArea.clientWidth) {
-        link.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-      }
+    const moveIndicator = (link: HTMLAnchorElement, animate = true) => {
+      indicator.style.transition = animate && !prefersReduced ? indicatorTransition : 'none';
+      indicator.style.transform = `translateX(${link.offsetLeft}px)`;
+      indicator.style.width = `${link.offsetWidth}px`;
     };
 
-    const setActive = (id: string, revealLink = true) => {
-      const activeLink = links.find((link) => link.dataset.tocId === id);
+    const setActive = (id: string, animate = true, revealLink = true) => {
+      const activeLink = links.find((link) => getLinkId(link) === id);
       if (!activeLink) return;
 
       activeId = id;
       links.forEach((link) => {
-        const active = link === activeLink;
-        link.classList.toggle('text-accent', active);
-        link.classList.toggle('text-muted', !active);
-        if (active) link.setAttribute('aria-current', 'true');
+        if (link === activeLink) link.setAttribute('aria-current', 'page');
         else link.removeAttribute('aria-current');
       });
-      positionThumb(activeLink, revealLink);
+
+      moveIndicator(activeLink, animate);
+
+      if (revealLink && track.scrollWidth > track.clientWidth) {
+        activeLink.scrollIntoView({
+          inline: 'center',
+          block: 'nearest',
+          behavior: prefersReduced ? 'auto' : 'smooth',
+        });
+      }
     };
 
+    const sections = links
+      .map((link) => document.getElementById(getLinkId(link)))
+      .filter((section): section is HTMLElement => section instanceof HTMLElement);
     const visibleSections = new Set<string>();
     const observer = new IntersectionObserver(
       (entries) => {
@@ -101,47 +104,54 @@ const { toc, class: className, ...attrs } = Astro.props;
         const activeSection = sections.find((section) => visibleSections.has(section.id));
         if (activeSection) setActive(activeSection.id);
       },
-      { rootMargin: '-30% 0px -60% 0px' },
+      { rootMargin: '-20% 0px -70% 0px', threshold: 0 },
     );
 
     sections.forEach((section) => observer.observe(section));
 
-    const requestLayoutUpdate = () => {
-      if (layoutFrame) return;
-      layoutFrame = window.requestAnimationFrame(() => {
-        const activeLink = links.find((link) => link.dataset.tocId === activeId);
-        if (activeLink) positionThumb(activeLink, false);
-        layoutFrame = 0;
-      });
+    links.forEach((link) => {
+      link.addEventListener('click', () => setActive(getLinkId(link)));
+    });
+
+    const moveCurrentWithoutAnimation = () => {
+      const activeLink = links.find((link) => getLinkId(link) === activeId);
+      if (!activeLink) return;
+      moveIndicator(activeLink, false);
     };
 
-    links.forEach((link) => {
-      link.addEventListener('click', () => {
-        const id = link.dataset.tocId;
-        if (id) setActive(id);
+    window.addEventListener('resize', () => {
+      if (resizeFrame) return;
+      resizeFrame = window.requestAnimationFrame(() => {
+        moveCurrentWithoutAnimation();
+        resizeFrame = 0;
       });
     });
 
-    window.addEventListener('resize', requestLayoutUpdate);
-
     const hashId = window.location.hash.slice(1);
-    setActive(items.some((item) => item.id === hashId) ? hashId : activeId, false);
-    document.fonts.ready.then(requestLayoutUpdate);
+    const initialId = links.some((link) => getLinkId(link) === hashId)
+      ? hashId
+      : getLinkId(links[0]);
+    setActive(initialId, false, false);
+
+    window.requestAnimationFrame(() => {
+      indicator.style.transition = prefersReduced ? 'none' : indicatorTransition;
+    });
+    document.fonts.ready.then(moveCurrentWithoutAnimation);
   });
 </script>
 
 <style>
-  [data-toc-scroll] {
+  [data-case-toc-track] {
+    justify-content: safe center;
     scrollbar-width: none;
   }
 
-  [data-toc-scroll]::-webkit-scrollbar {
+  [data-case-toc-track]::-webkit-scrollbar {
     display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-toc-link],
-    [data-toc-thumb] {
+    [data-case-toc-link] {
       transition: none !important;
     }
   }
