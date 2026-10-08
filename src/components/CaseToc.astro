@@ -14,20 +14,65 @@ const { toc, class: className, ...attrs } = Astro.props;
 ---
 
 <nav
-  data-case-toc
+  data-case-toc-rail
+  aria-label="Case contents"
+  class:list={[
+    'group fixed top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 xl:flex',
+    className,
+  ]}
+  style="left: calc(50% - 632px);"
+  {...attrs}
+>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -inset-x-3 -inset-y-3 z-0 rounded-[var(--radius)] bg-paper opacity-0 shadow-lg transition-opacity duration-[var(--motion-fast)] ease-[var(--ease-out)] group-hover:opacity-100 group-focus-within:opacity-100"
+  ></span>
+  {
+    toc.map((item, index) => (
+      <a
+        href={`#${item.id}`}
+        data-case-toc-rail-link
+        data-target={item.id}
+        aria-current={index === 0 ? 'page' : undefined}
+        class="group/item relative z-10 flex items-center gap-3 py-1"
+      >
+        <span
+          data-tick
+          class:list={[
+            'h-[2px] rounded-full transition-[background-color,opacity,width] duration-[var(--motion-fast)] ease-[var(--ease-out)]',
+            index === 0 ? 'w-6 bg-accent opacity-100' : 'w-4 bg-muted opacity-50',
+          ]}
+        ></span>
+        <span
+          data-label
+          class:list={[
+            't-small whitespace-nowrap opacity-0 transition-opacity duration-[var(--motion-fast)] ease-[var(--ease-out)] group-hover:opacity-100 group-focus-within:opacity-100',
+            index === 0 ? 'text-ink' : 'text-muted',
+          ]}
+        >
+          {item.label}
+        </span>
+      </a>
+    ))
+  }
+</nav>
+
+<nav
+  data-case-toc-tabs
   aria-label="Case sections"
-  class:list={['sticky top-16 z-30 w-full border-b border-line bg-paper', className]}
+  class:list={['sticky top-16 z-30 w-full border-b border-line bg-paper xl:hidden', className]}
   {...attrs}
 >
   <div
-    data-case-toc-track
+    data-tabs-track
     class="relative mx-auto flex justify-center gap-6 overflow-x-auto px-5 py-2 sm:px-8"
   >
     {
       toc.map((item, index) => (
         <a
           href={`#${item.id}`}
-          data-case-toc-link
+          data-case-toc-tab
+          data-target={item.id}
           aria-current={index === 0 ? 'page' : undefined}
           class="t-small whitespace-nowrap py-1 text-muted transition-colors duration-[var(--motion-fast)] hover:text-ink aria-[current=page]:text-accent"
         >
@@ -36,7 +81,7 @@ const { toc, class: className, ...attrs } = Astro.props;
       ))
     }
     <span
-      data-case-toc-indicator
+      data-tabs-indicator
       aria-hidden="true"
       class="pointer-events-none absolute bottom-0 left-0 h-[2px] w-0 bg-accent"
     ></span>
@@ -44,44 +89,63 @@ const { toc, class: className, ...attrs } = Astro.props;
 </nav>
 
 <script>
-  const tocRoots = document.querySelectorAll<HTMLElement>('[data-case-toc]');
+  const rail = document.querySelector<HTMLElement>('[data-case-toc-rail]');
+  const tabs = document.querySelector<HTMLElement>('[data-case-toc-tabs]');
+  const tabsTrack = tabs?.querySelector<HTMLElement>('[data-tabs-track]');
+  const tabsIndicator = tabs?.querySelector<HTMLElement>('[data-tabs-indicator]');
 
-  tocRoots.forEach((root) => {
-    const track = root.querySelector<HTMLElement>('[data-case-toc-track]');
-    const indicator = root.querySelector<HTMLElement>('[data-case-toc-indicator]');
-    if (!track || !indicator) return;
-
-    const links = Array.from(track.querySelectorAll<HTMLAnchorElement>('[data-case-toc-link]'));
-    if (links.length === 0) return;
-
+  if (rail && tabs && tabsTrack && tabsIndicator) {
+    const railLinks = Array.from(
+      rail.querySelectorAll<HTMLAnchorElement>('[data-case-toc-rail-link]'),
+    );
+    const tabLinks = Array.from(
+      tabsTrack.querySelectorAll<HTMLAnchorElement>('[data-case-toc-tab]'),
+    );
+    const allLinks = [...railLinks, ...tabLinks];
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const indicatorTransition =
       'transform var(--motion-theme) var(--ease-out), width var(--motion-theme) var(--ease-out)';
     let activeId = '';
     let resizeFrame = 0;
 
-    const getLinkId = (link: HTMLAnchorElement) => link.getAttribute('href')?.slice(1) ?? '';
-
-    const moveIndicator = (link: HTMLAnchorElement, animate = true) => {
-      indicator.style.transition = animate && !prefersReduced ? indicatorTransition : 'none';
-      indicator.style.transform = `translateX(${link.offsetLeft}px)`;
-      indicator.style.width = `${link.offsetWidth}px`;
+    const moveTabsIndicator = (link: HTMLAnchorElement, animate = true) => {
+      tabsIndicator.style.transition = animate && !prefersReduced ? indicatorTransition : 'none';
+      tabsIndicator.style.transform = `translateX(${link.offsetLeft}px)`;
+      tabsIndicator.style.width = `${link.offsetWidth}px`;
     };
 
-    const setActive = (id: string, animate = true, revealLink = true) => {
-      const activeLink = links.find((link) => getLinkId(link) === id);
-      if (!activeLink) return;
+    const setActive = (id: string, animate = true, revealTab = true) => {
+      const activeTab = tabLinks.find((link) => link.dataset.target === id);
+      if (!activeTab) return;
 
       activeId = id;
-      links.forEach((link) => {
-        if (link === activeLink) link.setAttribute('aria-current', 'page');
+      tabLinks.forEach((link) => {
+        if (link === activeTab) link.setAttribute('aria-current', 'page');
         else link.removeAttribute('aria-current');
       });
 
-      moveIndicator(activeLink, animate);
+      railLinks.forEach((link) => {
+        const active = link.dataset.target === id;
+        const tick = link.querySelector<HTMLElement>('[data-tick]');
+        const label = link.querySelector<HTMLElement>('[data-label]');
 
-      if (revealLink && track.scrollWidth > track.clientWidth) {
-        activeLink.scrollIntoView({
+        if (active) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+
+        tick?.classList.toggle('w-6', active);
+        tick?.classList.toggle('w-4', !active);
+        tick?.classList.toggle('bg-accent', active);
+        tick?.classList.toggle('bg-muted', !active);
+        tick?.classList.toggle('opacity-100', active);
+        tick?.classList.toggle('opacity-50', !active);
+        label?.classList.toggle('text-ink', active);
+        label?.classList.toggle('text-muted', !active);
+      });
+
+      moveTabsIndicator(activeTab, animate);
+
+      if (revealTab && tabsTrack.scrollWidth > tabsTrack.clientWidth) {
+        activeTab.scrollIntoView({
           inline: 'center',
           block: 'nearest',
           behavior: prefersReduced ? 'auto' : 'smooth',
@@ -89,8 +153,8 @@ const { toc, class: className, ...attrs } = Astro.props;
       }
     };
 
-    const sections = links
-      .map((link) => document.getElementById(getLinkId(link)))
+    const sections = tabLinks
+      .map((link) => document.getElementById(link.dataset.target ?? ''))
       .filter((section): section is HTMLElement => section instanceof HTMLElement);
     const visibleSections = new Set<string>();
     const observer = new IntersectionObserver(
@@ -109,14 +173,16 @@ const { toc, class: className, ...attrs } = Astro.props;
 
     sections.forEach((section) => observer.observe(section));
 
-    links.forEach((link) => {
-      link.addEventListener('click', () => setActive(getLinkId(link)));
+    allLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const id = link.dataset.target;
+        if (id) setActive(id);
+      });
     });
 
     const moveCurrentWithoutAnimation = () => {
-      const activeLink = links.find((link) => getLinkId(link) === activeId);
-      if (!activeLink) return;
-      moveIndicator(activeLink, false);
+      const activeTab = tabLinks.find((link) => link.dataset.target === activeId);
+      if (activeTab) moveTabsIndicator(activeTab, false);
     };
 
     window.addEventListener('resize', () => {
@@ -128,30 +194,32 @@ const { toc, class: className, ...attrs } = Astro.props;
     });
 
     const hashId = window.location.hash.slice(1);
-    const initialId = links.some((link) => getLinkId(link) === hashId)
+    const initialId = tabLinks.some((link) => link.dataset.target === hashId)
       ? hashId
-      : getLinkId(links[0]);
-    setActive(initialId, false, false);
+      : tabLinks[0]?.dataset.target;
+
+    if (initialId) setActive(initialId, false, false);
 
     window.requestAnimationFrame(() => {
-      indicator.style.transition = prefersReduced ? 'none' : indicatorTransition;
+      tabsIndicator.style.transition = prefersReduced ? 'none' : indicatorTransition;
     });
     document.fonts.ready.then(moveCurrentWithoutAnimation);
-  });
+  }
 </script>
 
 <style>
-  [data-case-toc-track] {
+  [data-tabs-track] {
     justify-content: safe center;
     scrollbar-width: none;
   }
 
-  [data-case-toc-track]::-webkit-scrollbar {
+  [data-tabs-track]::-webkit-scrollbar {
     display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-case-toc-link] {
+    [data-case-toc-rail] *,
+    [data-case-toc-tabs] * {
       transition: none !important;
     }
   }
