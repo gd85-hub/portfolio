@@ -143,6 +143,8 @@ export interface CaseStudy {
   title: string;
   cardDesc: string;
   cover?: string;
+  coverLight?: string;
+  coverDark?: string;
   lede: string;
   role: string;
   time: string;
@@ -157,6 +159,8 @@ export const cases = {
     kicker: 'AI sales analytics',
     title: 'Naoma',
     cardDesc: 'A sales-analytics platform built from scratch: dashboard, call scoring, and reporting.',
+    coverLight: '/covers/naoma/naoma-1-lm.png',
+    coverDark: '/covers/naoma/naoma-1-dm.png',
     lede: 'An AI sales-analytics platform that turns scattered call and deal data into a clear read on why reps win or lose.',
     role: 'Product Designer',
     time: '2024 to 2025',

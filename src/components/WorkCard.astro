@@ -9,6 +9,8 @@ type Props = Omit<HTMLAttributes<'a'>, 'role'> & {
   time: string;
   role: string;
   cover?: string | null;
+  coverLight?: string | null;
+  coverDark?: string | null;
 };
 
 const {
@@ -18,17 +20,33 @@ const {
   time,
   role,
   cover = null,
+  coverLight = null,
+  coverDark = null,
   href = '#',
   class: className,
   ...attrs
 } = Astro.props;
+
+const hasThemed = Boolean(coverLight && coverDark);
+const imgClass = 'absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[var(--motion-hover)] ease-[var(--ease-out)] group-hover:scale-[1.03]';
 ---
 
 <a href={href} class:list={['reveal group flex flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-surface', className]} {...attrs}>
   <div class="relative aspect-[16/10] overflow-hidden">
-    <div class="ph absolute inset-0 flex items-center justify-center transition-transform duration-[var(--motion-hover)] ease-[var(--ease-out)] group-hover:scale-[1.03]">
-      <Eyebrow tone="ph" as="span">[ cover ]</Eyebrow>
-    </div>
+    {
+      hasThemed ? (
+        <Fragment>
+          <img src={coverLight} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class:list={['block dark:hidden', imgClass]} />
+          <img src={coverDark} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class:list={['hidden dark:block', imgClass]} />
+        </Fragment>
+      ) : cover ? (
+        <img src={cover} alt={`${title} cover`} width="1600" height="1000" loading="lazy" decoding="async" class={imgClass} />
+      ) : (
+        <div class="ph absolute inset-0 flex items-center justify-center transition-transform duration-[var(--motion-hover)] ease-[var(--ease-out)] group-hover:scale-[1.03]">
+          <Eyebrow tone="ph" as="span">[ cover ]</Eyebrow>
+        </div>
+      )
+    }
     <span class="pointer-events-none absolute inset-0 bg-black/5 opacity-0 transition-opacity duration-[var(--motion-hover)] ease-[var(--ease-out)] group-hover:opacity-100"></span>
   </div>
   <div class="flex min-w-0 flex-1 flex-col gap-3 p-6 sm:p-7">
