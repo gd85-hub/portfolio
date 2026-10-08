@@ -10,11 +10,10 @@ import { caseStudies } from '../../data/cases';
       caseStudies.map((caseStudy) => (
         <WorkCard
           href={`/case/${caseStudy.slug}`}
-          kicker={caseStudy.kicker}
           title={caseStudy.title}
           desc={caseStudy.cardDesc}
-          time={caseStudy.time}
           role={caseStudy.role}
+          cardMeta={caseStudy.cardMeta}
           coverLight={caseStudy.coverLight}
           coverDark={caseStudy.coverDark}
           coverLightHover={caseStudy.coverLightHover}

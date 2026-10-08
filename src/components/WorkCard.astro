@@ -3,11 +3,10 @@ import type { HTMLAttributes } from 'astro/types';
 import Eyebrow from './Eyebrow.astro';
 
 type Props = Omit<HTMLAttributes<'a'>, 'role'> & {
-  kicker: string;
   title: string;
   desc: string;
-  time: string;
   role: string;
+  cardMeta: string;
   cover?: string | null;
   coverLight?: string | null;
   coverDark?: string | null;
@@ -16,11 +15,10 @@ type Props = Omit<HTMLAttributes<'a'>, 'role'> & {
 };
 
 const {
-  kicker,
   title,
   desc,
-  time,
   role,
+  cardMeta,
   cover = null,
   coverLight = null,
   coverDark = null,
@@ -35,7 +33,6 @@ const hasThemed = Boolean(coverLight && coverDark);
 const hasThemedHover = Boolean(coverLightHover && coverDarkHover);
 const imgBase = 'absolute inset-0 h-full w-full object-cover object-top';
 const imgHover = 'absolute inset-0 h-full w-full object-cover object-top opacity-0 [transition:opacity_900ms_var(--ease-out)] group-hover:opacity-100';
-const metaYear = time.replace(' to ', '–');
 ---
 
 <a href={href} class:list={['reveal group flex flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-surface dark:border-white/[0.07] dark:bg-[#0c0c0e]', className]} {...attrs}>
@@ -61,7 +58,7 @@ const metaYear = time.replace(' to ', '–');
       )
     }
   </div>
-  <div class="flex min-w-0 flex-1 flex-col border-t border-line p-6 sm:p-7 dark:border-white/[0.07] [transition:background-color_1000ms_var(--ease-out)] dark:group-hover:bg-white/[0.03]">
+  <div class="flex min-w-0 flex-1 flex-col border-t border-line p-6 sm:p-7 dark:border-white/[0.07] [transition:background-color_1000ms_var(--ease-out)] dark:group-hover:bg-white/[0.015]">
     <div class="flex items-center justify-between gap-4">
       <h3 class="t-section text-ink">{title}</h3>
       <span class="icon shrink-0 text-ink [transition:transform_420ms_var(--ease-out)] group-hover:translate-x-1" aria-hidden="true">
@@ -69,7 +66,7 @@ const metaYear = time.replace(' to ', '–');
       </span>
     </div>
     <p class="mt-3 line-clamp-2 t-body text-body">{desc}</p>
-    <p class="mt-4 t-small font-mono text-muted">{role} &middot; {kicker} &middot; {metaYear}</p>
+    <p class="mt-4 t-small font-mono text-muted">{role} &middot; {cardMeta}</p>
     <span class="sr-only">Read case</span>
   </div>
 </a>
