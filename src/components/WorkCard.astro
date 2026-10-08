@@ -48,8 +48,8 @@ const metaYear = time.replace(' to ', '–');
         </div>
       )
     }
-    <span class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/85 via-black/40 to-transparent opacity-90 transition-opacity duration-[var(--motion-hover)] ease-[var(--ease-out)] group-hover:opacity-100"></span>
-    <p data-typewriter class="wc-caption pointer-events-none absolute inset-x-0 bottom-0 px-6 pb-4 font-mono text-[12px] leading-tight tracking-[0.02em] text-white/85 sm:px-7">{role} &middot; {kicker} &middot; {metaYear}</p>
+    <span class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/85 via-black/40 to-transparent opacity-0 [transition:opacity_400ms_var(--ease-out)] group-hover:opacity-100"></span>
+    <p data-typewriter class="wc-caption pointer-events-none absolute inset-x-0 bottom-0 px-6 pb-4 font-mono text-[12px] leading-tight tracking-[0.02em] text-white/85 opacity-0 [transition:opacity_400ms_var(--ease-out)] group-hover:opacity-100 sm:px-7">{role} &middot; {kicker} &middot; {metaYear}</p>
   </div>
   <div class="flex min-w-0 flex-1 flex-col border-t border-line p-6 sm:p-7 dark:border-white/[0.07]">
     <div class="flex items-center justify-between gap-4">
@@ -81,32 +81,43 @@ const metaYear = time.replace(' to ', '–');
 </style>
 
 <script>
+  const fineHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const captions = Array.from(document.querySelectorAll<HTMLElement>('[data-typewriter]'));
-  if (!reduce && captions.length) {
-    const type = (el: HTMLElement) => {
-      const full = el.textContent ?? '';
-      el.textContent = '';
-      el.classList.add('is-typing');
-      let i = 0;
-      const step = () => {
-        el.textContent = full.slice(0, ++i);
-        if (i < full.length) {
-          window.setTimeout(step, 22);
-        } else {
-          el.classList.remove('is-typing');
-        }
-      };
-      step();
-    };
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          type(entry.target as HTMLElement);
-          io.unobserve(entry.target);
-        }
+
+  if (fineHover && !reduce) {
+    const captions = Array.from(document.querySelectorAll<HTMLElement>('[data-typewriter]'));
+
+    captions.forEach((caption) => {
+      const card = caption.closest('a');
+      if (!card) return;
+
+      const full = caption.textContent ?? '';
+      let timer: number | undefined;
+      let runId = 0;
+
+      card.addEventListener('mouseenter', () => {
+        const myId = ++runId;
+        caption.classList.add('is-typing');
+        caption.textContent = '';
+        let i = 0;
+        const step = () => {
+          if (myId !== runId) return;
+          caption.textContent = full.slice(0, ++i);
+          if (i < full.length) {
+            timer = window.setTimeout(step, 22);
+          } else {
+            caption.classList.remove('is-typing');
+          }
+        };
+        step();
       });
-    }, { threshold: 0.6 });
-    captions.forEach((el) => io.observe(el));
+
+      card.addEventListener('mouseleave', () => {
+        runId += 1;
+        if (timer) window.clearTimeout(timer);
+        caption.classList.remove('is-typing');
+        caption.textContent = full;
+      });
+    });
   }
 </script>
