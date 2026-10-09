@@ -27,46 +27,7 @@ const { email, name, telegramUrl, linkedinUrl, year } = site;
       </nav>
       <span class="font-mono sm:text-right">&copy; {year}</span>
     </div>
-
-    <div class="mt-16 sm:mt-20" data-brandmark>
-      <svg viewBox="0 0 334 210" fill="currentColor" aria-hidden="true" class="brandmark h-24 w-auto text-ink sm:h-32 lg:h-40">
-        <g class="bm-d"><path d="M333.068 103.04C333.626 134.358 322.269 163.74 299.05 184.612C281.045 200.159 259.353 209.357 235.278 209.395L161.955 209.488L161.899 122.125H95.8371C86.9742 118.941 81.556 111.251 80.625 102.016L80.9602 87.0833H80.9415L181.71 87.344C191.206 87.344 197.611 99.0743 197.611 107.323L197.518 171.243L240.51 170.741C263.096 170.48 281.101 155.957 290.56 135.755C298.976 115.087 298.957 91.794 289.126 71.5361C279.574 51.8925 260.526 39.2871 238.649 39.0637L197.667 38.6354V69.339L162.011 69.3948L161.899 0.558594L238.109 0.893744C261.532 1.00546 282.293 11.302 299.72 26.3838C321.617 45.9901 332.528 73.5842 333.068 103.04Z"/></g>
-        <g class="bm-g"><path d="M147.209 171.281L147.321 209.451H96.7875C56.5694 208.203 22.1979 183.793 7.30229 146.628C1.00891 130.914 -0.462029 115.013 0.115175 98.2736C1.92126 45.2267 42.7724 3.7239 95.8565 0.279292L147.377 0L147.451 39.6036H93.3429C71.5209 40.125 52.6221 52.8048 43.4427 72.2622C34.2633 91.7196 33.9281 114.398 41.8973 134.228C50.5181 155.64 68.8211 168.339 92.114 171.076L147.209 171.281Z"/></g>
-      </svg>
-      <span class="sr-only">{name}</span>
-    </div>
   </div>
-
-  <style>
-    [data-brandmark].is-armed .bm-g,
-    [data-brandmark].is-armed .bm-d{
-      opacity:0;
-      transition:transform 800ms var(--ease-out), opacity 800ms var(--ease-out);
-    }
-    [data-brandmark].is-armed .bm-g{ transform:translateX(-40px); }
-    [data-brandmark].is-armed .bm-d{ transform:translateX(40px); transition-delay:90ms; }
-    [data-brandmark].is-armed.is-in .bm-g,
-    [data-brandmark].is-armed.is-in .bm-d{
-      opacity:1;
-      transform:none;
-    }
-  </style>
-
-  <script>
-    const mark = document.querySelector('[data-brandmark]');
-    if (mark && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      mark.classList.add('is-armed');
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            mark.classList.add('is-in');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.4 });
-      io.observe(mark);
-    }
-  </script>
 
   <script is:inline>
     document.querySelector('[data-back-to-top]')?.addEventListener('click', (event) => {
