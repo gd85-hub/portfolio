@@ -4,5 +4,6 @@ export const site = {
   defaultDescription: 'Product designer turning dense, complex products into clear interfaces. Fintech, sales, and edtech.',
   email: 'gleb.dvoryatkin86@gmail.com',
   telegramUrl: 'https://t.me/virbonus825',
+  linkedinUrl: 'https://www.linkedin.com/in/gleb-d-2745a412b/',
   year: 2026,
 } as const;
