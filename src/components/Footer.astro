@@ -2,30 +2,23 @@
 import CopyEmail from './CopyEmail.astro';
 import { site } from '../data/site';
 
-const { email, name, telegramUrl, linkedinUrl, year } = site;
+const { email, telegramUrl, linkedinUrl } = site;
 ---
 
 <footer id="contact" class="scroll-mt-20 border-t border-line bg-[var(--footer-bg)] dark:border-white/[0.07]">
   <div class="mx-auto max-w-wide px-5 py-16 sm:px-8">
     <div class="max-w-[52ch]">
       <h2 class="t-title text-ink">Let's talk.</h2>
-      <p class="t-lede mt-4 text-body">Open to senior product design roles and selected fintech advisory.</p>
+      <p class="t-lede mt-4 text-body">Always glad to talk — open to new opportunities and collaborations.</p>
       <div class="mt-8 flex flex-wrap items-center gap-6 font-mono">
-        <CopyEmail email={email} class="t-body text-ink" />
-        <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="link-underline t-body text-ink">Telegram</a>
-        <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" class="link-underline t-body text-ink">LinkedIn</a>
+        <CopyEmail email={email} class="t-body text-accent" />
+        <a href={telegramUrl} target="_blank" rel="noopener noreferrer" class="link-underline t-body text-accent">Telegram</a>
+        <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" class="link-underline t-body text-accent">LinkedIn</a>
       </div>
     </div>
 
-    <div class="mt-14 flex flex-col gap-6 border-t border-line pt-8 text-[12px] text-muted dark:border-white/[0.07] sm:flex-row sm:items-center sm:justify-between">
-      <span class="font-mono">{name}</span>
-      <nav class="flex flex-wrap items-center gap-6 font-mono" aria-label="Footer">
-        <a href="/#work" class="link-underline hover:text-ink">Work</a>
-        <a href="/about" class="link-underline hover:text-ink">About</a>
-        <a href="/resume" class="link-underline hover:text-ink">Resume</a>
-        <a href="#top" data-back-to-top class="link-underline hover:text-ink">Back to top</a>
-      </nav>
-      <span class="font-mono sm:text-right">&copy; {year}</span>
+    <div class="mt-14 flex border-t border-line pt-8 text-[12px] text-muted dark:border-white/[0.07]">
+      <a href="#top" data-back-to-top class="link-underline font-mono hover:text-ink">Back to top</a>
     </div>
   </div>
 
