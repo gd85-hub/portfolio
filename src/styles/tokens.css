@@ -6,7 +6,7 @@
   --callout-insight-bg:#e9f3f2; --callout-problem-bg:#f9efee; --callout-problem-accent:#a84a42;
   --inv-bg:#18181b; --inv-fg:#ffffff; --inv-sub:#a1a1aa; --inv-line:#3f3f46; --inv-btn:#ffffff; --inv-btnfg:#18181b;
   --footer-bg:#f4f4f5;
-  --motion-fast:160ms; --motion-hover:280ms; --motion-theme:220ms; --motion-slow:600ms;
+  --motion-fast:160ms; --motion-hover:280ms; --motion-theme:220ms; --motion-theme-swap:400ms; --motion-slow:600ms;
   --ease-emphasized:cubic-bezier(.22,1,.36,1);
   --ease-out:cubic-bezier(.23,1,.32,1);
   --radius:10px; --radius-sm:8px;

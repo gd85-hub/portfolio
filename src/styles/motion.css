@@ -14,7 +14,7 @@ html.theme-transition-active,
 html.theme-transition-active body,
 html.theme-transition-active :where(header, section, article, footer, .bg-paper, .bg-surface, .bg-accent, .bg-callout-insight, .bg-callout-problem, .bg-ink, .bg-inv, .bg-inv-btn, .border-ink, .border-inv-fg, .border-inv-line, .border-line, .border-l-accent, .border-l-callout-problem-accent, .border-l-muted, .text-accent, .text-body, .text-callout-problem-accent, .text-ink, .text-inv-btnfg, .text-inv-fg, .text-inv-sub, .text-muted, .text-on-accent, .text-paper, .text-phtext){
   transition-property:background-color, border-color, color;
-  transition-duration:var(--motion-theme);
+  transition-duration:var(--motion-theme-swap);
   transition-timing-function:var(--ease-out);
 }
 :where(.group svg){
@@ -25,13 +25,13 @@ html.theme-transition-active :where(header, section, article, footer, .bg-paper,
 .theme-toggle-icon{
   grid-area:1 / 1;
   opacity:0;
-  transform:rotate(-45deg);
-  transition:opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+  transform:rotate(-90deg) scale(.6);
+  transition:opacity var(--motion-theme-swap) var(--ease-out), transform var(--motion-theme-swap) var(--ease-out);
 }
 html:not(.dark) .theme-toggle-icon-moon,
 html.dark .theme-toggle-icon-sun{
   opacity:1;
-  transform:rotate(0);
+  transform:rotate(0) scale(1);
 }
 .button-feedback{
   transition:
