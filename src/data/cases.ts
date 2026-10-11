@@ -52,7 +52,9 @@ export interface BeforeAfterBlock {
 export interface BeforeAfterSliderBlock {
   type: 'beforeAfterSlider';
   before: string;
-  after: string;
+  after?: string;
+  afterLight?: string;
+  afterDark?: string;
   beforeAlt: string;
   afterAlt: string;
   beforeLabel?: string;
@@ -328,7 +330,8 @@ export const cases = {
         problem: 'The interface was messy and inconsistent, so the product looked unpolished and felt rough to use.',
         solution: 'I built a UI kit for the whole OilCase ecosystem, which made the product consistent and faster to build.',
         before: '/oilcase-x/sign-in-before.png',
-        after: '/oilcase-x/sign-in-after.png',
+        afterLight: '/oilcase-x/sign-in-after-lm.png',
+        afterDark: '/oilcase-x/sign-in-after-dm.png',
         beforeAlt: 'OilCase X login screen before the redesign',
         afterAlt: 'OilCase X login screen after the redesign',
       },
@@ -338,7 +341,8 @@ export const cases = {
         problem: 'A four-link top bar with no state indicators left people unsure where they were, and it did not scale.',
         solution: 'I moved navigation to a sidebar with clear state, and put stats and controls in the top bar for the turn-based flow.',
         before: '/oilcase-x/field-map-before.png',
-        after: '/oilcase-x/field-map-after.png',
+        afterLight: '/oilcase-x/field-map-after-lm.png',
+        afterDark: '/oilcase-x/field-map-after-dm.png',
         beforeAlt: 'OilCase X field map and navigation before the redesign',
         afterAlt: 'OilCase X field map and navigation after the redesign',
       },
@@ -348,7 +352,8 @@ export const cases = {
         problem: 'Content had no hierarchy or grouping, so everything looked equally important and nothing was easy to find.',
         solution: 'I set a clear hierarchy, cut and simplified the copy, and reorganized content into tables and blocks.',
         before: '/oilcase-x/wells-before.png',
-        after: '/oilcase-x/wells-after.png',
+        afterLight: '/oilcase-x/wells-after-lm.png',
+        afterDark: '/oilcase-x/wells-after-dm.png',
         beforeAlt: 'OilCase X wells data before the redesign',
         afterAlt: 'OilCase X wells data after the redesign',
       },
@@ -358,7 +363,8 @@ export const cases = {
         problem: 'Unused features added noise, while the tools players actually needed were missing.',
         solution: 'I removed the dead weight and added what the game needed: statistics, resource display, a drilling view, and a turn-completion flow.',
         before: '/oilcase-x/3D-view-before.png',
-        after: '/oilcase-x/3D-view-after.png',
+        afterLight: '/oilcase-x/3D-view-after-lm.png',
+        afterDark: '/oilcase-x/3D-view-after-dm.png',
         beforeAlt: 'OilCase X 3D field view before the redesign',
         afterAlt: 'OilCase X 3D field view after the redesign',
       },

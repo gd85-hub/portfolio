@@ -4,7 +4,9 @@ import Eyebrow from '../Eyebrow.astro';
 
 type Props = HTMLAttributes<'figure'> & {
   before: string;
-  after: string;
+  after?: string;
+  afterLight?: string;
+  afterDark?: string;
   beforeAlt: string;
   afterAlt: string;
   beforeLabel?: string;
@@ -18,6 +20,8 @@ type Props = HTMLAttributes<'figure'> & {
 const {
   before,
   after,
+  afterLight,
+  afterDark,
   beforeAlt,
   afterAlt,
   beforeLabel = 'Before',
@@ -30,6 +34,7 @@ const {
   ...attrs
 } = Astro.props;
 const hasProblemSolution = Boolean(problem || solution);
+const hasThemedAfter = Boolean(afterLight && afterDark);
 
 // Before and after source images are expected to have matching dimensions.
 ---
@@ -64,7 +69,16 @@ const hasProblemSolution = Boolean(problem || solution);
     data-before-after-slider
     class="ba relative cursor-ew-resize touch-none select-none overflow-hidden rounded-[var(--radius)] border border-line"
   >
-    <img src={after} alt={afterAlt} draggable="false" class="block h-auto w-full" />
+    {
+      hasThemedAfter ? (
+        <Fragment>
+          <img src={afterLight} alt={afterAlt} draggable="false" class="block h-auto w-full dark:hidden" />
+          <img src={afterDark} alt={afterAlt} draggable="false" class="hidden h-auto w-full dark:block" />
+        </Fragment>
+      ) : (
+        <img src={after} alt={afterAlt} draggable="false" class="block h-auto w-full" />
+      )
+    }
     <img
       src={before}
       alt={beforeAlt}
