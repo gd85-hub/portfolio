@@ -119,10 +119,10 @@ const hasThemedAfter = Boolean(afterLight && afterDark);
       </span>
     </div>
 
-    <Eyebrow as="span" tone="inherit" class="pointer-events-none absolute left-3 top-3 z-20 rounded-[var(--radius-sm)] border border-line bg-surface px-3 py-2 text-ink">
+    <Eyebrow as="span" tone="inherit" class="pointer-events-none absolute left-3 top-3 z-20 rounded-[var(--radius-sm)] bg-black/55 px-3 py-2 text-white ring-1 ring-white/15 backdrop-blur-md">
       {beforeLabel}
     </Eyebrow>
-    <Eyebrow as="span" tone="inherit" class="pointer-events-none absolute right-3 top-3 z-20 rounded-[var(--radius-sm)] border border-line bg-surface px-3 py-2 text-ink">
+    <Eyebrow as="span" tone="inherit" class="pointer-events-none absolute right-3 top-3 z-20 rounded-[var(--radius-sm)] bg-black/55 px-3 py-2 text-white ring-1 ring-white/15 backdrop-blur-md">
       {afterLabel}
     </Eyebrow>
   </div>
