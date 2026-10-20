@@ -31,21 +31,70 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
     body: block.p,
   };
 });
+
+const getBlockMarginClass = (
+  previousBlock: CaseBlock | undefined,
+  currentBlock: CaseBlock,
+) => {
+  if (!previousBlock) {
+    return undefined;
+  }
+
+  if (previousBlock.type === 'prose' && currentBlock.type === 'list') {
+    return 'mt-6 sm:mt-8';
+  }
+
+  if (
+    currentBlock.type === 'callout' &&
+    (previousBlock.type === 'prose' || previousBlock.type === 'list')
+  ) {
+    return 'mt-8';
+  }
+
+  return 'mt-12 sm:mt-16';
+};
 ---
 
-<div class="space-y-12 sm:space-y-16">
-  {normalizedBlocks.map((block) => {
+<div>
+  {normalizedBlocks.map((block, index) => {
+    const marginClass = getBlockMarginClass(normalizedBlocks[index - 1], block);
+
     switch (block.type) {
       case 'prose':
-        return <Prose heading={block.heading} body={block.body} />;
+        return <div class={marginClass}><Prose heading={block.heading} body={block.body} /></div>;
       case 'imageText':
-        return <ImageText side={block.side} image={block.image} alt={block.alt} caption={block.caption} heading={block.heading} body={block.body} />;
+        return <div class={marginClass}><ImageText side={block.side} image={block.image} alt={block.alt} caption={block.caption} heading={block.heading} body={block.body} /></div>;
       case 'fullImage':
         return (
-          <div class="py-4 sm:py-6">
-            <FullImage
-              image={block.image}
-              alt={block.alt}
+          <div class={marginClass}>
+            <div class="py-4 sm:py-6">
+              <FullImage
+                image={block.image}
+                alt={block.alt}
+                caption={block.caption}
+                heading={block.heading}
+                problem={block.problem}
+                solution={block.solution}
+              />
+            </div>
+          </div>
+        );
+      case 'metrics':
+        return <div class={marginClass}><Metrics heading={block.heading} items={block.items} /></div>;
+      case 'beforeAfter':
+        return <div class={marginClass}><BeforeAfter before={block.before} after={block.after} beforeAlt={block.beforeAlt} afterAlt={block.afterAlt} caption={block.caption} /></div>;
+      case 'beforeAfterSlider':
+        return (
+          <div class={marginClass}>
+            <BeforeAfterSlider
+              before={block.before}
+              after={block.after}
+              afterLight={block.afterLight}
+              afterDark={block.afterDark}
+              beforeAlt={block.beforeAlt}
+              afterAlt={block.afterAlt}
+              beforeLabel={block.beforeLabel}
+              afterLabel={block.afterLabel}
               caption={block.caption}
               heading={block.heading}
               problem={block.problem}
@@ -53,41 +102,20 @@ const normalizedBlocks: CaseBlock[] = blocks.map((block) => {
             />
           </div>
         );
-      case 'metrics':
-        return <Metrics heading={block.heading} items={block.items} />;
-      case 'beforeAfter':
-        return <BeforeAfter before={block.before} after={block.after} beforeAlt={block.beforeAlt} afterAlt={block.afterAlt} caption={block.caption} />;
-      case 'beforeAfterSlider':
-        return (
-          <BeforeAfterSlider
-            before={block.before}
-            after={block.after}
-            afterLight={block.afterLight}
-            afterDark={block.afterDark}
-            beforeAlt={block.beforeAlt}
-            afterAlt={block.afterAlt}
-            beforeLabel={block.beforeLabel}
-            afterLabel={block.afterLabel}
-            caption={block.caption}
-            heading={block.heading}
-            problem={block.problem}
-            solution={block.solution}
-          />
-        );
       case 'callout':
-        return <Callout body={block.body} variant={block.variant} title={block.title} />;
+        return <div class={marginClass}><Callout body={block.body} variant={block.variant} title={block.title} /></div>;
       case 'list':
-        return <List heading={block.heading} ordered={block.ordered} items={block.items} />;
+        return <div class={marginClass}><List heading={block.heading} ordered={block.ordered} items={block.items} /></div>;
       case 'quote':
-        return <Quote quote={block.quote} attribution={block.attribution} />;
+        return <div class={marginClass}><Quote quote={block.quote} attribution={block.attribution} /></div>;
       case 'twoCol':
-        return <TwoCol heading={block.heading} left={block.left} right={block.right} />;
+        return <div class={marginClass}><TwoCol heading={block.heading} left={block.left} right={block.right} /></div>;
       case 'divider':
-        return <div class="pt-4 sm:pt-6"><Divider label={block.label} title={block.title} /></div>;
+        return <div class={marginClass}><div class="pt-4 sm:pt-6"><Divider label={block.label} title={block.title} /></div></div>;
       case 'gallery':
-        return <Gallery heading={block.heading} columns={block.columns} items={block.items} />;
+        return <div class={marginClass}><Gallery heading={block.heading} columns={block.columns} items={block.items} /></div>;
       case 'table':
-        return <Table heading={block.heading} columns={block.columns} rows={block.rows} />;
+        return <div class={marginClass}><Table heading={block.heading} columns={block.columns} rows={block.rows} /></div>;
       default: {
         const exhaustiveCheck: never = block;
         return exhaustiveCheck;
