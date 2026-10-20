@@ -1,128 +1,46 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Eyebrow from '../components/Eyebrow.astro';
 import { site } from '../data/site';
 
 const title = `About - ${site.name}`;
-const description = 'I design interfaces for complex, data-heavy tools, the kind where a user has to read a lot of state and make a real decision.';
-
-const principles = [
-  {
-    title: 'The brief is a hypothesis',
-    desc: 'Projects start with a problem someone already believes in. On Naoma the first version was built for the wrong one, and it only worked after the positioning caught up. I test the framing before I trust it.',
-  },
-  {
-    title: 'Edge cases are the product',
-    desc: 'Empty states, errors, conflicting actions, the configuration nobody planned for. In back-office tools that is most of the surface, and it decides whether the thing holds up in real use.',
-  },
-  {
-    title: 'Density is a decision',
-    desc: 'In data-heavy tools every element competes for the same glance. The work is deciding what earns attention now, what earns a click, and what can sit quietly until someone looks for it.',
-  },
-  {
-    title: 'Finished means engineering can ship it',
-    desc: 'Component kits and written conventions exist so the same decision gets made once. A design that lives only in Figma leaves that work to someone else.',
-  },
-];
-
-const whatIDo = [
-  {
-    number: '01',
-    title: 'Data-dense product UIs',
-    desc: 'Dashboards, analytics, and monitoring where a lot of state has to stay legible at a glance and safe to act on.',
-  },
-  {
-    number: '02',
-    title: '0 to 1 and redesign',
-    desc: 'Taking an ambiguous or broken product to a version that ships and holds up: the framing, IA, and flows, plus the calls that decide whether it actually works.',
-  },
-  {
-    number: '03',
-    title: 'Design systems and UI kits',
-    desc: 'Component libraries and handoff conventions that keep a growing product coherent and let engineering ship without rebuilding the basics every time.',
-  },
-];
+const description = 'Gleb Dvoryatkin, a product designer for data-dense tools, with ten years in marketing and research behind the design work.';
 ---
 
 <BaseLayout title={title} description={description}>
   <main>
-    <article class="mx-auto max-w-content px-5 pb-24 pt-12 sm:px-8">
-      <div class="grid items-start gap-10 md:grid-cols-[1fr_.42fr] md:gap-14">
-        <header class="reveal max-w-[70ch]">
-          <Eyebrow class="mb-4">About</Eyebrow>
-          <h1 class="t-title text-ink">I like problems where the answer is buried in data and someone still has to act on it.</h1>
-        </header>
+    <article class="mx-auto max-w-content px-5 pb-24 pt-16 sm:px-8 sm:pt-24">
+      <div class="reveal flex flex-col items-start gap-10">
+        <img
+          src="/gleb-photo-light.png"
+          alt={`Portrait of ${site.name}`}
+          width="256"
+          height="256"
+          loading="eager"
+          decoding="async"
+          class="block h-40 w-40 shrink-0 rounded-full object-cover ring-1 ring-line dark:hidden sm:h-52 sm:w-52"
+        />
+        <img
+          src="/gleb-photo-dark.png"
+          alt={`Portrait of ${site.name}`}
+          width="256"
+          height="256"
+          loading="eager"
+          decoding="async"
+          class="hidden h-40 w-40 shrink-0 rounded-full object-cover ring-1 ring-white/[0.06] dark:block sm:h-52 sm:w-52"
+        />
 
-        <div class="reveal max-w-md overflow-hidden rounded-[var(--radius)] border border-line bg-surface md:justify-self-end">
-          <img
-            src="/gleb-photo.png"
-            alt={`Portrait of ${site.name}`}
-            class="h-auto w-full"
-            loading="lazy"
-            decoding="async"
-          />
+        <div class="max-w-[60ch] space-y-5">
+          <h1 class="t-lede text-ink">I'm Gleb, a product designer. I work on data-dense tools, the kind where someone has to read a screen full of data and still make the right call.</h1>
+          <p class="t-body text-body">Before design, I spent ten years in marketing, research, and project management. So I read a product from both ends: the business behind it and the person using it.</p>
+          <p class="t-body text-body">I design dashboards, analytics, and back-office tools, plus the design systems that hold them together. The real work is in the parts most people skip: the edge case, the empty state, the moment something breaks.</p>
+          <p class="t-body text-body">Off the clock: guitar, boxing, books, astrophysics. Three languages so far: English, French, Russian.</p>
         </div>
       </div>
 
-      <section class="reveal mt-16 border-t border-line pt-12 sm:mt-20 sm:pt-14">
-        <h2 class="t-section text-ink">What I do</h2>
-        <div class="mt-10 border-t border-line">
-          {
-            whatIDo.map((item) => (
-              <div class="grid gap-4 border-b border-line py-8 sm:grid-cols-[3rem_1fr] sm:gap-6 sm:py-10">
-                <span class="eyebrow text-muted">{item.number}</span>
-                <div>
-                  <h3 class="t-sub text-ink">{item.title}</h3>
-                  <p class="mt-3 max-w-[70ch] t-body text-body">{item.desc}</p>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="reveal mt-16 border-t border-line pt-12 sm:mt-20 sm:pt-14">
-        <Eyebrow tone="accent" class="mb-4">Principles</Eyebrow>
-        <h2 class="t-section text-ink">How I work</h2>
-        <div class="mt-10 border-t border-line">
-          {
-            principles.map((principle, index) => (
-              <div class="grid gap-4 border-b border-line py-8 sm:grid-cols-[3rem_1fr] sm:gap-6 sm:py-10">
-                <span class="eyebrow text-muted">0{index + 1}</span>
-                <div>
-                  <h3 class="t-sub text-ink">{principle.title}</h3>
-                  <p class="mt-3 max-w-[70ch] t-body text-body">{principle.desc}</p>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </section>
-
-      <section class="reveal mt-16 border-t border-line pt-12 sm:mt-20 sm:pt-14">
-        <div class="max-w-[70ch]">
-          <h2 class="t-section text-ink">Background</h2>
-          <div class="mt-6 space-y-4 t-body text-body">
-            <p>I design interfaces for complex, data-heavy tools, the kind where a user has to read a lot of state and make a real decision. My background is unusual for a designer: about a decade in marketing, research, and project management before UX, so I read a problem from the business and the interface side before proposing anything.</p>
-            <p>Today I design internal and client-facing products at Axon Trade, a technology provider for the institutional crypto market. Before that I worked across sales analytics and edtech, and earlier led data and customer-facing teams at companies like June Homes and Standuply, with clients including IBM, Intel, Adobe, and Coursera.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="reveal mt-16 border-t border-line pt-12 sm:mt-20 sm:pt-14">
-        <div class="max-w-[70ch]">
-          <h2 class="t-section text-ink">Beyond work</h2>
-          <div class="mt-6 space-y-3">
-            <p class="t-body text-body">Guitar, boxing, books, astrophysics. Languages are a long-running habit.</p>
-            <p class="t-small text-muted">English (C1), French (B1), Russian (native).</p>
-          </div>
-        </div>
-      </section>
-
-      <footer class="reveal mt-16 border-t border-line pt-10 sm:mt-20 sm:pt-12">
+      <footer class="reveal mt-14 border-t border-line pt-10 dark:border-white/[0.07] sm:mt-16">
         <a href="/resume" class="group t-body inline-flex items-center gap-1.5 font-medium text-ink">
-          <span class="link-underline">For the professional track record, see my resume</span>
-          <span class="icon transition-transform group-hover:translate-x-1">
+          <span class="link-underline">For the full track record, see my resume</span>
+          <span class="icon [transition:transform_420ms_var(--ease-out)] group-hover:translate-x-1">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
           </span>
         </a>
