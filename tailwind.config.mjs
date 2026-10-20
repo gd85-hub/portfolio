@@ -27,7 +27,7 @@ export default {
         'inv-btnfg': 'var(--inv-btnfg)'
       },
       fontFamily: {
-        sans: ['"Geist Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['var(--sans)'],
         mono: ['"Geist Mono Variable"', 'ui-monospace', 'monospace']
       },
       maxWidth: {

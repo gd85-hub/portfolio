@@ -10,7 +10,7 @@
   --ease-emphasized:cubic-bezier(.22,1,.36,1);
   --ease-out:cubic-bezier(.23,1,.32,1);
   --radius:10px; --radius-sm:8px;
-  --sans:'Geist Variable',ui-sans-serif,system-ui,sans-serif;
+  --sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
   --mono:'Geist Mono Variable',ui-monospace,monospace;
   color-scheme: light;
 }
