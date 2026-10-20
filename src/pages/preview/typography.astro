@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { cases } from '../../data/cases';
+
+const naoma = cases.naoma;
+
+const fontOptions = [
+  { key: 'geist', label: 'Geist', family: 'Geist Variable', weights: [400, 500, 600] },
+  { key: 'switzer', label: 'Switzer', family: 'Switzer', weights: [400, 500, 600] },
+  { key: 'general-sans', label: 'General Sans', family: 'General Sans', weights: [400, 500, 600] },
+  { key: 'inter', label: 'Inter', family: 'Inter', weights: [400, 500, 600] },
+  { key: 'dm-sans', label: 'DM Sans', family: 'DM Sans', weights: [400, 500, 600] },
+  { key: 'instrument-sans', label: 'Instrument Sans', family: 'Instrument Sans', weights: [400, 500, 600] },
+  { key: 'satoshi', label: 'Satoshi', family: 'Satoshi', weights: [400, 500] },
+  { key: 'manrope', label: 'Manrope', family: 'Manrope', weights: [400, 500, 600] },
+  { key: 'archivo', label: 'Archivo', family: 'Archivo', weights: [400, 500, 600] },
+];
+
+const sampleSlots = [
+  { slot: 'a', label: 'Typeface A' },
+  { slot: 'b', label: 'Typeface B' },
+];
+
+const fontshareUrls = [
+  'https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap',
+  'https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap',
+  'https://api.fontshare.com/v2/css?f[]=satoshi@400,500&display=swap',
+];
+
+const googleFontsUrl = 'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=DM+Sans:wght@400;500;600&family=Instrument+Sans:wdth,wght@100,400;100,500;100,600&family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap';
+---
+
+<BaseLayout
+  title="Typography Lab (internal)"
+  description="Internal typography comparison for the portfolio."
+  robots="noindex,nofollow"
+>
+  {fontshareUrls.map((href) => <link rel="stylesheet" href={href} data-typography-font-source />)}
+  <link rel="stylesheet" href={googleFontsUrl} data-typography-font-source />
+
+  <main
+    data-typography-lab
+    data-font-config={JSON.stringify(fontOptions)}
+    class="mx-auto max-w-wide px-5 pb-24 pt-12 sm:px-8 sm:pt-16"
+  >
+    <header class="max-w-3xl">
+      <h1 class="t-title text-ink">Typography Lab</h1>
+      <p class="mt-4 t-body text-body">Compare typefaces using real portfolio content.</p>
+    </header>
+
+    <section class="mt-10 border-y border-line py-6" aria-label="Typography comparison controls">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
+        <fieldset>
+          <legend class="eyebrow mb-3 text-muted">Mode</legend>
+          <div class="inline-flex rounded-[var(--radius)] border border-line bg-surface p-1">
+            <label class="cursor-pointer">
+              <input class="peer sr-only" type="radio" name="preview-mode" value="compare" checked />
+              <span class="block rounded-[var(--radius-sm)] px-3 py-2 t-small text-muted transition-colors peer-checked:bg-ink peer-checked:text-paper">A/B Compare</span>
+            </label>
+            <label class="cursor-pointer">
+              <input class="peer sr-only" type="radio" name="preview-mode" value="single" />
+              <span class="block rounded-[var(--radius-sm)] px-3 py-2 t-small text-muted transition-colors peer-checked:bg-ink peer-checked:text-paper">Single preview</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <label>
+          <span class="eyebrow mb-3 block text-muted">Typeface A</span>
+          <select data-font-select="a" class="w-full rounded-[var(--radius)] border border-line bg-surface px-3 py-2 t-small text-ink">
+            {fontOptions.map((font) => <option value={font.key} selected={font.key === 'geist'}>{font.label}</option>)}
+          </select>
+        </label>
+
+        <label data-font-b-control>
+          <span class="eyebrow mb-3 block text-muted">Typeface B</span>
+          <select data-font-select="b" class="w-full rounded-[var(--radius)] border border-line bg-surface px-3 py-2 t-small text-ink">
+            {fontOptions.map((font) => <option value={font.key} selected={font.key === 'switzer'}>{font.label}</option>)}
+          </select>
+        </label>
+
+        <fieldset>
+          <legend class="eyebrow mb-3 text-muted">Heading weight</legend>
+          <div class="inline-flex rounded-[var(--radius)] border border-line bg-surface p-1">
+            <label class="cursor-pointer">
+              <input class="peer sr-only" type="radio" name="heading-weight" value="500" />
+              <span class="block rounded-[var(--radius-sm)] px-4 py-2 t-small text-muted transition-colors peer-checked:bg-ink peer-checked:text-paper">500</span>
+            </label>
+            <label class="cursor-pointer">
+              <input class="peer sr-only" type="radio" name="heading-weight" value="600" checked />
+              <span class="block rounded-[var(--radius-sm)] px-4 py-2 t-small text-muted transition-colors peer-checked:bg-ink peer-checked:text-paper">600</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <section data-preview-grid class="mx-auto mt-12 grid min-w-0 gap-12 md:grid-cols-2" aria-label="Typeface previews">
+      {
+        sampleSlots.map(({ slot, label }) => (
+          <article data-font-sample data-slot={slot} data-font-state="loading" class="min-w-0 border-t border-line pt-5">
+            <header class="flex items-center justify-between gap-4 font-mono">
+              <p data-sample-kicker class="eyebrow text-muted">{label}</p>
+              <p data-sample-name class="t-small text-ink"></p>
+            </header>
+
+            <p data-font-warning class="mt-8 t-body text-body" role="status" aria-live="polite">Loading typeface...</p>
+
+            <div data-sample-content class="mt-8 space-y-12">
+              <section>
+                <p class="eyebrow text-muted">Hero</p>
+                <p class="mt-4 max-w-[54ch] text-lg leading-[1.55] text-body sm:text-xl">
+                  I'm Gleb, a product designer specializing in complex interfaces and high-load B2B SaaS. 6+ years in product design across fintech, analytics, and edtech, built on a decade in marketing and research.
+                </p>
+              </section>
+
+              <section class="border-t border-line pt-10">
+                <p class="eyebrow mb-5 text-muted">About</p>
+                <h2 data-lab-heading class="t-title text-ink">About</h2>
+                <div class="mt-6 space-y-5">
+                  <p class="t-body text-body">I design complex digital products, from trading platforms and sales analytics to educational tools. My work spans the entire design process, from understanding the problem and shaping the product to designing interfaces and systems that hold it all together.</p>
+                  <p class="t-body text-body">Before moving into product design, I spent a decade primarily in marketing, with research and project management also part of my work. That experience still shapes how I approach problems, make decisions, and collaborate with teams.</p>
+                  <p class="t-body text-body">Outside work, I'm into music, sports, and travel. I've played guitar in several bands, including traditional Irish music. I also enjoy training and discovering new places.</p>
+                </div>
+              </section>
+
+              <section class="border-t border-line pt-10">
+                <p class="eyebrow mb-5 text-muted">Work card</p>
+                <h2 data-lab-heading class="t-section text-ink">Selected work</h2>
+                <div class="mt-7 border-y border-line py-6">
+                  <h3 data-lab-heading class="t-section text-ink">{naoma.title}</h3>
+                  <p class="mt-3 t-body text-body">{naoma.cardDesc}</p>
+                  <p class="mt-4 t-small font-mono text-muted">{naoma.role} &middot; {naoma.cardMeta}</p>
+                </div>
+              </section>
+
+              <section class="border-t border-line pt-10">
+                <p class="eyebrow mb-5 text-muted">Type details</p>
+                <div class="space-y-5 break-words [overflow-wrap:anywhere] text-ink">
+                  <p data-lab-heading class="t-display">Aa Gg</p>
+                  <p data-lab-heading class="t-title">Rr Mm Ww</p>
+                  <p data-lab-heading class="t-section">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+                  <p class="t-sub">abcdefghijklmnopqrstuvwxyz</p>
+                  <p class="t-body">0123456789</p>
+                  <p class="t-small">Aa Gg Rr Mm Ww &middot; Il1 O0 8B</p>
+                </div>
+              </section>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+
+  <script>
+    type FontOption = {
+      key: string;
+      label: string;
+      family: string;
+      weights: number[];
+    };
+
+    const lab = document.querySelector<HTMLElement>('[data-typography-lab]');
+
+    if (lab) {
+      const config = lab.dataset.fontConfig;
+      const fonts = config ? JSON.parse(config) as FontOption[] : [];
+      const fontByKey = new Map(fonts.map((font) => [font.key, font]));
+      const fontStatus = new Map(fonts.map((font) => [font.key, 'loading']));
+      const samples = Array.from(lab.querySelectorAll<HTMLElement>('[data-font-sample]'));
+      const previewGrid = lab.querySelector<HTMLElement>('[data-preview-grid]');
+      const fontBControl = lab.querySelector<HTMLElement>('[data-font-b-control]');
+      const fontSelectA = lab.querySelector<HTMLSelectElement>('[data-font-select="a"]');
+      const fontSelectB = lab.querySelector<HTMLSelectElement>('[data-font-select="b"]');
+      let mode = 'compare';
+      let headingWeight = '600';
+
+      const normalizeFamily = (family: string) => family.replace(/^['"]|['"]$/g, '').trim();
+
+      const supportsWeight = (faceWeight: string, weight: number) => {
+        if (faceWeight === 'normal') return weight === 400;
+
+        const values = faceWeight.split(/\s+/).map(Number).filter(Number.isFinite);
+        if (values.length === 2) return weight >= values[0] && weight <= values[1];
+
+        return values[0] === weight;
+      };
+
+      const validateFont = async (font: FontOption) => {
+        const testText = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        await Promise.all(font.weights.map((weight) => document.fonts.load(`${weight} 16px "${font.family}"`, testText)));
+
+        const faces = Array.from(document.fonts).filter((face) => normalizeFamily(face.family) === font.family);
+
+        return font.weights.every((weight) => (
+          faces.some((face) => supportsWeight(face.weight, weight) && face.status === 'loaded')
+        ));
+      };
+
+      const waitForStylesheet = (link: HTMLLinkElement) => {
+        if (link.sheet) return Promise.resolve();
+
+        return new Promise<void>((resolve) => {
+          const finish = () => resolve();
+          link.addEventListener('load', finish, { once: true });
+          link.addEventListener('error', finish, { once: true });
+          window.setTimeout(finish, 10000);
+        });
+      };
+
+      const updateOptionLabels = () => {
+        lab.querySelectorAll<HTMLSelectElement>('[data-font-select]').forEach((select) => {
+          Array.from(select.options).forEach((option) => {
+            const font = fontByKey.get(option.value);
+            if (!font) return;
+
+            option.textContent = fontStatus.get(font.key) === 'error'
+              ? `${font.label} (unavailable)`
+              : font.label;
+          });
+        });
+      };
+
+      const updateSample = (sample: HTMLElement, fontKey: string) => {
+        const font = fontByKey.get(fontKey);
+        const name = sample.querySelector<HTMLElement>('[data-sample-name]');
+        const warning = sample.querySelector<HTMLElement>('[data-font-warning]');
+        const status = fontStatus.get(fontKey) ?? 'error';
+
+        if (!font || !name || !warning) return;
+
+        sample.style.setProperty('--lab-font', `"${font.family}"`);
+        sample.dataset.fontState = status;
+        name.textContent = font.label;
+        warning.hidden = status === 'ready';
+        warning.textContent = status === 'error'
+          ? `${font.label} did not load. The sample is hidden to avoid showing a fallback font.`
+          : `Loading ${font.label}...`;
+      };
+
+      const render = () => {
+        lab.style.setProperty('--lab-heading-weight', headingWeight);
+
+        samples.forEach((sample) => {
+          const slot = sample.dataset.slot;
+          const fontKey = slot === 'b' ? fontSelectB?.value : fontSelectA?.value;
+          const kicker = sample.querySelector<HTMLElement>('[data-sample-kicker]');
+
+          if (fontKey) updateSample(sample, fontKey);
+          if (kicker) kicker.textContent = mode === 'single' ? 'Typeface' : `Typeface ${slot?.toUpperCase()}`;
+          sample.hidden = mode === 'single' && slot === 'b';
+        });
+
+        if (previewGrid) {
+          previewGrid.classList.toggle('md:grid-cols-2', mode === 'compare');
+          previewGrid.classList.toggle('max-w-3xl', mode === 'single');
+        }
+
+        if (fontBControl) fontBControl.hidden = mode === 'single';
+        if (fontSelectB) fontSelectB.disabled = mode === 'single';
+      };
+
+      lab.querySelectorAll<HTMLInputElement>('input[name="preview-mode"]').forEach((input) => {
+        input.addEventListener('change', () => {
+          mode = input.value;
+          render();
+        });
+      });
+
+      lab.querySelectorAll<HTMLInputElement>('input[name="heading-weight"]').forEach((input) => {
+        input.addEventListener('change', () => {
+          headingWeight = input.value;
+          render();
+        });
+      });
+
+      fontSelectA?.addEventListener('change', render);
+      fontSelectB?.addEventListener('change', render);
+
+      const loadFonts = async () => {
+        const links = Array.from(document.querySelectorAll<HTMLLinkElement>('[data-typography-font-source]'));
+        await Promise.all(links.map(waitForStylesheet));
+
+        await Promise.all(fonts.map(async (font) => {
+          try {
+            const loaded = await validateFont(font);
+            fontStatus.set(font.key, loaded ? 'ready' : 'error');
+          } catch {
+            fontStatus.set(font.key, 'error');
+          }
+
+          updateOptionLabels();
+          render();
+        }));
+      };
+
+      render();
+      loadFonts();
+    }
+  </script>
+
+  <style>
+    [data-font-sample] {
+      font-family: var(--lab-font);
+      font-synthesis: none;
+      font-weight: 400;
+    }
+
+    [data-font-sample] [data-lab-heading] {
+      font-weight: var(--lab-heading-weight);
+    }
+
+    [data-font-sample][data-font-state='loading'] [data-sample-content],
+    [data-font-sample][data-font-state='error'] [data-sample-content] {
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-typography-lab] * {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</BaseLayout>
