@@ -39,14 +39,20 @@ const {
     <script is:inline>
       (function(){
         try {
+          const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
           const savedTheme = localStorage.getItem('theme');
-          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const hasSavedTheme = savedTheme === 'light' || savedTheme === 'dark';
+          const applyTheme = (isDark) => document.documentElement.classList.toggle('dark', isDark);
 
-          if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
+          applyTheme(hasSavedTheme ? savedTheme === 'dark' : colorScheme.matches);
+
+          colorScheme.addEventListener('change', (event) => {
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'light' || currentTheme === 'dark') return;
+
+            applyTheme(event.matches);
+          });
         } catch(e){}
 
       })();
