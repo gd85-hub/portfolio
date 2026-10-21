@@ -35,7 +35,7 @@ const imgBase = 'absolute inset-0 h-full w-full object-cover object-top';
 const imgHover = 'absolute inset-0 h-full w-full object-cover object-top opacity-0 [transition:opacity_900ms_var(--ease-out)] group-hover:opacity-100';
 ---
 
-<a href={href} class:list={['reveal group flex flex-col overflow-hidden rounded-[24px] border border-line bg-surface dark:border-white/[0.07] dark:bg-[#0c0c0e]', className]} {...attrs}>
+<a href={href} class:list={['reveal group flex flex-col overflow-hidden rounded-[24px] bg-surface dark:bg-[#0c0c0e]', className]} {...attrs}>
   <div class="relative aspect-[16/10] overflow-hidden">
     {
       hasThemed ? (
