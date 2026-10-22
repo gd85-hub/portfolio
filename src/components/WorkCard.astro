@@ -35,7 +35,7 @@ const imgBase = 'absolute inset-0 h-full w-full object-cover object-top';
 const imgHover = 'absolute inset-0 h-full w-full object-cover object-top opacity-0 [transition:opacity_900ms_var(--ease-out)] group-hover:opacity-100';
 ---
 
-<a href={href} class:list={['reveal group flex flex-col overflow-hidden rounded-[24px] bg-surface dark:bg-[#0c0c0e]', className]} {...attrs}>
+<a href={href} class:list={['reveal group flex flex-col overflow-hidden rounded-[24px] bg-[var(--footer-bg)]', className]} {...attrs}>
   <div class="relative aspect-[16/10] overflow-hidden">
     {
       hasThemed ? (
@@ -58,7 +58,7 @@ const imgHover = 'absolute inset-0 h-full w-full object-cover object-top opacity
       )
     }
   </div>
-  <div class="flex min-w-0 flex-1 flex-col border-t border-line p-6 sm:p-7 dark:border-white/[0.07] [transition:background-color_1000ms_var(--ease-out)] dark:group-hover:bg-white/[0.015]">
+  <div class="flex min-w-0 flex-1 flex-col p-6 sm:p-7 [transition:background-color_1000ms_var(--ease-out)] dark:group-hover:bg-white/[0.015]">
     <div class="flex items-center justify-between gap-4">
       <h3 class="t-section text-ink">{title}</h3>
       <span class="icon shrink-0 text-ink [transition:transform_420ms_var(--ease-out)] group-hover:translate-x-1" aria-hidden="true">
